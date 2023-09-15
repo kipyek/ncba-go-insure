@@ -4,7 +4,7 @@ import React from 'react'
 const Login = () => {
   return (
        <View className='item-center justify-center'>
-      <Text>Login</Text>
+      <Text>Logins</Text>
     </View>
    
   )
