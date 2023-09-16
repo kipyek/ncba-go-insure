@@ -30,7 +30,10 @@ export type AppRoutes = {
 
 export type AuthenticationRoutes = {
   Login: undefined;
-
+  AuthHome: any;
+  Register: any;
+  Help: any;
+  GetQuote: any;
 };
 
 export type HomeRoutes = {

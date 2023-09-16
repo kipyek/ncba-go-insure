@@ -11,6 +11,8 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 const fonts = {
   "SFProText-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
   "Poppins-Italic": require("./assets/fonts/Poppins-MediumItalic.ttf"),
+  "gothici-Bold": require("./assets/fonts/gothicb.ttf"),
+  "gothici-Regular": require("./assets/fonts/CenturyGothic.ttf")
 };
 
 // Custom Components
@@ -106,7 +108,7 @@ export default function App() {
   }
   else {
     return (
-      userToken ? <RootSiblingParent><AuthPath /></RootSiblingParent> : <RootSiblingParent><HomePath /></RootSiblingParent>
+      userToken ? <RootSiblingParent><HomePath /></RootSiblingParent> : <RootSiblingParent><AuthPath /></RootSiblingParent>
 
     );
   };
