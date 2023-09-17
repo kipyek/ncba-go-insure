@@ -42,7 +42,7 @@ export default function GetQuote() {
   };
 
   const onNextStepPress = () => {
-    setCurrentPage(currentPage);
+    setCurrentPage(1);
   };
   const renderViewPagerPage = (data: any) => {
     return (
@@ -74,7 +74,7 @@ export default function GetQuote() {
 
       <View>
         {currentPage === 0 ?
-          <QuoteRequest current={onNextStepPress} />
+          <QuoteRequest onNextStepPress={() => onNextStepPress()} />
           :
           currentPage === 1 ?
             <QuoteList />
@@ -88,7 +88,7 @@ export default function GetQuote() {
                 <QuoteFinish />
         }
       </View>
-      <Swiper
+      {/* <Swiper
         style={{ flexGrow: 1 }}
         loop={false}
         index={currentPage}
@@ -100,7 +100,7 @@ export default function GetQuote() {
         }}
       >
         {PAGES.map((page) => renderViewPagerPage(page))}
-      </Swiper>
+      </Swiper> */}
     </View>
   );
 }

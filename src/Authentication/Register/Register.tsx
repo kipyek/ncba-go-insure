@@ -10,6 +10,16 @@ const Register = () => {
   const navigation: any = useNavigation()
   const [selectedOption, setSelectedOption] = useState('customer');
   const [date, setDate] = useState(null);
+  const [fname, setFname] = useState('');
+  const [sname, setSname] = useState('');
+  const [otherName, setOtherName] = useState('');
+  const [id, setId] = useState('');
+  const [kra, setKra] = useState('');
+  const [code, setCode] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [pass, setPass] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
   const [title, setTitle] = useState('')
 
@@ -60,16 +70,16 @@ const Register = () => {
               <TextInput
                 className='p-1 rounded-md flex-1'
                 style={{ borderWidth: 1 }}
-                onChangeText={text => setTitle(text)}
-                value={title}
+                onChangeText={text => setSname(text)}
+                value={sname}
                 placeholder="Enter Surname"
                 keyboardType="default"
               />
               <TextInput
                 className='p-1 rounded-md flex-1'
                 style={{ borderWidth: 1 }}
-                onChangeText={text => setTitle(text)}
-                value={title}
+                onChangeText={text => setFname(text)}
+                value={fname}
                 placeholder="Enter first name"
                 keyboardType="default"
               />
@@ -78,8 +88,8 @@ const Register = () => {
             <TextInput
               className='p-1 rounded-md mt-2'
               style={{ borderWidth: 1 }}
-              onChangeText={text => setTitle(text)}
-              value={title}
+              onChangeText={text => setOtherName(text)}
+              value={otherName}
               placeholder="Enter your other names"
               keyboardType="default"
             />
@@ -88,16 +98,16 @@ const Register = () => {
                 <TextInput
                   className='p-1 rounded-md flex-1'
                   style={{ borderWidth: 1 }}
-                  onChangeText={text => setTitle(text)}
-                  value={title}
+                  onChangeText={text => setId(text)}
+                  value={id}
                   placeholder="Enter your national ID"
                   keyboardType="default"
                 />
                 <TextInput
                   className='p-1 rounded-md flex-1'
                   style={{ borderWidth: 1 }}
-                  onChangeText={text => setTitle(text)}
-                  value={title}
+                  onChangeText={text => setKra(text)}
+                  value={kra}
                   placeholder="Enter your KRA PIN"
                   keyboardType="default"
                 />
@@ -110,8 +120,8 @@ const Register = () => {
               <TextInput
                 className='p-1 rounded-md  mt-2'
                 style={{ borderWidth: 1 }}
-                onChangeText={text => setTitle(text)}
-                value={title}
+                onChangeText={text => setCode(text)}
+                value={code}
                 placeholder="Enter your DSA Code"
                 keyboardType="default"
               />
@@ -122,16 +132,16 @@ const Register = () => {
             <TextInput
               className='p-1 rounded-md mt-2'
               style={{ borderWidth: 1 }}
-              onChangeText={text => setTitle(text)}
-              value={title}
+              onChangeText={text => setEmail(text)}
+              value={email}
               placeholder="Enter your email"
               keyboardType="default"
             />
             <TextInput
               className='p-1 rounded-md mt-2'
               style={{ borderWidth: 1 }}
-              onChangeText={text => setTitle(text)}
-              value={title}
+              onChangeText={text => setPhone(text)}
+              value={phone}
               placeholder="07XXXXXXXX"
               keyboardType="default"
             />
@@ -150,16 +160,16 @@ const Register = () => {
               <TextInput
                 className='p-1 rounded-md flex-1'
                 style={{ borderWidth: 1 }}
-                onChangeText={text => setTitle(text)}
-                value={title}
+                onChangeText={text => setPassword(text)}
+                value={password}
                 placeholder="Type your password"
                 keyboardType="default"
               />
               <TextInput
                 className='p-1 rounded-md flex-1'
                 style={{ borderWidth: 1 }}
-                onChangeText={text => setTitle(text)}
-                value={title}
+                onChangeText={text => setPass(text)}
+                value={pass}
                 placeholder="Confirm password"
                 keyboardType="default"
               />

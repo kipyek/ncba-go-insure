@@ -35,11 +35,12 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 4,
-    margin: 4
+    marginVertical: 4
   },
   placeholderStyle: {
     fontSize: 16,
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: 'grey'
   },
   selectedTextStyle: {
     fontSize: 16,
