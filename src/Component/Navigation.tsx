@@ -44,4 +44,6 @@ export type HomeRoutes = {
   Profile: any;
   Transaction: any;
   Quote: any;
+  Home:any;
+  Claim:any;
 }

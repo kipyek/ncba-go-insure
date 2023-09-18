@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Feather as Icon } from "@expo/vector-icons";
+import { Feather as Icon,MaterialIcons,FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -11,6 +11,7 @@ import Dashboard from "./Dashboard";
 import Quote from "./Quote";
 import Profile from "./Profile";
 import Transaction from "./Transaction";
+import Claim from "./Claim";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -24,14 +25,12 @@ const ManageStackScreens = () => {
         tabBarIcon: ({ focused, color, size }: any) => {
           let iconName: any;
 
-          if (route.name === 'Dashboard') {
+          if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home';
-          } else if (route.name === 'Quote') {
+          } else if (route.name === 'Claim') {
             iconName = focused ? 'clock' : 'clock';
-          } else if (route.name === 'Transaction') {
-            iconName = focused ? 'truck' : 'truck';
           } else if (route.name === 'Profile') {
-            iconName = focused ? 'settings' : 'settings';
+            iconName = focused ? 'user' : 'user';
           }
 
           // You can return any component that you like here!
@@ -40,22 +39,34 @@ const ManageStackScreens = () => {
         // tabBarStyle: {
         //   height: 60,
         // },
-        tabBarActiveTintColor: '#eb7325',
-        tabBarInactiveTintColor: '#A16931',
+        tabBarActiveTintColor: '#87CEEB',
+        tabBarInactiveTintColor: 'grey',
         headerShown: false,
 
       })}
     >
-      <Tab.Screen name="Dashboard" component={Dashboard}
+      <Tab.Screen name="Home" component={Dashboard}
         options={{ unmountOnBlur: true, }}
       />
       <Tab.Screen name="Quote" component={Quote}
-        options={{ unmountOnBlur: true, }}
-      />
+        options={{
+          tabBarIcon: ({ focused }) => (focused ?
+            <MaterialIcons name="request-quote" size={24} color="#87CEEB" />
+            :
+            <MaterialIcons name="request-quote" size={24} color="grey" />),
+        }} />
+       <Tab.Screen name="Claim" component={Claim}
+       options={{ unmountOnBlur: true, }}
+       />
+      
+       <Tab.Screen name="Transaction" component={Transaction}
+         options={{
+          tabBarIcon: ({ focused }) => (focused ?
+            <FontAwesome name="money" size={24} color="#87CEEB" />
+            :
+            <FontAwesome name="money" size={24} color="grey" />),
+        }} />
       <Tab.Screen name="Profile" component={Profile}
-        options={{ unmountOnBlur: true, }}
-      />
-      <Tab.Screen name="Transaction" component={Transaction}
         options={{ unmountOnBlur: true, }}
       />
       {/* Add more screens here as need be */}

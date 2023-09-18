@@ -15,9 +15,9 @@ const Dashboard = () => {
     })
   }
   return (
-    <SafeAreaView className='flex-1 justify-center items-center bg-red-950'>
+    <SafeAreaView className='flex-1 justify-center items-center'>
       <TouchableOpacity onPress={handleToastTest}>
-        <Text style={styles.text} className='font-["SFProText-Bold"] text-red-500'>Dashboard</Text>
+        <Text style={styles.text} className='font-["SFProText-Bold"] '>Dashboard</Text>
       </TouchableOpacity>
 
     </SafeAreaView>
