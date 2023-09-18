@@ -98,6 +98,35 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
             placeholder=''
           />
 
+          {/** Logic need to change after adding apis */}
+          <Text className='mb-1 mt-3 font-[gothici-Regular]'>What is the value of windscreen?*</Text>
+          <DropDown
+            label={"label"}
+            value={"value"}
+            onchange={(item: any) => setValue(item?.value)}
+            datas={data}
+            placeholder='50,000'
+          />
+
+          <Text className='mb-1 mt-3 font-[gothici-Regular]'>What is the value of the entertainment unit?*</Text>
+          <DropDown
+            label={"label"}
+            value={"value"}
+            onchange={(item: any) => setValue(item?.value)}
+            datas={data}
+            placeholder='30,000'
+          />
+
+         <Text className='mb-1 mt-3 font-[gothici-Regular]'>Kindly key in the seating capacity of your vehicle</Text>
+          <DropDown
+            label={"label"}
+            value={"value"}
+            onchange={(item: any) => setValue(item?.value)}
+            datas={data}
+            placeholder='2'
+          />
+         {/** End of Logic need to change after adding apis */}  
+
           <Text className='mb-1 mt-3 font-[gothici-Regular]'>Enter your email address*</Text>
           <TextInput
             className='p-1 rounded-md flex-1'

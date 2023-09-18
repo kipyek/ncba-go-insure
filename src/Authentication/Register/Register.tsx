@@ -1,10 +1,11 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { Fragment, useState } from 'react'
 import { RadioButton } from '../../Component/RadioButton';
 import { useNavigation } from '@react-navigation/native';
 import { Fontisto } from '@expo/vector-icons';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Moment from 'moment';
+import { api } from '../../Services';
 
 const Register = () => {
   const navigation: any = useNavigation()
@@ -35,6 +36,45 @@ const Register = () => {
   const handleConfirmDate = (date: any) => {
     setDate(date)
     hideDatePicker()
+  }
+
+  const handleConfirmEMail = () => {
+     Alert.alert('Welcome to NCBA Go Insure', 
+     'Thank you for your interest in NCBA Go Insure. Please check your email for a link to activate your account.Incase you have not received the confirmation email, click "Resend" below to send a new code', 
+     [
+    {
+      text: 'Cancel',
+      onPress: () => console.log('Cancel Pressed'),
+      style: 'cancel',
+    },
+    {text: 'Resend', onPress: () => console.log('OK Pressed')},
+  ]);
+  }
+ 
+
+
+  const handleRegistration = () => {
+    const payload = {
+        "phoneNumber": "0718477952",
+        "emailAddress": "d.kipyek@gmail.com",
+        "firstName": "Kip",
+        "lastName": "Denis",
+        "gender": "string",
+        "idNumber": "36550053",
+        "password": "denis23",
+        "userType": 0,
+        "otherNames": "Kos",
+        "pin": "",
+        "dateOfBirth": "2023-09-18T06:49:39.468Z"
+    }
+
+    api.post("Authentication/Register", payload)
+    .then(response => {
+      const data = response.data
+      console.log("All of the data",data)
+    }).catch(error => {
+      console.log("Error in",error.response)
+    })
   }
 
   return (
@@ -176,13 +216,11 @@ const Register = () => {
             </View>
 
             <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleConfirmEMail}>
                 <Text className='text-center text-white font-["gothici-Bold"]'>REGISTER</Text>
               </TouchableOpacity>
             </View>
-
           </View>
-
 
 
           <View className='ml-4 mr-4 mt-10'>

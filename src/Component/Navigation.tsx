@@ -25,7 +25,7 @@ export type AppRoutes = {
   AuthHome: any;
   ForgotPassword: any;
   LoginOTP: any;
-  Register: any
+  Register: any;
 }
 
 export type AuthenticationRoutes = {
@@ -34,6 +34,8 @@ export type AuthenticationRoutes = {
   Register: any;
   Help: any;
   GetQuote: any;
+  LoginOTP: any;
+  ForgotPassword:any;
 };
 
 export type HomeRoutes = {

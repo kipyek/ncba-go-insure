@@ -108,7 +108,7 @@ export default function App() {
   }
   else {
     return (
-      userToken ? <RootSiblingParent><HomePath /></RootSiblingParent> : <RootSiblingParent><AuthPath /></RootSiblingParent>
+      userToken ? <RootSiblingParent><AuthPath /></RootSiblingParent> : <RootSiblingParent><HomePath/></RootSiblingParent>
 
     );
   };

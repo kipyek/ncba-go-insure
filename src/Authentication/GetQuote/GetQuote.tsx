@@ -43,6 +43,12 @@ export default function GetQuote() {
 
   const onNextStepPress = () => {
     setCurrentPage(1);
+  }; 
+  const onNextStepPressList = () => {
+    setCurrentPage(2);
+  };
+  const onNextStepPressSelection = () => {
+    setCurrentPage(3);
   };
   const renderViewPagerPage = (data: any) => {
     return (
@@ -77,10 +83,10 @@ export default function GetQuote() {
           <QuoteRequest onNextStepPress={() => onNextStepPress()} />
           :
           currentPage === 1 ?
-            <QuoteList />
+            <QuoteList onNextStepPressList={() => onNextStepPressList()}/>
             :
             currentPage === 2 ?
-              <BenefitSelection />
+              <BenefitSelection onNextStepPressSelection={() => onNextStepPressSelection()} />
               :
               currentPage === 3 ?
                 <QuoteConfirm />
