@@ -7,7 +7,6 @@ import BenefitSelection from './BenefitSelection';
 import QuoteConfirm from './QuoteConfirm';
 import QuoteFinish from './QuoteFinish';
 import QuoteRequest from './QuoteRequest';
-import Swiper from 'react-native-swiper';
 
 const PAGES = ['Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5'];
 

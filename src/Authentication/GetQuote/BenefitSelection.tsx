@@ -42,7 +42,7 @@ const BenefitSelection = ({onNextStepPressSelection}:any) => {
       </View>
       <View className='flex-row mt-2 justify-between bg-gray-200'>
             <Text>Entertainment unit:</Text>
-      <Text className='font-bold ml-2'>Kes 130,000</Text>
+      <Text className='font-bold ml-2'>Kes 0</Text>
       </View>
       <View className='flex-row mt-2 justify-between bg-gray-200'>
             <Text>Extensions:</Text>
