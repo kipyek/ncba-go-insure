@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { Header } from '../../Component/Header'
 
 const Quote = () => {
   return (
     <View>
-      <Text>Quote</Text>
+      <Header
+        label="Request Quote"
+      />
     </View>
   )
 }

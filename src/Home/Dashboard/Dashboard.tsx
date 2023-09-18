@@ -1,6 +1,8 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React from 'react';
 import Toast from 'react-native-root-toast'
+import { Header } from '../../Component/Header';
+import { Feather } from '@expo/vector-icons';
 
 const Dashboard = () => {
   const handleToastTest = () => {
@@ -16,7 +18,10 @@ const Dashboard = () => {
   }
   return (
     <SafeAreaView className='flex-1 '>
-        <Image source={require("../../../assets/images/background.png")} style={styles.image} />
+      <Header
+        label="Dashboard"
+      />
+      <Image source={require("../../../assets/images/background.png")} style={styles.image} />
       <TouchableOpacity onPress={handleToastTest}>
         <Text style={styles.text} className='font-["SFProText-Bold"] '>Dashboard</Text>
       </TouchableOpacity>
@@ -36,6 +41,6 @@ const styles = StyleSheet.create({
     height: '100%',
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    opacity:0.4
+    opacity: 0.4
   },
 })
