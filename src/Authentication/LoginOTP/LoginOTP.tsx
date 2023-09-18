@@ -31,18 +31,18 @@ const LoginOTP = () => {
           keyboardType="default"
         />
 
-        <View className='flex-row mt-2'>
+        <View className='flex-row mt-6'>
           <Text>OTP not received? click</Text>
           <Text className='ml-2 font-["gothici-Bold"]'>RESEND</Text>
         </View>
 
         <View className='flex-row justify-between'>
-          <View className='item-center bg-[#302A29] p-4 mt-2 rounded-md w-32'>
+          <View className='item-center bg-[#302A29] p-2 mt-3 rounded-md w-32'>
             <TouchableOpacity onPress={() => navigation.navigate("LoginOTP")}>
               <Text className='text-center text-white font-["gothici-Bold"]'>RESEND</Text>
             </TouchableOpacity>
           </View>
-          <View className='item-center bg-[#302A29] p-4 mt-2 rounded-md w-32'>
+          <View className='item-center bg-[#302A29] p-3 mt-2 rounded-md w-32'>
             <TouchableOpacity onPress={() => handleSuccess()}>
               <Text className='text-center text-white font-["gothici-Bold"]'>VERIFY</Text>
             </TouchableOpacity>
