@@ -1,18 +1,178 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import React, { Fragment, useState } from 'react'
 import { Header } from '../../Component/Header'
+import DropDown from '../../Component/DropDown'
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import { Fontisto, FontAwesome, MaterialIcons } from "@expo/vector-icons"
+import Moment from 'moment';
+
+const data = [
+  { label: 'Health', value: '1' },
+  { label: 'Life', value: '2' },
+  { label: 'Homeowner', value: '3' },
+  { label: 'Car Insurance', value: '4' },
+];
 
 const Claim = () => {
+  const [value, setValue] = useState('');
+  const [date, setDate] = useState(null);
+  const [accident, setAccident] = useState('');
+  const [detail, setDetail] = useState('');
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [report, setReport] = useState(false);
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false)
+  }
+
+  const handleConfirmDate = (date: any) => {
+    setDate(date)
+    hideDatePicker()
+  }
+
+  const handleReport = () => {
+    setReport(!report)
+  }
+
   return (
-    <View>
-      <Header
-        label="Claims"
+    <Fragment>
+      <View>
+        <Header
+          label="Claims"
+        />
+        {/**Intro */}
+        <View style={styles.introCard}>
+          <Text className='font-[gothici-Regular]'>
+            Please enter details about your claim, A customer support agent will contact you as soon as possible.
+          </Text>
+          <Text className='font-[gothici-Regular]'>All fields mark with asterisk(*) are required.</Text>
+        </View>
+
+        {/**Fields */}
+        <View className='mb-2'>
+          <Text className=' mb-2 mt-3 font-[gothici-Regular]'>Select policy to claim*</Text>
+          <DropDown
+            label={"label"}
+            value={"value"}
+            onchange={(item: any) => setValue(item?.value)}
+            datas={data}
+            placeholder='---select policy---'
+          />
+        </View>
+
+        <View className='mb-2'>
+          <Text className=' mb-2 mt-3 font-[gothici-Regular]'>Select insured item below*</Text>
+          <DropDown
+            label={"label"}
+            value={"value"}
+            onchange={(item: any) => setValue(item?.value)}
+            datas={data}
+            placeholder=''
+          />
+        </View>
+
+        <View className='mt-2 mb-2'>
+          <Text className='mb-1 mt-3 font-[gothici-Regular]'>When did accident/loss occur?*</Text>
+          <View className='flex-row justify-between p-2 rounded-md' style={{ borderWidth: 1 }}>
+            {date ?
+              <Text>{Moment(date).format('Do MMMM, YYYY')}</Text>
+              :
+              <Text className='text-gray-400'>Select when the accident occur</Text>
+            }
+            <Fontisto name="date" size={20} color="black" onPress={() => setDatePickerVisibility(true)} />
+          </View>
+        </View>
+
+        <View>
+          <Text className='mb-1 mt-3 font-[gothici-Regular]'>Where did accident/loss occur?*</Text>
+          <TextInput
+            className='p-1 rounded-md mt-2'
+            style={{ borderWidth: 1 }}
+            onChangeText={text => setAccident(text)}
+            value={accident}
+            placeholder="Enter the location"
+            keyboardType="default"
+          />
+        </View>
+
+        <View>
+          <Text className='mb-1 mt-3 font-[gothici-Regular]'>Briefly describe how the accident/loss occurred and the extent of demage/loss*</Text>
+          <TextInput
+            className='p-1 rounded-md mt-2'
+            style={{ borderWidth: 1 }}
+            onChangeText={text => setDetail(text)}
+            value={detail}
+            placeholder="Enter the location"
+            keyboardType="default"
+          />
+        </View>
+
+        {/**Report */}
+        <View className='flex-row '>
+          <TouchableOpacity onPress={handleReport}>
+            {report ?
+              <FontAwesome name="check-square-o" size={24} color="black" />
+              :
+              <MaterialIcons name="check-box-outline-blank" size={24} color="black" />
+            }
+          </TouchableOpacity>
+          <Text className='font-[gothici-Regular] ml-2 mr-4'>Have you reported to the police? If not report soonest possible (within 24hours)</Text>
+        </View>
+        {report ?
+          <View>
+            <View>
+              <Text className='mb-1 mt-3 font-[gothici-Regular]'>Where did accident/loss occur?*</Text>
+              <TextInput
+                className='p-1 rounded-md mt-2'
+                style={{ borderWidth: 1 }}
+                onChangeText={text => setAccident(text)}
+                value={accident}
+                placeholder="Enter the location"
+                keyboardType="default"
+              />
+            </View>
+            <View>
+              <Text className='mb-1 mt-3 font-[gothici-Regular]'>Where did accident/loss occur?*</Text>
+              <TextInput
+                className='p-1 rounded-md mt-2'
+                style={{ borderWidth: 1 }}
+                onChangeText={text => setAccident(text)}
+                value={accident}
+                placeholder="Enter the location"
+                keyboardType="default"
+              />
+            </View>
+          </View>
+          :
+          null
+        }
+
+      </View>
+      <DateTimePicker
+        isVisible={isDatePickerVisible}
+        mode="date"
+        display='default'
+        pickerContainerStyleIOS={{ justifyContent: "center", paddingHorizontal: 150 }}
+        onConfirm={handleConfirmDate}
+        onCancel={hideDatePicker}
       />
-      <Text>Claim</Text>
-    </View>
+    </Fragment>
+
   )
 }
 
 export default Claim
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  introCard: {
+    backgroundColor: '#87CEEB',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  }
+})
