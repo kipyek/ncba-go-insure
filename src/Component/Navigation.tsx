@@ -35,7 +35,7 @@ export type AuthenticationRoutes = {
   Help: any;
   GetQuote: any;
   LoginOTP: any;
-  ForgotPassword:any;
+  ForgotPassword: any;
 };
 
 export type HomeRoutes = {
@@ -44,6 +44,6 @@ export type HomeRoutes = {
   Profile: any;
   Transaction: any;
   Quote: any;
-  Home:any;
-  Claim:any;
+  Home: any;
+  Claim: any;
 }
