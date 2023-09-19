@@ -229,7 +229,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm }: any) => {
             {/**End of Condition for financing */}
 
             <View className='mb-2'>
-              <Text className=' mb-2 mt-3 font-[gothici-Regular]'>How did you hear about us?</Text>
+              <Text className=' mb-1 mt-3 font-[gothici-Regular]'>How did you hear about us?</Text>
               <DropDown
                 label={"label"}
                 value={"value"}
@@ -240,7 +240,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm }: any) => {
             </View>
 
             {/**Confirmation of information */}
-            <View className='flex-row '>
+            <View className='flex-row mb-2'>
               <TouchableOpacity onPress={handleConfirm}>
                 {confirmed ?
                   <FontAwesome name="check-square-o" size={24} color="black" />
