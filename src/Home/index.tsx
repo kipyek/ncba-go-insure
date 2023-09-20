@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Feather as Icon,MaterialIcons,FontAwesome } from "@expo/vector-icons";
+import { Feather as Icon, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -12,6 +12,7 @@ import Quote from "./Quote";
 import Profile from "./Profile";
 import Transaction from "./Transaction";
 import Claim from "./Claim";
+import ClaimForm from "./ClaimForm";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -55,12 +56,12 @@ const ManageStackScreens = () => {
             :
             <MaterialIcons name="request-quote" size={24} color="grey" />),
         }} />
-       <Tab.Screen name="Claim" component={Claim}
-       options={{ unmountOnBlur: true, }}
-       />
-      
-       <Tab.Screen name="Transaction" component={Transaction}
-         options={{
+      <Tab.Screen name="Claim" component={Claim}
+        options={{ unmountOnBlur: true, }}
+      />
+
+      <Tab.Screen name="Transaction" component={Transaction}
+        options={{
           tabBarIcon: ({ focused }) => (focused ?
             <FontAwesome name="money" size={24} color="#87CEEB" />
             :
@@ -84,6 +85,7 @@ export const HomeNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Main" component={ManageStackScreens} />
+      <Stack.Screen name="ClaimForm" component={ClaimForm} />
 
     </Stack.Navigator>
   )

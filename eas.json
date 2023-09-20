@@ -1,0 +1,15 @@
+{
+  "cli": {
+    "version": ">= 5.2.0"
+  },
+  "build": {
+    "dev": {
+      "channel": "dev",
+      "android": {
+        "buildType": "apk",
+        "autoIncrement": true
+      },
+      "ios": {}
+    }
+  }
+}

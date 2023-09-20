@@ -5,6 +5,7 @@ import { ThemeProvider } from '@shopify/restyle';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import { ModalPortal } from 'react-native-modals';
 
 
 // Fonts
@@ -38,6 +39,7 @@ const AuthPath = () => {
               <AppStack.Screen name="Home" component={HomeNavigator} />
             </AppStack.Group>
           </AppStack.Navigator>
+          <ModalPortal />
         </SafeAreaView>
       </LoadAssets>
     </ThemeProvider>
@@ -54,6 +56,7 @@ const HomePath = () => {
             <AppStack.Screen name="Home" component={HomeNavigator} />
             <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
           </AppStack.Navigator>
+          <ModalPortal />
         </SafeAreaView>
       </LoadAssets>
     </ThemeProvider>
