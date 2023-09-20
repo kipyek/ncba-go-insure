@@ -25,13 +25,13 @@ const ConfirmedQuote = () => {
             </View>
 
             <CQuote
-                Quote={100}
-                Product={90}
-                Insurer={89}
-                Reg={43}
-                Gross={23}
-                Amount={67}
-                Oustanding={65}
+                Quote={"Q01718"}
+                Product={"Motor Commercial Own Goods (Third party only)"}
+                Insurer={"GA Insurance Company LTD"}
+                Reg={"KVV 123H"}
+                Gross={"Kes 20,090.00"}
+                Amount={"Kes 0.00"}
+                Oustanding={"Kes 20,090.00"}
             />
         </View>
     )

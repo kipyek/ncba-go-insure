@@ -6,29 +6,29 @@ const PaymentComponent = ({ Reference, RNumber, PDate, RId, PAmount }: any) => {
         <View className='flex-1'>
             <ScrollView>
                 <View style={styles.card}>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Receipt No:</Text>
                         <Text>{RNumber}</Text>
                     </View>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Payment date:</Text>
                         <Text>{PDate}</Text>
                     </View>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>NCBA Reference:</Text>
                         <Text>{Reference}</Text>
                     </View>
 
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Risk ID:</Text>
                         <Text>{RId}</Text>
                     </View>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Paid amount:</Text>
                         <Text>{PAmount}</Text>
                     </View>
 
-                    <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
+                    <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md '>
                         <TouchableOpacity onPress={() => { }}>
                             <Text className='text-center text-white font-["gothici-Bold"]'>DETAILS</Text>
                         </TouchableOpacity>

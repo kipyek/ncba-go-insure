@@ -6,33 +6,33 @@ const PPaymentComponent = ({ description, DNumber, PNumber, IssuedDate, RId, AOu
         <View className='flex-1'>
             <ScrollView>
                 <View style={styles.card}>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Debit No:</Text>
                         <Text>{DNumber}</Text>
                     </View>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Policy No:</Text>
                         <Text>{PNumber}</Text>
                     </View>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Description:</Text>
                         <Text>{description}</Text>
                     </View>
 
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Date issued:</Text>
                         <Text>{IssuedDate}</Text>
                     </View>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Risk ID:</Text>
                         <Text>{RId}</Text>
                     </View>
-                    <View className='flex-row mt-4 justify-between bg-gray-200'>
+                    <View className='flex-row mt-1 justify-between bg-gray-200 p-1 rounded-md'>
                         <Text className={'font-["gothici-Bold"]'}>Oustanding amount:</Text>
                         <Text>{AOustanding}</Text>
                     </View>
 
-                    <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
+                    <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md '>
                         <TouchableOpacity onPress={() => { }}>
                             <Text className='text-center text-white font-["gothici-Bold"]'>DETAILS</Text>
                         </TouchableOpacity>
