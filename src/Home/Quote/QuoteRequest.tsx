@@ -121,7 +121,7 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
               placeholder=''
             />
 
-            {/** Logic need to change after adding apis */}
+            {/** Start Logic need to change after adding apis */}
             <Text className='mb-1 mt-3 font-[gothici-Regular]'>What is the value of windscreen?*</Text>
             <TextInput
               className='p-1 rounded-md flex-1'
@@ -155,26 +155,6 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
               keyboardType="default"
             />
             {/** End of Logic need to change after adding apis */}
-
-            <Text className='mb-1 mt-3 font-[gothici-Regular]'>Enter your email address*</Text>
-            <TextInput
-              className='p-1 rounded-md flex-1'
-              style={{ borderWidth: 1 }}
-              onChangeText={text => setEmail(text)}
-              value={email}
-              placeholder="Enter your email"
-              keyboardType="default"
-            />
-
-            <Text className='mb-1 mt-3 font-[gothici-Regular]'>Enter your phone number*</Text>
-            <TextInput
-              className='p-1 rounded-md flex-1'
-              style={{ borderWidth: 1 }}
-              onChangeText={text => setPhone(text)}
-              value={phone}
-              placeholder="Enter your phoneNumber"
-              keyboardType="default"
-            />
 
             <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
               <TouchableOpacity onPress={() => handleQuote()}>

@@ -33,8 +33,8 @@ const Profile = () => {
 
           <View className='bg-gray-100 p-2 rounded-md justify-between flex-row'>
             <View>
-              <Text className='text-sm font-semibold text-gray-300 ml-2'>Email</Text>
-              <Text className='text-base font-bold text-gray-500 ml-2'>d.kipyek@gmail.com</Text>
+              <Text className='text-sm font-[gothici-Regular] text-gray-300 ml-2'>Email</Text>
+              <Text className='text-base font-[gothici-Bold] text-gray-500 ml-2'>d.kipyek@gmail.com</Text>
             </View>
             <Feather name="edit-3" size={24} color="black"
               style={{ alignSelf: 'center' }}
@@ -45,8 +45,8 @@ const Profile = () => {
 
           <View className='bg-gray-100 p-2 rounded-md my-2 flex-row justify-between'>
             <View >
-              <Text className='text-sm font-semibold text-gray-300 ml-2'>Phone Number</Text>
-              <Text className='text-base font-bold text-gray-500 ml-2'>0712345678</Text>
+              <Text className='text-sm font-[gothici-Regular] text-gray-300 ml-2'>Phone Number</Text>
+              <Text className='text-base font-[gothici-Bold] text-gray-500 ml-2'>0712345678</Text>
             </View>
             <Feather
               name="edit-3"
@@ -62,7 +62,7 @@ const Profile = () => {
             onPress={() => setModalPassword(true)}
           >
             <View >
-              <Text className='text-sm font-semibold ml-2'>Change Password</Text>
+              <Text className=' text-base ml-2 font-[gothici-Bold]'>Change Password</Text>
             </View>
             <Feather
               name="chevron-right"
@@ -79,7 +79,7 @@ const Profile = () => {
             onPress={() => { }}
           >
             <MaterialIcons name="logout" size={24} color="red" />
-            <Text className='font-bold text-lg ml-2 text-red-400'>Logout</Text>
+            <Text className='text-base ml-2 text-red-400 font-[gothici-Bold]'>Logout</Text>
           </TouchableOpacity>
         </View>
 
