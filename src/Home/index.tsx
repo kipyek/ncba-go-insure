@@ -14,6 +14,8 @@ import Transaction from "./Transaction";
 import Claim from "./Claim";
 import ClaimForm from "./ClaimForm";
 import QuoteDetails from "./QuoteDetails";
+import QDetails from "./QuoteDetails/QDetails";
+import PaymentScreen from "./QuoteDetails/PaymentScreen";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();

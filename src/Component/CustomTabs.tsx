@@ -21,7 +21,7 @@ export default function CustomTabs({
             style={{
                 height: 34,
                 width: '100%',
-                borderColor: '#AD40AF',
+                borderColor: '#EEE017',
                 flexDirection: 'row',
                 justifyContent: 'center',
                 marginVertical: 10
@@ -31,12 +31,12 @@ export default function CustomTabs({
                 onPress={() => updateSwitchData(1)}
                 style={{
                     flex: 1,
-                    backgroundColor: getSelectionMode == 1 ? '#FFA500' : '#e4e4e4',
+                    backgroundColor: getSelectionMode == 1 ? '#EEE017' : '#e4e4e4',
                     borderRadius: 2,
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderWidth: 1,
-                    borderColor: "#FFA500",
+                    borderColor: "#EEE017",
                     marginRight: 8,
                     marginLeft: 8
                 }}>
@@ -44,7 +44,8 @@ export default function CustomTabs({
                     style={{
                         color: getSelectionMode == 1 ? 'white' : 'black',
                         paddingRight: 10,
-                        fontSize: 14
+                        fontSize: 12,
+                        fontFamily: 'gothici-Bold'
                     }}>
                     {option1}
                 </Text>
@@ -55,19 +56,20 @@ export default function CustomTabs({
                 onPress={() => updateSwitchData(2)}
                 style={{
                     flex: 1,
-                    backgroundColor: getSelectionMode == 2 ? '#FFA500' : '#e4e4e4',
+                    backgroundColor: getSelectionMode == 2 ? '#EEE017' : '#e4e4e4',
                     borderRadius: 2,
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderWidth: 1,
-                    borderColor: "#FFA500",
+                    borderColor: "#EEE017",
                     marginRight: 8
                 }}>
                 <Text
                     style={{
                         color: getSelectionMode == 2 ? 'white' : 'black',
                         paddingHorizontal: 10,
-                        fontSize: 14
+                        fontSize: 12,
+                        fontFamily: 'gothici-Bold'
                     }}>
                     {option2}
                 </Text>
@@ -78,19 +80,20 @@ export default function CustomTabs({
                 onPress={() => updateSwitchData(3)}
                 style={{
                     flex: 1,
-                    backgroundColor: getSelectionMode == 3 ? '#FFA500' : '#e4e4e4',
+                    backgroundColor: getSelectionMode == 3 ? '#EEE017' : '#e4e4e4',
                     borderRadius: 2,
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderWidth: 1,
-                    borderColor: "#FFA500",
+                    borderColor: "#EEE017",
                     marginRight: 8
                 }}>
                 <Text
                     style={{
                         color: getSelectionMode == 3 ? 'white' : 'black',
                         paddingHorizontal: 10,
-                        fontSize: 14
+                        fontSize: 12,
+                        fontFamily: 'gothici-Bold'
                     }}>
                     {option3}
                 </Text>

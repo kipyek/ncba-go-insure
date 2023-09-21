@@ -151,9 +151,9 @@ const QuoteConfirm = ({ onNextStepPressConfirm }: any) => {
               </TouchableOpacity>
             </View>
             {confirmed ?
-              <View className='item-center bg-[#302A29] p-3 mt-2 rounded-md w-32'>
+              <View className='item-center bg-[#EEE017] p-3 mt-2 rounded-md w-32'>
                 <TouchableOpacity onPress={handleNext}>
-                  <Text className='text-center text-white font-["gothici-Bold"]'>GO FOR IT</Text>
+                  <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
                 </TouchableOpacity>
               </View>
               :
