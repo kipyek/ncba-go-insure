@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState, Fragment } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 import { MaterialIcons, Feather } from '@expo/vector-icons';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import { Header } from '../../Component/Header';
@@ -19,6 +19,15 @@ const Profile = () => {
   const [ConfirmPass, setConfirmPass] = useState('')
   const [userName, setUserName] = useState('')
   const [location, setLocation] = useState('')
+
+  const handleSuccess = () => {
+    navigation.dispatch(CommonActions.reset({
+      index: 0,
+      routes: [
+        { name: 'Authentication' },
+      ],
+    }))
+  }
 
   return (
     <Fragment>
@@ -76,7 +85,7 @@ const Profile = () => {
           </TouchableOpacity>
           <TouchableOpacity
             className='bg-gray-100 p-2 rounded-md my-2 items-center flex-row'
-            onPress={() => { }}
+            onPress={handleSuccess}
           >
             <MaterialIcons name="logout" size={24} color="red" />
             <Text className='text-base ml-2 text-red-400 font-[gothici-Bold]'>Logout</Text>

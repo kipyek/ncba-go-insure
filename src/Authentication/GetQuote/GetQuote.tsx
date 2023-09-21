@@ -33,34 +33,15 @@ const firstIndicatorStyles = {
 
 export default function GetQuote() {
   const [currentPage, setCurrentPage] = React.useState<number>(0);
-  const [nextPosition, setNextPosition] = React.useState<number>(currentPage + 1);
 
   const onStepPress = (position: number) => {
     setCurrentPage(position);
     console.log(currentPage)
   };
 
-  const onNextStepPress = () => {
-    setCurrentPage(1);
-  };
-  const onNextStepPressList = () => {
-    setCurrentPage(2);
-  };
-  const onNextStepPressSelection = () => {
-    setCurrentPage(3);
-  };
-  const onNextStepPressConfirm = () => {
-    setCurrentPage(4);
-  };
-  const renderViewPagerPage = (data: any) => {
-    return (
-      <View key={data} style={styles.page}>
-        <Text>{data}</Text>
-      </View>
-    );
-  };
-
-
+  const handleNextStep = () => {
+    setCurrentPage((i) => i + 1)
+  }
 
 
   return (
@@ -82,16 +63,16 @@ export default function GetQuote() {
 
       <View>
         {currentPage === 0 ?
-          <QuoteRequest onNextStepPress={() => onNextStepPress()} />
+          <QuoteRequest onNextStepPress={() => handleNextStep()} />
           :
           currentPage === 1 ?
-            <QuoteList onNextStepPressList={() => onNextStepPressList()} />
+            <QuoteList onNextStepPressList={() => handleNextStep()} />
             :
             currentPage === 2 ?
-              <BenefitSelection onNextStepPressSelection={() => onNextStepPressSelection()} />
+              <BenefitSelection onNextStepPressSelection={() => handleNextStep()} />
               :
               currentPage === 3 ?
-                <QuoteConfirm onNextStepPressConfirm={() => onNextStepPressConfirm()} />
+                <QuoteConfirm onNextStepPressConfirm={() => handleNextStep()} />
                 :
                 <QuoteFinish />
         }

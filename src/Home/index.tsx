@@ -13,6 +13,7 @@ import Profile from "./Profile";
 import Transaction from "./Transaction";
 import Claim from "./Claim";
 import ClaimForm from "./ClaimForm";
+import QuoteDetails from "./QuoteDetails";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -86,6 +87,7 @@ export const HomeNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Main" component={ManageStackScreens} />
       <Stack.Screen name="ClaimForm" component={ClaimForm} />
+      <Stack.Screen name="QuoteDetails" component={QuoteDetails} />
 
     </Stack.Navigator>
   )

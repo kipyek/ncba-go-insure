@@ -1,6 +1,6 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { Fragment, useState } from 'react'
-import { Cover } from '../../../DummyData/Data'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Fragment, useState } from 'react';
+import { Cover } from '../../../DummyData/Data';
 import { BottomModal, ModalContent } from 'react-native-modals';
 
 const QuoteList = ({ onNextStepPressList }: any) => {
@@ -17,6 +17,12 @@ const QuoteList = ({ onNextStepPressList }: any) => {
           <Text className='font-[gothici-Regular]'>Please review the quotes below from different insurers. Click "BUY" against your preferred insurer to add optional benefits.</Text>
         </View>
 
+        <View className='item-center bg-[#302A29] p-1 mt-4 w-32 ml-4 justify-end rounded-md '>
+          <TouchableOpacity onPress={() => setModalVisibles(true)}>
+            <Text className='text-center text-white font-["gothici-Bold"]'>Cover Summary</Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.card}>
           <View className='flex-row items-center'>
             <Image source={require("../../../assets/images/uap.jpg")} className='w-32 h-32' />
@@ -28,11 +34,7 @@ const QuoteList = ({ onNextStepPressList }: any) => {
                 <Text>184,828</Text>
 
               </View>
-              <View className='item-center bg-[#302A29] p-1 mt-4 rounded-md '>
-                <TouchableOpacity onPress={() => setModalVisibles(true)}>
-                  <Text className='text-center text-white font-["gothici-Bold"]'>Cover Summary</Text>
-                </TouchableOpacity>
-              </View>
+
 
             </View>
           </View>
