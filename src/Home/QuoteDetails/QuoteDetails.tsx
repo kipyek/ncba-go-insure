@@ -12,11 +12,16 @@ const QuoteDetails = () => {
     const navigation: any = useNavigation()
     const [visible, setVisible] = useState(false)
     const [show, setShow] = useState(true)
-    const [moves, setMoves] = useState(0)
+    const [moves, setMoves] = useState(1)
 
     const hideMenu = () => setVisible(false);
 
     const showMenu = () => setVisible(true);
+
+    const handleDocument = () => {
+        setMoves(0)
+        hideMenu()
+    }
 
     const handleQDetails = () => {
         setMoves(1)
@@ -26,6 +31,7 @@ const QuoteDetails = () => {
         setMoves(2)
         hideMenu()
     }
+
 
     return (
         <View>
@@ -46,7 +52,7 @@ const QuoteDetails = () => {
                     onRequestClose={hideMenu}
                     style={{}}
                 >
-                    {!show && <MenuItem onPress={() => hideMenu()}>UPLOAD DOCUMENTS</MenuItem>}
+                    {!show && <MenuItem onPress={() => handleDocument()}>UPLOAD DOCUMENTS</MenuItem>}
                     <MenuItem onPress={() => handleQDetails()} >QUOTE DETAILS</MenuItem>
                     {show && <MenuItem onPress={() => handlePayments()}>PAYMENTS</MenuItem>}
                 </Menu>

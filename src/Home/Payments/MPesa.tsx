@@ -1,13 +1,19 @@
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, TextInput } from 'react-native'
 import React, { useState } from 'react'
+import { Entypo } from "@expo/vector-icons"
 
 const MPesa = () => {
-
+    const [show, setShow] = useState(false);
     const [phone, setPhone] = useState('');
     const [amount, setAmount] = useState('')
     const api = "Q01721";
     const apiPaybill = "488496";
     const apiAmount = "62,842.00"
+
+
+    const handleToggling = () => {
+        setShow(!show)
+    }
     return (
         <ScrollView>
             <View className=' mb-40'>
@@ -43,16 +49,30 @@ const MPesa = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {/**Start Alternative */}
+                <TouchableOpacity
+                    onPress={() => handleToggling()}
+                    className='flex-row justify-between bg-gray-200 ml-4 mr-4 pl-1 pr-1'>
+                    <Text className='font-[gothici-Regular]'>Click here to see alternative</Text>
+                    {!show ?
+                        <Entypo name="chevron-small-up" size={24} color="black" />
+                        :
+                        <Entypo name="chevron-small-down" size={24} color="black" />
+                    }
+                </TouchableOpacity>
+                {/**End Alternative */}
                 {/**Paybill */}
-                <View style={styles.introCard}>
-                    <Text className='font-[gothici-Regular] mb-1'>Alternatively, follow the steps below:</Text>
-                    <Text className='font-[gothici-Regular] mb-1'>1. On M-Pesa menu, select<Text className='font-[gothici-Bold]'>Lipa na M-Pesa</Text></Text>
-                    <Text className='font-[gothici-Regular] mb-1'>2. Choose <Text className='font-[gothici-Bold]'>Paybill</Text></Text>
-                    <Text className='font-[gothici-Regular] mb-1'>3. Key in paybill number <Text className='font-[gothici-Bold]'>{apiPaybill}</Text></Text>
-                    <Text className='font-[gothici-Regular] mb-1'>4. Enter <Text className='font-[gothici-Bold]'>{api}</Text> as the account number</Text>
-                    <Text className='font-[gothici-Regular] mb-1'>5. Enter amount to pay (You are required to pay at least Kes <Text className='font-[gothici-Bold]'>{apiAmount}</Text> for your policy to be approved)</Text>
-                    <Text className='font-[gothici-Regular] mb-1'>6. Submit</Text>
-                </View>
+                {show &&
+                    <View style={styles.introCard}>
+                        <Text className='font-[gothici-Regular] mb-1'>Alternatively, follow the steps below:</Text>
+                        <Text className='font-[gothici-Regular] mb-1'>1. On M-Pesa menu, select<Text className='font-[gothici-Bold]'>Lipa na M-Pesa</Text></Text>
+                        <Text className='font-[gothici-Regular] mb-1'>2. Choose <Text className='font-[gothici-Bold]'>Paybill</Text></Text>
+                        <Text className='font-[gothici-Regular] mb-1'>3. Key in paybill number <Text className='font-[gothici-Bold]'>{apiPaybill}</Text></Text>
+                        <Text className='font-[gothici-Regular] mb-1'>4. Enter <Text className='font-[gothici-Bold]'>{api}</Text> as the account number</Text>
+                        <Text className='font-[gothici-Regular] mb-1'>5. Enter amount to pay (You are required to pay at least Kes <Text className='font-[gothici-Bold]'>{apiAmount}</Text> for your policy to be approved)</Text>
+                        <Text className='font-[gothici-Regular] mb-1'>6. Submit</Text>
+                    </View>
+                }
 
                 {/**Actions */}
                 <View className='ml-4 mr-4 mt-2 '>
