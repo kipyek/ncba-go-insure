@@ -7,6 +7,7 @@ import BenefitSelection from './BenefitSelection';
 import QuoteConfirm from './QuoteConfirm';
 import QuoteFinish from './QuoteFinish';
 import QuoteRequest from './QuoteRequest';
+import AuthCss from '../AuthCss';
 
 const PAGES = ['Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5'];
 
@@ -45,8 +46,8 @@ export default function GetQuote() {
 
 
   return (
-    <View style={styles.container}>
-      <View style={styles.stepIndicator}>
+    <View style={AuthCss.container}>
+      <View style={AuthCss.stepIndicator}>
         <StepIndicator
           customStyles={firstIndicatorStyles}
           currentPosition={currentPage}
@@ -93,19 +94,3 @@ export default function GetQuote() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  stepIndicator: {
-    marginTop: 50,
-    marginBottom: 20
-  },
-  page: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

@@ -6,6 +6,7 @@ import { Fontisto } from '@expo/vector-icons';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Moment from 'moment';
 import { api } from '../../Services';
+import AuthCss from '../AuthCss';
 
 const Register = () => {
   const navigation: any = useNavigation()
@@ -39,48 +40,48 @@ const Register = () => {
   }
 
   const handleConfirmEMail = () => {
-     Alert.alert('Welcome to NCBA Go Insure', 
-     'Thank you for your interest in NCBA Go Insure. Please check your email for a link to activate your account.Incase you have not received the confirmation email, click "Resend" below to send a new code', 
-     [
-    {
-      text: 'Cancel',
-      onPress: () => console.log('Cancel Pressed'),
-      style: 'cancel',
-    },
-    {text: 'Resend', onPress: () => console.log('OK Pressed')},
-  ]);
+    Alert.alert('Welcome to NCBA Go Insure',
+      'Thank you for your interest in NCBA Go Insure. Please check your email for a link to activate your account.Incase you have not received the confirmation email, click "Resend" below to send a new code',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'Resend', onPress: () => console.log('OK Pressed') },
+      ]);
   }
- 
+
 
 
   const handleRegistration = () => {
     const payload = {
-        "phoneNumber": "0718477952",
-        "emailAddress": "d.kipyek@gmail.com",
-        "firstName": "Kip",
-        "lastName": "Denis",
-        "gender": "string",
-        "idNumber": "36550053",
-        "password": "denis23",
-        "userType": 0,
-        "otherNames": "Kos",
-        "pin": "",
-        "dateOfBirth": "2023-09-18T06:49:39.468Z"
+      "phoneNumber": "0718477952",
+      "emailAddress": "d.kipyek@gmail.com",
+      "firstName": "Kip",
+      "lastName": "Denis",
+      "gender": "string",
+      "idNumber": "36550053",
+      "password": "denis23",
+      "userType": 0,
+      "otherNames": "Kos",
+      "pin": "",
+      "dateOfBirth": "2023-09-18T06:49:39.468Z"
     }
 
     api.post("Authentication/Register", payload)
-    .then(response => {
-      const data = response.data
-      console.log("All of the data",data)
-    }).catch(error => {
-      console.log("Error in",error.response)
-    })
+      .then(response => {
+        const data = response.data
+        console.log("All of the data", data)
+      }).catch(error => {
+        console.log("Error in", error.response)
+      })
   }
 
   return (
     <Fragment>
       <View className='flex-1'>
-        <View className='mt-14 ml-4' style={styles.card}>
+        <View className='mt-14 ml-4' style={AuthCss.card}>
           <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to NCBA Go Insure</Text>
           <Text className='font-["gothici-Regular"]'>Please register here</Text>
         </View>
@@ -247,42 +248,3 @@ const Register = () => {
 }
 
 export default Register
-
-const styles = StyleSheet.create({
-  radioButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 5,
-  },
-  selectedRadioButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 5,
-  },
-  unSelectedButton: {
-    backgroundColor: 'white',
-    borderColor: 'grey'
-  },
-  selectedButton: {
-    backgroundColor: 'blue',
-    borderColor: 'blue',
-  },
-  label: {
-    marginLeft: 10,
-  },
-  selectedLabel: {
-    marginLeft: 10,
-    fontWeight: 'bold', // Customize the selected button's label style
-  },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})

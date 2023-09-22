@@ -159,7 +159,7 @@ const ClaimForm = () => {
                         }
 
                         <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate("ClaimDocuments")}>
                                 <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT</Text>
                             </TouchableOpacity>
                         </View>

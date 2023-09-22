@@ -23,6 +23,7 @@ import { AppRoutes } from "./src/Component/Navigation";
 // App Screens
 import { HomeNavigator } from "./src/Home";
 import { AuthenticationNavigator } from "./src/Authentication";
+import Android from './src/Component/Android';
 
 // Init Routes
 const AppStack = createNativeStackNavigator<AppRoutes>();
@@ -32,7 +33,7 @@ const AuthPath = () => {
   return (
     <ThemeProvider {...{ theme }}>
       <LoadAssets {...{ fonts }}>
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#a06931' }}>
+        <SafeAreaView style={Android.AndroidSafeArea}>
           <AppStack.Navigator initialRouteName="Authentication" screenOptions={{ headerShown: false }}>
             <AppStack.Group>
               <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
@@ -51,7 +52,7 @@ const HomePath = () => {
   return (
     <ThemeProvider {...{ theme }}>
       <LoadAssets {...{ fonts }}>
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#a06931' }}>
+        <SafeAreaView style={Android.AndroidSafeArea}>
           <AppStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
             <AppStack.Screen name="Home" component={HomeNavigator} />
             <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />

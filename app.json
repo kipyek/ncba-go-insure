@@ -24,7 +24,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.pensoftlimited.ncbagoinsure",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"

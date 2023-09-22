@@ -294,5 +294,3 @@ const QuoteConfirm = ({ onNextStepPressConfirm }: any) => {
 }
 
 export default QuoteConfirm
-
-const styles = StyleSheet.create({})

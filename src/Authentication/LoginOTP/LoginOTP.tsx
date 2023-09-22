@@ -1,6 +1,7 @@
 import { Linking, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { CommonActions, useNavigation } from '@react-navigation/native'
+import AuthCss from '../AuthCss'
 
 const LoginOTP = () => {
   const navigation: any = useNavigation()
@@ -16,7 +17,7 @@ const LoginOTP = () => {
   }
   return (
     <View className='bg-white flex-1'>
-      <View className='mt-14 ml-4' style={styles.card}>
+      <View className='mt-14 ml-4' style={AuthCss.card}>
         <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to NCBA Go Insure</Text>
         <Text className='font-["gothici-Regular"]' style={{ fontSize: 12 }}>Enter your authenticator code sent to your phone number and email</Text>
       </View>
@@ -57,18 +58,4 @@ const LoginOTP = () => {
   )
 }
 
-export default LoginOTP
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})
+export default LoginOTP;

@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
+import AuthCss from '../AuthCss'
 
 const Help = () => {
   return (
     <View className='flex-1 bg-white'>
-      <Image source={require("../../../assets/images/ncba.png")} style={styles.image} />
-      <View style={styles.card}>
+      <Image source={require("../../../assets/images/ncba.png")} style={AuthCss.helpImage} />
+      <View style={AuthCss.card}>
         <Text className='mt-2 font-[gothici-Regular]'>Mara Rd. Upper-hill </Text>
         <Text className='mt-2 font-[gothici-Regular]'>P.O Box 44599-00100, Nairobi Kenya </Text>
         <Text className='mt-2 font-[gothici-Regular]'>Customer Contact Centre </Text>
@@ -23,23 +24,3 @@ const Help = () => {
 
 export default Help
 
-const styles = StyleSheet.create({
-  image: {
-    width: "100%",
-    height: '15%',
-    marginTop: 40,
-    backgroundColor: 'grey',
-
-  },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})

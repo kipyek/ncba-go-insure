@@ -1,6 +1,7 @@
-import { Linking, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Linking, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import AuthCss from '../AuthCss'
 
 const Login = () => {
   const navigation: any = useNavigation()
@@ -18,7 +19,7 @@ const Login = () => {
   };
   return (
     <View className='bg-white flex-1'>
-      <View className='mt-14 ml-4' style={styles.card}>
+      <View className='mt-14 ml-4' style={AuthCss.card}>
         <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to NCBA Go Insure</Text>
         <Text className='font-["gothici-Regular"]'>Login to your account</Text>
       </View>
@@ -67,18 +68,4 @@ const Login = () => {
   )
 }
 
-export default Login
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})
+export default Login;
