@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import CustomTabs from '../../Component/CustomTabs'
 import { Ipf, Mpesa, Ncba } from '../Payments';
+import HomeCss from '../HomeCss';
 
 const PaymentScreen = () => {
     const [tabSelected, setTabSelected] = useState(1);
@@ -13,7 +14,7 @@ const PaymentScreen = () => {
     const apiStatus = "NOT PAID"
     return (
         <View className=''>
-            <View style={styles.introCard} className='flex-row justify-between'>
+            <View style={HomeCss.introCard} className='flex-row justify-between'>
                 <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Quote details ({api})</Text>
                 <View className='bg-red-500 rounded-md p-1'>
                     <Text className='text-white font-[gothici-Bold]'>{apiStatus}</Text>
@@ -32,18 +33,4 @@ const PaymentScreen = () => {
     )
 }
 
-export default PaymentScreen
-
-const styles = StyleSheet.create({
-    introCard: {
-        backgroundColor: '#ffffff',
-        borderRadius: 10,
-        padding: 10,
-        margin: 10,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 4,
-    },
-})
+export default PaymentScreen;

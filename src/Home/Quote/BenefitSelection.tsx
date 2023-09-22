@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useState } from 'react';
+import HomeCss from '../HomeCss';
 
 const Additionals = [
   {
@@ -48,11 +49,11 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
     <View>
       <ScrollView>
         <View className='mb-52'>
-          <View style={styles.introCard}>
+          <View style={HomeCss.introCard}>
             <Text className='font-[gothici-Regular]'>Please review the details of your quote including the scope of the cover under Cover Summary. To buy the cover, click "NEXT"</Text>
           </View>
 
-          <View style={styles.card}>
+          <View style={HomeCss.card}>
             <View className='flex-row items-center'>
               <Image source={require("../../../assets/images/uap.jpg")} className='w-32 h-32' />
               <View className='w-48'>
@@ -133,29 +134,4 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
   )
 }
 
-export default BenefitSelection
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  introCard: {
-    backgroundColor: '#87CEEB',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})
+export default BenefitSelection;

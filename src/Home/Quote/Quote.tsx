@@ -8,6 +8,7 @@ import QuoteConfirm from './QuoteConfirm';
 import QuoteFinish from './QuoteFinish';
 import QuoteRequest from './QuoteRequest';
 import { Header } from '../../Component/Header';
+import HomeCss from '../HomeCss';
 
 const firstIndicatorStyles = {
   stepIndicatorSize: 30,
@@ -49,11 +50,11 @@ export default function Quote() {
 
 
   return (
-    <View style={styles.container}>
+    <View className='flex-1 bg-white'>
       <Header
         label={"Get Quote"}
       />
-      <View style={styles.stepIndicator}>
+      <View style={HomeCss.stepIndicator}>
         <StepIndicator
           customStyles={firstIndicatorStyles}
           currentPosition={currentPage}
@@ -84,35 +85,6 @@ export default function Quote() {
                 <QuoteFinish onNewQuote={handleNewQuote} />
         }
       </View>
-      {/* <Swiper
-        style={{ flexGrow: 1 }}
-        loop={false}
-        index={currentPage}
-        autoplay={false}
-        showsButtons
-        showsPagination={false}
-        onIndexChanged={(page) => {
-          setCurrentPage(page);
-        }}
-      >
-        {PAGES.map((page) => renderViewPagerPage(page))}
-      </Swiper> */}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  stepIndicator: {
-    marginTop: 10,
-    marginBottom: 20
-  },
-  page: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

@@ -37,6 +37,4 @@ const ExpiredPolicies = () => {
     )
 }
 
-export default ExpiredPolicies
-
-const styles = StyleSheet.create({})
+export default ExpiredPolicies;

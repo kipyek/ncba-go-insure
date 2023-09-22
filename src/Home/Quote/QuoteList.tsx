@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { Fragment, useState } from 'react';
 import { Cover } from '../../../DummyData/Data';
 import { BottomModal, ModalContent } from 'react-native-modals';
+import HomeCss from '../HomeCss';
 
 const QuoteList = ({ onNextStepPressList }: any) => {
   const [modalVisibles, setModalVisibles] = useState(false);
@@ -13,7 +14,7 @@ const QuoteList = ({ onNextStepPressList }: any) => {
   return (
     <Fragment>
       <View>
-        <View style={styles.introCard}>
+        <View style={HomeCss.introCard}>
           <Text className='font-[gothici-Regular]'>Please review the quotes below from different insurers. Click "BUY" against your preferred insurer to add optional benefits.</Text>
         </View>
 
@@ -23,7 +24,7 @@ const QuoteList = ({ onNextStepPressList }: any) => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.card}>
+        <View style={HomeCss.card}>
           <View className='flex-row items-center'>
             <Image source={require("../../../assets/images/uap.jpg")} className='w-32 h-32' />
             <View className='w-48'>
@@ -72,40 +73,4 @@ const QuoteList = ({ onNextStepPressList }: any) => {
   )
 }
 
-export default QuoteList
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  introCard: {
-    backgroundColor: '#87CEEB',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  warningCard: {
-    backgroundColor: 'red',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})
+export default QuoteList;

@@ -205,6 +205,4 @@ const CoverDetail = () => {
     )
 }
 
-export default CoverDetail
-
-const styles = StyleSheet.create({})
+export default CoverDetail;

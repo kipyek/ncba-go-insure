@@ -14,6 +14,4 @@ const ClaimDocuments = () => {
     )
 }
 
-export default ClaimDocuments
-
-const styles = StyleSheet.create({})
+export default ClaimDocuments;

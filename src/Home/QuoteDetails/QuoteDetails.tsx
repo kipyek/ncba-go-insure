@@ -75,5 +75,3 @@ const QuoteDetails = () => {
 }
 
 export default QuoteDetails
-
-const styles = StyleSheet.create({})

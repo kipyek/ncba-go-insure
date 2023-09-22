@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import React, { useState } from 'react'
 import DropDown from '../../Component/DropDown'
 import { Alert } from 'react-native';
+import HomeCss from '../HomeCss';
 const datas = [
   { label: 'First time', value: '1' },
   { label: 'Renewing', value: '2' },
@@ -44,7 +45,7 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
     <View className=''>
       <ScrollView >
         <View className=' mb-52'>
-          <View style={styles.introCard}>
+          <View style={HomeCss.introCard}>
             <Text className='font-[gothici-Regular]'>Please fill in the details below to generate a quotation</Text>
           </View>
 
@@ -170,18 +171,4 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
   )
 }
 
-export default QuoteRequest
-
-const styles = StyleSheet.create({
-  introCard: {
-    backgroundColor: '#87CEEB',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})
+export default QuoteRequest;

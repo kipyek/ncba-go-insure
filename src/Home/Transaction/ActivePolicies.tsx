@@ -37,6 +37,4 @@ const ActivePolicies = () => {
     )
 }
 
-export default ActivePolicies
-
-const styles = StyleSheet.create({})
+export default ActivePolicies;

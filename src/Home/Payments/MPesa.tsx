@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { Entypo } from "@expo/vector-icons"
+import HomeCss from '../HomeCss';
 
 const MPesa = () => {
     const [show, setShow] = useState(false);
@@ -18,7 +19,7 @@ const MPesa = () => {
         <ScrollView>
             <View className=' mb-40'>
                 {/**STK Push */}
-                <View style={styles.introCard}>
+                <View style={HomeCss.introCard}>
                     <Text className='text-[#666666] font-[gothici-Bold]'>You are required to pay at least Kes 62,842.00 for your policy to be approved</Text>
                     <View>
                         <Text className='mb-1 mt-3 font-[gothici-Regular]'>Enter your Mpesa phone number</Text>
@@ -63,7 +64,7 @@ const MPesa = () => {
                 {/**End Alternative */}
                 {/**Paybill */}
                 {show &&
-                    <View style={styles.introCard}>
+                    <View style={HomeCss.introCard}>
                         <Text className='font-[gothici-Regular] mb-1'>Alternatively, follow the steps below:</Text>
                         <Text className='font-[gothici-Regular] mb-1'>1. On M-Pesa menu, select<Text className='font-[gothici-Bold]'>Lipa na M-Pesa</Text></Text>
                         <Text className='font-[gothici-Regular] mb-1'>2. Choose <Text className='font-[gothici-Bold]'>Paybill</Text></Text>
@@ -89,18 +90,4 @@ const MPesa = () => {
     )
 }
 
-export default MPesa
-
-const styles = StyleSheet.create({
-    introCard: {
-        backgroundColor: '#87CEEB',
-        borderRadius: 10,
-        padding: 10,
-        margin: 10,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 4,
-    },
-})
+export default MPesa;

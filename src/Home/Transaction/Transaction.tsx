@@ -43,6 +43,4 @@ const Transaction = () => {
   )
 }
 
-export default Transaction
-
-const styles = StyleSheet.create({})
+export default Transaction;

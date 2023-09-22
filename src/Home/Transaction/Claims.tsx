@@ -37,6 +37,4 @@ const Claims = () => {
     )
 }
 
-export default Claims
-
-const styles = StyleSheet.create({})
+export default Claims;

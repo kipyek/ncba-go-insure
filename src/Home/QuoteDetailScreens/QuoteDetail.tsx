@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import HomeCss from '../HomeCss';
 
 const QuoteDetail = () => {
     return (
         <View className=' '>
-            <View style={styles.card}>
+            <View style={HomeCss.card}>
                 <View className='flex-row justify-between bg-[#F5F5F5] p-1 rounded-sm mt-1'>
                     <Text className='font-[gothici-Bold]' style={{ fontSize: 16 }}>Quote Number</Text>
                     <Text>Q01721</Text>
@@ -47,18 +48,4 @@ const QuoteDetail = () => {
     )
 }
 
-export default QuoteDetail
-
-const styles = StyleSheet.create({
-    card: {
-        backgroundColor: '#ffffff',
-        borderRadius: 10,
-        padding: 10,
-        margin: 10,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 4,
-    }
-})
+export default QuoteDetail;

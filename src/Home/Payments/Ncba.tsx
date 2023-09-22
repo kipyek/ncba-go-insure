@@ -1,11 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import HomeCss from '../HomeCss'
 
 const Ncba = () => {
     const api = "Q01721"
     return (
         <View>
-            <View style={styles.introCard}>
+            <View style={HomeCss.introCard}>
                 <Text className='font-[gothici-Bold] mb-3'>Pay from NCBA Account</Text>
                 <Text className='font-[gothici-Regular] mb-1'>Please follow the steps below:</Text>
                 <Text className='font-[gothici-Regular] mb-1'>1. Go to your NCBA NOW mobile banking app and log in.</Text>
@@ -28,18 +29,4 @@ const Ncba = () => {
     )
 }
 
-export default Ncba
-
-const styles = StyleSheet.create({
-    introCard: {
-        backgroundColor: '#87CEEB',
-        borderRadius: 10,
-        padding: 10,
-        margin: 10,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 4,
-    },
-})
+export default Ncba;
