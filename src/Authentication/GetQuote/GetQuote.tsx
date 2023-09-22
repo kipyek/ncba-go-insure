@@ -7,7 +7,6 @@ import BenefitSelection from './BenefitSelection';
 import QuoteConfirm from './QuoteConfirm';
 import QuoteFinish from './QuoteFinish';
 import QuoteRequest from './QuoteRequest';
-import Swiper from 'react-native-swiper';
 
 const PAGES = ['Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5'];
 
@@ -34,25 +33,15 @@ const firstIndicatorStyles = {
 
 export default function GetQuote() {
   const [currentPage, setCurrentPage] = React.useState<number>(0);
-  const [nextPosition, setNextPosition] = React.useState<number>(currentPage + 1);
 
   const onStepPress = (position: number) => {
     setCurrentPage(position);
     console.log(currentPage)
   };
 
-  const onNextStepPress = () => {
-    setCurrentPage(1);
-  };
-  const renderViewPagerPage = (data: any) => {
-    return (
-      <View key={data} style={styles.page}>
-        <Text>{data}</Text>
-      </View>
-    );
-  };
-
-
+  const handleNextStep = () => {
+    setCurrentPage((i) => i + 1)
+  }
 
 
   return (
@@ -74,16 +63,16 @@ export default function GetQuote() {
 
       <View>
         {currentPage === 0 ?
-          <QuoteRequest onNextStepPress={() => onNextStepPress()} />
+          <QuoteRequest onNextStepPress={() => handleNextStep()} />
           :
           currentPage === 1 ?
-            <QuoteList />
+            <QuoteList onNextStepPressList={() => handleNextStep()} />
             :
             currentPage === 2 ?
-              <BenefitSelection />
+              <BenefitSelection onNextStepPressSelection={() => handleNextStep()} />
               :
               currentPage === 3 ?
-                <QuoteConfirm />
+                <QuoteConfirm onNextStepPressConfirm={() => handleNextStep()} />
                 :
                 <QuoteFinish />
         }

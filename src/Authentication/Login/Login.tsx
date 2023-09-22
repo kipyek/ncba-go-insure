@@ -43,14 +43,14 @@ const Login = () => {
         />
 
         <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("LoginOTP")}>
             <Text className='text-center text-white font-["gothici-Bold"]'>LOGIN</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-6' >Not Registered? Click here to register</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
           <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4' >Forgot your password?</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("GetQuote")}>

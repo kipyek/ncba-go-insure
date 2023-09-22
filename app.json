@@ -2,6 +2,7 @@
   "expo": {
     "name": "ncba-go-insure",
     "slug": "ncba-go-insure",
+    "owner": "pensoft-limited",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,12 +20,25 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo1.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.pensoftlimited.ncbagoinsure",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "26c138bf-a960-4690-8d5c-cd36b02cebd5"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/26c138bf-a960-4690-8d5c-cd36b02cebd5"
     }
   }
 }

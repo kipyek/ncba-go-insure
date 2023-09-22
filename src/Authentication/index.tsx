@@ -8,6 +8,8 @@ import AuthHome from "./AuthHome/AuthHome";
 import Register from "./Register/Register";
 import Help from "./Help/Help";
 import GetQuote from "./GetQuote/GetQuote";
+import LoginOTP from "./LoginOTP";
+import ForgotPassword from "./ForgotPassword";
 
 
 // Stack Defination
@@ -23,6 +25,8 @@ export const AuthenticationNavigator = () => {
         <AuthenticationStack.Screen name="Register" component={Register} />
         <AuthenticationStack.Screen name="Help" component={Help} />
         <AuthenticationStack.Screen name="GetQuote" component={GetQuote} />
+        <AuthenticationStack.Screen name="LoginOTP" component={LoginOTP} />
+        <AuthenticationStack.Screen name="ForgotPassword" component={ForgotPassword} />
       </AuthenticationStack.Group>
     </AuthenticationStack.Navigator>
   );
@@ -36,6 +40,8 @@ export const RootNavigator = () => {
       <AuthenticationStack.Screen name="Register" component={Register} />
       <AuthenticationStack.Screen name="Help" component={Help} />
       <AuthenticationStack.Screen name="GetQuote" component={GetQuote} />
+      <AuthenticationStack.Screen name="LoginOTP" component={LoginOTP} />
+      <AuthenticationStack.Screen name="ForgotPassword" component={ForgotPassword} />
     </AuthenticationStack.Navigator>
   );
 };

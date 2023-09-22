@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import DropDown from '../../Component/DropDown'
+import { Alert } from 'react-native';
 const datas = [
   { label: 'First time', value: '1' },
   { label: 'Renewing', value: '2' },
@@ -18,14 +19,34 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
   const [values, setValues] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('')
+  const [windscreen, setWindScreen] = useState('')
+  const [eunit, setEunit] = useState('')
+  const [capacity, setCapacity] = useState('')
 
   const handleQuote = () => {
-    onNextStepPress()
-  }
+    onNextStepPress();
+    handleMorethan15()
+  };
+
+  const handleMorethan15 = () => {
+    Alert.alert('Warning!!', 
+    'We note that your vehicle is over 15 years old from the date of manufacture. Kindly note that Comprehensive covers are mostly issued for vehicles below 15 years of age unless the insurance is being renewed at the same insurer. To purchase comprehensive cover, please select your current insurer from the list on the next page, otherwise your cover may be downgraded to a third party cover.', 
+    [
+   {
+     text: 'Cancel',
+     onPress: () => console.log('Cancel Pressed'),
+     style: 'cancel',
+   },
+   {text: 'Send to my email', onPress: () => console.log('OK Pressed')},
+ ]);
+ }
   return (
-    <View>
-      <ScrollView>
-        <View className='mb-40 ml-2 mr-2'>
+    <View className=''>
+        <View style={styles.introCard}>
+        <Text className='font-[gothici-Regular]'>Please fill in the details below to generate a quotation</Text>
+      </View>
+      <ScrollView >
+        <View className='mb-80 ml-2 mr-2'>
           <Text className='mb-2 font-[gothici-Regular]'>Insuring for first time or renewing your cover?*</Text>
           <DropDown
             label={"label"}
@@ -98,6 +119,41 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
             placeholder=''
           />
 
+          {/** Logic need to change after adding apis */}
+          <Text className='mb-1 mt-3 font-[gothici-Regular]'>What is the value of windscreen?*</Text>
+              <TextInput
+            className='p-1 rounded-md flex-1'
+            style={{ borderWidth: 1 }}
+            onChangeText={text => setWindScreen(text)}
+            value={windscreen}
+            placeholder="50,000"
+            keyboardType="default"
+          />
+
+
+          <Text className='mb-1 mt-3 font-[gothici-Regular]'>What is the value of the entertainment unit?*</Text>
+       
+               <TextInput
+            className='p-1 rounded-md flex-1'
+            style={{ borderWidth: 1 }}
+            onChangeText={text => setEunit(text)}
+            value={eunit}
+            placeholder="30,000"
+            keyboardType="default"
+          />
+
+         <Text className='mb-1 mt-3 font-[gothici-Regular]'>Key in seating capacity of your vehicle</Text>
+       
+               <TextInput
+            className='p-1 rounded-md flex-1'
+            style={{ borderWidth: 1 }}
+            onChangeText={text => setCapacity(text)}
+            value={capacity}
+            placeholder="2"
+            keyboardType="default"
+          />
+         {/** End of Logic need to change after adding apis */}  
+
           <Text className='mb-1 mt-3 font-[gothici-Regular]'>Enter your email address*</Text>
           <TextInput
             className='p-1 rounded-md flex-1'
@@ -124,9 +180,6 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
             </TouchableOpacity>
           </View>
 
-
-
-
         </View>
       </ScrollView>
 
@@ -136,4 +189,16 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
 
 export default QuoteRequest
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  introCard: {
+    backgroundColor: '#87CEEB',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  }
+})

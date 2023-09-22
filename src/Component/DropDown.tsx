@@ -3,7 +3,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 const DropDown = ({ label, value, onchange, datas, placeholder }: any) => {
   return (
-    <View className='flex-1'>
+    <View className=''>
       <Dropdown
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
