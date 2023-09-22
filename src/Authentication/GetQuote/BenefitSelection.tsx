@@ -57,7 +57,7 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
             <View className='w-48'>
               <Text>UAP Insurance Company Ltd</Text>
               <Text >MOTOR PSV - SELF DRIVE COMPREHENSIVE</Text>
-              <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md '>
+              <View className='item-center bg-primary p-2 mt-4 rounded-md '>
                 <TouchableOpacity>
                   <Text className='text-center text-white font-["gothici-Bold"]'>SEND TO MY EMAIL</Text>
                 </TouchableOpacity>
@@ -110,12 +110,12 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
             </View>
 
             <View className='flex-row justify-between mt-10'>
-              <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md w-36'>
+              <View className='item-center bg-primary p-2 mt-4 rounded-md w-36'>
                 <TouchableOpacity >
                   <Text className='text-center text-white font-["gothici-Bold"]'>BACK</Text>
                 </TouchableOpacity>
               </View>
-              <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md w-36'>
+              <View className='item-center bg-primary p-2 mt-4 rounded-md w-36'>
                 <TouchableOpacity onPress={() => handleNext()} >
                   <Text className='text-center text-white font-["gothici-Bold"]'>NEXT</Text>
                 </TouchableOpacity>

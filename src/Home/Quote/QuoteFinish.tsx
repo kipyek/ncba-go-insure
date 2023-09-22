@@ -21,7 +21,7 @@ const QuoteFinish = ({ onNewQuote }: any) => {
               <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
             </TouchableOpacity>
           </View>
-          <View className='item-center bg-[#302A29] p-1 mt-4 rounded-md w-32'>
+          <View className='item-center bg-primary p-1 mt-4 rounded-md w-32'>
             <TouchableOpacity onPress={handleOnClick}>
               <Text className='text-center text-white font-["gothici-Bold"]'>NEW QUOTE</Text>
             </TouchableOpacity>

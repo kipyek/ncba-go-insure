@@ -43,7 +43,7 @@ const MPesa = () => {
                         />
                     </View>
 
-                    <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md w-24'>
+                    <View className='item-center bg-primary p-2 mt-4 rounded-md w-24'>
                         <TouchableOpacity>
                             <Text className='text-center text-white font-["gothici-Bold"]'>PAY</Text>
                         </TouchableOpacity>
@@ -77,7 +77,7 @@ const MPesa = () => {
                 {/**Actions */}
                 <View className='ml-4 mr-4 mt-2 '>
                     <Text className='font-[gothici-Regular]'>If you have already paid, confirm by clicking the button below:</Text>
-                    <View className='item-center bg-[#302A29] p-3 mt-4 rounded-md '>
+                    <View className='item-center bg-primary p-3 mt-4 rounded-md '>
                         <TouchableOpacity>
                             <Text className='text-center text-white font-["gothici-Bold"]'>CONFIRM PAYMENT</Text>
                         </TouchableOpacity>

@@ -156,7 +156,7 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
             />
             {/** End of Logic need to change after adding apis */}
 
-            <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
+            <View className='item-center bg-primary p-4 mt-4 rounded-md '>
               <TouchableOpacity onPress={() => handleQuote()}>
                 <Text className='text-center text-white font-["gothici-Bold"]'>GET QUOTE</Text>
               </TouchableOpacity>

@@ -216,7 +216,7 @@ const Register = () => {
               />
             </View>
 
-            <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
+            <View className='item-center bg-primary p-4 mt-4 rounded-md '>
               <TouchableOpacity onPress={handleConfirmEMail}>
                 <Text className='text-center text-white font-["gothici-Bold"]'>REGISTER</Text>
               </TouchableOpacity>
@@ -227,9 +227,9 @@ const Register = () => {
           <View className='ml-4 mr-4 mt-10'>
             <View className='flex-row'>
               <Text className='font-["gothici-Regular"]'>Already have an account?</Text>
-              <Text className='font-["gothici-Bold"] text-[#00BFFF]' onPress={() => navigation.navigate("Login")}> Please Login</Text>
+              <Text className='font-["gothici-Bold"] text-ncba1' onPress={() => navigation.navigate("Login")}> Please Login</Text>
             </View>
-            <Text className='mt-2 font-["gothici-Regular"] text-[#00BFFF]' onPress={() => navigation.navigate("GetQuote")}>Get Motor Quote</Text>
+            <Text className='mt-2 font-["gothici-Regular"] text-ncba1' onPress={() => navigation.navigate("GetQuote")}>Get Motor Quote</Text>
           </View>
         </ScrollView>
 

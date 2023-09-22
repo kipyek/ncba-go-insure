@@ -36,7 +36,7 @@ const ClaimComponent = ({ RNumber, CNumber, PNumber, CDate, PType, RLocation, St
                         <Text>{Status}</Text>
                     </View>
 
-                    <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md '>
+                    <View className='item-center bg-primary p-2 mt-4 rounded-md '>
                         <TouchableOpacity onPress={() => { }}>
                             <Text className='text-center text-white font-["gothici-Bold"]'>DETAILS</Text>
                         </TouchableOpacity>

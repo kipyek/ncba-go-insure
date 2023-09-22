@@ -12,7 +12,7 @@ const Claim = () => {
         label="Claims"
 
       />
-      <View className='item-center bg-[#302A29] p-4 rounded-md '>
+      <View className='item-center bg-primary p-4 rounded-md '>
         <TouchableOpacity onPress={() => navigation.navigate("ClaimForm")}>
           <Text className='text-center text-white font-["gothici-Bold"]'>Click Here to Book a Claim</Text>
         </TouchableOpacity>

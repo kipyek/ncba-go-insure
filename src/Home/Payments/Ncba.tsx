@@ -17,7 +17,7 @@ const Ncba = () => {
             </View>
             <View className='ml-4 mr-4 mt-2 '>
                 <Text className='font-[gothici-Regular]'>If you have already paid, confirm by clicking the button below:</Text>
-                <View className='item-center bg-[#302A29] p-3 mt-4 rounded-md '>
+                <View className='item-center bg-primary p-3 mt-4 rounded-md '>
                     <TouchableOpacity>
                         <Text className='text-center text-white font-["gothici-Bold"]'>CONFIRM PAYMENT</Text>
                     </TouchableOpacity>

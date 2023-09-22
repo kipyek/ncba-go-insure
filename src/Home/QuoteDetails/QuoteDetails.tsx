@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { Header } from '../../Component/Header';
 import { Feather } from '@expo/vector-icons';
@@ -11,7 +11,7 @@ import DocScreen from './DocScreen';
 const QuoteDetails = () => {
     const navigation: any = useNavigation()
     const [visible, setVisible] = useState(false)
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(true)
     const [moves, setMoves] = useState(1)
 
     const hideMenu = () => setVisible(false);
@@ -36,11 +36,12 @@ const QuoteDetails = () => {
     return (
         <View className='flex-1'>
             <Header
-                label={moves === 2 ? "Payments" : "Quote Details"}
+                label={moves === 2 ? "Payments" : moves === 1 ? "Quote Details" : "Upload Documents"}
                 rightButton={{
                     child: <Feather
                         name="more-vertical"
-                        size={24} color="black"
+                        size={24}
+                        color="black"
                         onPress={() => showMenu()}
                     />
                 }}

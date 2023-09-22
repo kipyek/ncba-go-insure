@@ -43,7 +43,7 @@ const Login = () => {
           keyboardType="default"
         />
 
-        <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
+        <View className='item-center bg-primary p-4 mt-4 rounded-md '>
           <TouchableOpacity onPress={() => navigation.navigate("LoginOTP")}>
             <Text className='text-center text-white font-["gothici-Bold"]'>LOGIN</Text>
           </TouchableOpacity>

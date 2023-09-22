@@ -38,12 +38,12 @@ const LoginOTP = () => {
         </View>
 
         <View className='flex-row justify-between'>
-          <View className='item-center bg-[#302A29] p-2 mt-3 rounded-md w-32'>
+          <View className='item-center bg-primary p-2 mt-3 rounded-md w-32'>
             <TouchableOpacity onPress={() => navigation.navigate("LoginOTP")}>
               <Text className='text-center text-white font-["gothici-Bold"]'>RESEND</Text>
             </TouchableOpacity>
           </View>
-          <View className='item-center bg-[#302A29] p-3 mt-2 rounded-md w-32'>
+          <View className='item-center bg-primary p-3 mt-2 rounded-md w-32'>
             <TouchableOpacity onPress={() => handleSuccess()}>
               <Text className='text-center text-white font-["gothici-Bold"]'>VERIFY</Text>
             </TouchableOpacity>

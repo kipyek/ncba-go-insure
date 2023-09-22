@@ -18,7 +18,7 @@ const QuoteList = ({ onNextStepPressList }: any) => {
           <Text className='font-[gothici-Regular]'>Please review the quotes below from different insurers. Click "BUY" against your preferred insurer to add optional benefits.</Text>
         </View>
 
-        <View className='item-center bg-[#302A29] p-1 mt-4 w-32 ml-4 justify-end rounded-md '>
+        <View className='item-center bg-primary p-1 mt-4 w-32 ml-4 justify-end rounded-md '>
           <TouchableOpacity onPress={() => setModalVisibles(true)}>
             <Text className='text-center text-white font-["gothici-Bold"]'>Cover Summary</Text>
           </TouchableOpacity>
@@ -41,7 +41,7 @@ const QuoteList = ({ onNextStepPressList }: any) => {
           </View>
 
 
-          <View className='item-center bg-[#302A29] p-3 mt-4 rounded-md '>
+          <View className='item-center bg-primary p-3 mt-4 rounded-md '>
             <TouchableOpacity onPress={handleQuoteList}>
               <Text className='text-center text-white font-["gothici-Bold"]'>BUY</Text>
             </TouchableOpacity>
