@@ -49,5 +49,5 @@ export type HomeRoutes = {
   Claim: any;
   ClaimForm: any;
   QuoteDetails: any;
-  ClaimDocuments: any
+  ClaimDocuments: any;
 }
