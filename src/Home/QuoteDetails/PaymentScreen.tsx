@@ -10,11 +10,18 @@ const PaymentScreen = () => {
         setTabSelected(value)
     }
 
-    const api = "Q01721"
-    const apiStatus = "NOT PAID"
+    const api = "Q01721";
+    const apiStatus = "NOT PAID";
+    const apiAmount = "184,828.00"
     return (
-        <View className=''>
-            <View style={HomeCss.introCard} className='flex-row justify-between'>
+        <View>
+            {/**Amount */}
+            <View style={HomeCss.introCard} className='mt-1 mb-0'>
+                <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Total premium: Kes {apiAmount}
+                </Text>
+            </View>
+            {/**Quote Card */}
+            <View style={HomeCss.introCard} className='flex-row justify-between mt-1'>
                 <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Quote details ({api})</Text>
                 <View className='bg-red-500 rounded-md p-1'>
                     <Text className='text-white font-[gothici-Bold]'>{apiStatus}</Text>

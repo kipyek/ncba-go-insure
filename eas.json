@@ -6,7 +6,7 @@
     "dev": {
       "channel": "dev",
       "android": {
-        "buildType": "apk",
+        "buildType": "app-bundle",
         "autoIncrement": true
       },
       "ios": {}

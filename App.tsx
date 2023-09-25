@@ -24,6 +24,7 @@ import { AppRoutes } from "./src/Component/Navigation";
 import { HomeNavigator } from "./src/Home";
 import { AuthenticationNavigator } from "./src/Authentication";
 import Android from './src/Component/Android';
+import { StatusBar } from 'expo-status-bar';
 
 // Init Routes
 const AppStack = createNativeStackNavigator<AppRoutes>();
@@ -58,6 +59,7 @@ const HomePath = () => {
             <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
           </AppStack.Navigator>
           <ModalPortal />
+
         </SafeAreaView>
       </LoadAssets>
     </ThemeProvider>

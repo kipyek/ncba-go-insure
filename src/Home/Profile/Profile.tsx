@@ -5,6 +5,7 @@ import { MaterialIcons, Feather } from '@expo/vector-icons';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import { Header } from '../../Component/Header';
 import { Button } from '@rneui/themed';
+import { StatusBar } from 'expo-status-bar';
 
 const Profile = () => {
   const navigation: any = useNavigation();
@@ -32,6 +33,7 @@ const Profile = () => {
   return (
     <Fragment>
       <View className='flex-1 bg-white'>
+        <StatusBar backgroundColor='#87CEEB' />
         <Header
           label="Profile"
         />

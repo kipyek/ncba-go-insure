@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import { Header } from '../../Component/Header'
 import { useNavigation } from '@react-navigation/native'
 import HomeCss from '../HomeCss'
+import { StatusBar } from 'expo-status-bar'
 
 
 const Claim = () => {
   const navigation: any = useNavigation();
   return (
     <View className='flex-1'>
+      <StatusBar backgroundColor='#87CEEB' />
       <Header
         label="Claims"
 

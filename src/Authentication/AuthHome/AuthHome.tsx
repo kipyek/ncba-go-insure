@@ -2,11 +2,13 @@ import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import AuthCss from '../AuthCss'
+import { StatusBar } from 'expo-status-bar'
 
 const AuthHome = () => {
   const navigation: any = useNavigation()
   return (
     <View className='flex-1 bg-white'>
+      <StatusBar backgroundColor='#87CEEB' />
       <Image source={location[0]} style={AuthCss.image} />
       <View className='ml-3 mr-3 flex-1'>
         <View className='item-center bg-primary mt-20 p-4 rounded-md'>

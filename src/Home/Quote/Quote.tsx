@@ -9,6 +9,7 @@ import QuoteFinish from './QuoteFinish';
 import QuoteRequest from './QuoteRequest';
 import { Header } from '../../Component/Header';
 import HomeCss from '../HomeCss';
+import { StatusBar } from 'expo-status-bar';
 
 const firstIndicatorStyles = {
   stepIndicatorSize: 30,
@@ -51,6 +52,7 @@ export default function Quote() {
 
   return (
     <View className='flex-1 bg-white'>
+      <StatusBar backgroundColor='#87CEEB' />
       <Header
         label={"Get Quote"}
       />

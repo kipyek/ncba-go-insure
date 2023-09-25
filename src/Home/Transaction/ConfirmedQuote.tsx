@@ -1,10 +1,14 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { TextInput, View } from 'react-native'
 import React from 'react'
 import CQuote from '../../Component/CQuote'
+import { StatusBar } from 'expo-status-bar'
+import { useNavigation } from '@react-navigation/native'
 
 const ConfirmedQuote = () => {
+    const navigation: any = useNavigation();
     return (
         <View className='flex-1'>
+            <StatusBar backgroundColor='#87CEEB' />
             <View className='mr-4 ml-4 mt-2'>
                 <TextInput
                     style={{
@@ -32,6 +36,7 @@ const ConfirmedQuote = () => {
                 Gross={"Kes 20,090.00"}
                 Amount={"Kes 0.00"}
                 Oustanding={"Kes 20,090.00"}
+                onPress={() => navigation.navigate("QuoteDetails")} //It should have id of particular details
             />
         </View>
     )
