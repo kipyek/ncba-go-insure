@@ -80,7 +80,7 @@ const DocScreen = () => {
                             <View style={HomeCss.container1}>
                                 {importDoc && <Image source={{ uri: importDoc }} style={{ width: 400, height: 100 }} />}
                                 <View style={HomeCss.uploadBtnContainer1}>
-                                    <TouchableOpacity onPress={() => { }} style={HomeCss.uploadBtn} >
+                                    <TouchableOpacity onPress={pickImage1} style={HomeCss.uploadBtn} >
                                         <Text className='font-[gothici-Regular]'>Upload Logbook or Import Documents</Text>
                                         <AntDesign name="plus" size={20} color="black" />
                                     </TouchableOpacity>
@@ -105,7 +105,7 @@ const DocScreen = () => {
                         <View style={HomeCss.container1}>
                             <View style={HomeCss.uploadBtnContainer1}>
                                 {kra && <Image source={{ uri: kra }} style={{ width: 400, height: 100 }} />}
-                                <TouchableOpacity onPress={() => { }} style={HomeCss.uploadBtn} >
+                                <TouchableOpacity onPress={pickImage2} style={HomeCss.uploadBtn} >
                                     <Text className='font-[gothici-Regular]'>Copy of KRA PIN</Text>
                                     <AntDesign name="plus" size={20} color="black" />
                                 </TouchableOpacity>
