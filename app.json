@@ -20,11 +20,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo1.png",
+        "foregroundImage": "./assets/images/logo3.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.pensoftlimited.ncbagoinsure",
-      "versionCode": 5
+      "permissions": [
+        "CAMERA"
+      ],
+      "versionCode": 8
     },
     "web": {
       "favicon": "./assets/favicon.png"

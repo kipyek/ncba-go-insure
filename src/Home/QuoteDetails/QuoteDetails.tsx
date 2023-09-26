@@ -11,7 +11,7 @@ import DocScreen from './DocScreen';
 const QuoteDetails = () => {
     const navigation: any = useNavigation()
     const [visible, setVisible] = useState(false)
-    const [show, setShow] = useState(true)
+    const [show, setShow] = useState(false)
     const [moves, setMoves] = useState(1)
 
     const hideMenu = () => setVisible(false);

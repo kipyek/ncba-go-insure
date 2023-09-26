@@ -22,6 +22,7 @@
     "expo": "~48.0.10",
     "expo-app-loading": "^2.1.1",
     "expo-clipboard": "~4.1.2",
+    "expo-image-picker": "~14.1.1",
     "expo-status-bar": "~1.4.4",
     "expo-system-ui": "~2.2.1",
     "expo-updates": "~0.16.4",
