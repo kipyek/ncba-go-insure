@@ -17,7 +17,7 @@ const Additionals = [
   },
 ]
 
-const BenefitSelection = ({ onNextStepPressSelection }: any) => {
+const BenefitSelection = ({ onNextStepPressSelection, handleBackStep }: any) => {
   const [total, setTotal] = useState(0);
   const [checkedState, setCheckedState] = useState(
     new Array(Additionals.length).fill(false)
@@ -25,6 +25,10 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
   const handleNext = () => {
     onNextStepPressSelection()
   };
+
+  const handleBack = () => {
+    handleBackStep()
+  }
 
   const handleOptional = (position: any) => {
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -113,7 +117,7 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
 
               <View className='flex-row justify-between mt-10'>
                 <View className='item-center bg-primary p-2 mt-4 rounded-md w-36'>
-                  <TouchableOpacity >
+                  <TouchableOpacity onPress={handleBack}>
                     <Text className='text-center text-white font-["gothici-Bold"]'>BACK</Text>
                   </TouchableOpacity>
                 </View>
