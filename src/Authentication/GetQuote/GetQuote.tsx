@@ -85,19 +85,6 @@ export default function GetQuote() {
                 <QuoteFinish onStart={() => handleNewQuote()} />
         }
       </View>
-      {/* <Swiper
-        style={{ flexGrow: 1 }}
-        loop={false}
-        index={currentPage}
-        autoplay={false}
-        showsButtons
-        showsPagination={false}
-        onIndexChanged={(page) => {
-          setCurrentPage(page);
-        }}
-      >
-        {PAGES.map((page) => renderViewPagerPage(page))}
-      </Swiper> */}
     </View>
   );
 }

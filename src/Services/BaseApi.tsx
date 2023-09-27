@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const dev = 'https://62.12.115.55:6004/api/';
+const dev = 'https://definiteportal.pensoft.co.ke/api/';
 const qa = '';
 const prod = '';
 

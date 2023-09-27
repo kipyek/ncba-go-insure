@@ -36,6 +36,7 @@ export type AuthenticationRoutes = {
   GetQuote: any;
   LoginOTP: any;
   ForgotPassword: any;
+  RegisterOTP: any;
 
 };
 
