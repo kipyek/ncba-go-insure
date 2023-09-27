@@ -49,6 +49,7 @@ const BenefitSelection = ({ onNextStepPressSelection, handleBackStep }: any) => 
 
     setTotal(totalPrice);
   };
+
   return (
     <View>
       <ScrollView>

@@ -43,6 +43,9 @@ export default function GetQuote() {
   const handleNextStep = () => {
     setCurrentPage((i) => i + 1)
   }
+  const handleBackStep = () => {
+    setCurrentPage((i) => i - 1)
+  }
 
 
   return (
@@ -70,10 +73,10 @@ export default function GetQuote() {
             <QuoteList onNextStepPressList={() => handleNextStep()} />
             :
             currentPage === 2 ?
-              <BenefitSelection onNextStepPressSelection={() => handleNextStep()} />
+              <BenefitSelection onNextStepPressSelection={() => handleNextStep()} onBackStep={() => handleBackStep()} />
               :
               currentPage === 3 ?
-                <QuoteConfirm onNextStepPressConfirm={() => handleNextStep()} />
+                <QuoteConfirm onNextStepPressConfirm={() => handleNextStep()} onBackStep={() => handleBackStep()} />
                 :
                 <QuoteFinish />
         }

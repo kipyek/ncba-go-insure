@@ -58,9 +58,9 @@ const QuoteList = ({ onNextStepPressList }: any) => {
       >
         <ModalContent>
           <View style={{ borderWidth: 1, width: 50, alignSelf: 'center', marginBottom: 12, borderColor: 'gray' }} />
-          <View>
+          <View >
             {Cover.map(i =>
-              <View>
+              <View key={i.title}>
                 <Text className='text-center mt-1 mb-1 font-[gothici-Bold]'>{i.title}</Text>
                 <Text>{i.body}</Text>
               </View>

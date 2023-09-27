@@ -12,7 +12,7 @@ const data = [
   { label: 'Car Insurance', value: '4' },
 ];
 
-const QuoteConfirm = ({ onNextStepPressConfirm }: any) => {
+const QuoteConfirm = ({ onNextStepPressConfirm, onBackStep }: any) => {
   const [number, setNumber] = useState("");
   const [value, setValue] = useState('')
   const [date, setDate] = useState(null);
@@ -60,6 +60,10 @@ const QuoteConfirm = ({ onNextStepPressConfirm }: any) => {
 
   const handleNext = () => {
     onNextStepPressConfirm()
+  }
+
+  const handleBack = () => {
+    onBackStep()
   }
 
 
@@ -255,7 +259,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm }: any) => {
             {/**Buttons */}
             <View className='flex-row justify-between'>
               <View className='item-center bg-primary p-2 mt-3 rounded-md w-32'>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleBack}>
                   <Text className='text-center text-white font-["gothici-Bold"]'>BACK</Text>
                 </TouchableOpacity>
               </View>
