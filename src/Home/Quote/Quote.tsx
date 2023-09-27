@@ -71,7 +71,7 @@ export default function Quote() {
             'Quote Confirmation',
             'Finish',]}
           renderLabel={renderLabel}
-          onPress={onStepPress}
+        //onPress={onStepPress}
         />
       </View>
 

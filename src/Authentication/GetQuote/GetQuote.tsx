@@ -47,6 +47,10 @@ export default function GetQuote() {
     setCurrentPage((i) => i - 1)
   }
 
+  const handleNewQuote = () => {
+    setCurrentPage(0);
+  };
+
 
   return (
     <View style={AuthCss.container}>
@@ -61,7 +65,7 @@ export default function GetQuote() {
             'Quote Confirmation',
             'Finish',]}
           renderLabel={renderLabel}
-          onPress={onStepPress}
+        // onPress={onStepPress}
         />
       </View>
 
@@ -78,7 +82,7 @@ export default function GetQuote() {
               currentPage === 3 ?
                 <QuoteConfirm onNextStepPressConfirm={() => handleNextStep()} onBackStep={() => handleBackStep()} />
                 :
-                <QuoteFinish />
+                <QuoteFinish onStart={() => handleNewQuote()} />
         }
       </View>
       {/* <Swiper

@@ -11,6 +11,7 @@ const QuoteList = ({ onNextStepPressList }: any) => {
   const handleQuoteList = () => {
     onNextStepPressList()
   }
+
   return (
     <Fragment>
       <View>
