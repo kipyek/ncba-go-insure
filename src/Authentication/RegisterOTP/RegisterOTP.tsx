@@ -9,27 +9,19 @@ import { api } from '../../Services'
 const validationSchema = Yup.object().shape({
     code: Yup
         .string()
-        .required('Surname is required'),
+        .required('Code is required'),
 });
 
-const RegisterOTP = () => {
+const RegisterOTP = ({ route }: any) => {
+    const { item } = route.params
+    console.log("Registration email", item)
     const navigation: any = useNavigation()
-    const [code, setCode] = useState('')
     const [isLoading, setisLoading] = useState(false)
-
-    const handleSuccess = () => {
-        navigation.dispatch(CommonActions.reset({
-            index: 0,
-            routes: [
-                { name: 'Home' },
-            ],
-        }))
-    }
 
     const handleRegisterOTP = (values: any) => {
         setisLoading(true)
         const payload = {
-            "Email": "d.kipyek@gmail.com",
+            "Email": item,
             "OTP": values.code
         }
         console.log(payload)
@@ -37,12 +29,13 @@ const RegisterOTP = () => {
         api.post("authentication/VerifyAccount", payload)
             .then(response => {
                 const data = response.data
-                alert(data.message)
-                setisLoading(false)
+                navigation.navigate("Login")
+                //alert(data.message)
             }).catch(error => {
                 console.log("Error in", error.response)
+            }).finally(() =>
                 setisLoading(false)
-            })
+            )
     }
     return (
         <View className='bg-white flex-1'>

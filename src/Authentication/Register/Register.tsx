@@ -96,11 +96,12 @@ const Register = () => {
       api.post("authentication/SignUp", payload)
         .then(response => {
           const data = response.data
-          alert(data.message)
-          navigation.navigate("RegisterOTP")
-          setisLoading(false)
+          const email = data.body
+          //alert(data.message)
+          navigation.navigate("RegisterOTP", { item: email })
         }).catch(error => {
-          console.log("Error in", error.response)
+          alert(error.response.data.message)
+        }).finally(() => {
           setisLoading(false)
         })
     } else {
@@ -159,7 +160,7 @@ const Register = () => {
                           onChangeText={handleChange("sname")}
                           onBlur={handleBlur("sname")}
                           placeholder="Enter Surname"
-                          keyboardType="default"
+                          keyboardType="visible-password"
                         />
                         {errors && <Text className='text-red-400 font-light'>{errors.sname}</Text>}
                       </View>
@@ -171,7 +172,7 @@ const Register = () => {
                           onChangeText={handleChange("fname")}
                           onBlur={handleBlur("fname")}
                           placeholder="Enter first name"
-                          keyboardType="default"
+                          keyboardType="visible-password"
                         />
                         {errors && <Text className='text-red-400 font-light'>{errors.fname}</Text>}
                       </View>
@@ -180,17 +181,17 @@ const Register = () => {
 
 
                     <TextInput
-                      className='p-1 rounded-md mt-2'
+                      className='p-1 rounded-md mt-2 mb-3'
                       style={{ borderWidth: 1 }}
                       onChangeText={handleChange("otherName")}
                       onBlur={handleBlur("otherName")}
                       placeholder="Enter your other names"
-                      keyboardType="default"
+                      keyboardType="visible-password"
                     />
                     {selectedOption === 'customer' ?
-                      <View className='flex-row item-center gap-1 mt-2'>
+                      <View className='flex-row item-center gap-1 mt-2 mb-4'>
                         <TextInput
-                          className='p-1 rounded-md flex-1'
+                          className='p-1 rounded-md flex-1 '
                           style={{ borderWidth: 1 }}
                           onChangeText={handleChange("nationalId")}
                           onBlur={handleBlur("nationalId")}
@@ -230,7 +231,7 @@ const Register = () => {
                         onChangeText={handleChange("email")}
                         onBlur={handleBlur("email")}
                         placeholder="Enter your email"
-                        keyboardType="default"
+                        keyboardType="visible-password"
                       />
                       {errors ? <Text className='text-red-400 font-light'>{errors.email}</Text> : <Text></Text>}
                     </View>
@@ -242,7 +243,7 @@ const Register = () => {
                         onChangeText={handleChange("phone")}
                         onBlur={handleBlur("phone")}
                         placeholder="07XXXXXXXX"
-                        keyboardType="default"
+                        keyboardType="visible-password"
                       />
                       {errors ? <Text className='text-red-400 font-light'>{errors.phone}</Text> : null}
                     </View>
@@ -258,7 +259,7 @@ const Register = () => {
                     </View>
 
 
-                    <View className='flex-row item-center gap-1 mt-2'>
+                    <View className='flex-row item-center gap-1 mt-4'>
                       <View className='flex-1'>
                         <TextInput
                           className='p-1 rounded-md'
@@ -266,7 +267,7 @@ const Register = () => {
                           onChangeText={handleChange("password")}
                           onBlur={handleBlur("password")}
                           placeholder="Type your password"
-                          keyboardType="default"
+                          keyboardType="visible-password"
                         />
                         {errors ? <Text className='text-red-400 font-light'>{errors.password}</Text> : <Text></Text>}
                       </View>
@@ -278,7 +279,7 @@ const Register = () => {
                           onChangeText={handleChange("pass")}
                           onBlur={handleBlur("pass")}
                           placeholder="Confirm password"
-                          keyboardType="default"
+                          keyboardType="visible-password"
                         />
                         {errors ? <Text className='text-red-400 font-light'>{errors.pass}</Text> : <Text></Text>}
                       </View>
@@ -320,6 +321,8 @@ const Register = () => {
         pickerContainerStyleIOS={{ justifyContent: "center", paddingHorizontal: 150 }}
         onConfirm={handleConfirmDate}
         onCancel={hideDatePicker}
+      // minimumDate={new Date()}
+      //maximumDate={new Date(new Date().getTime() - (14 * 24 * 60 * 60 * 1000))}
       />
     </Fragment>
 
