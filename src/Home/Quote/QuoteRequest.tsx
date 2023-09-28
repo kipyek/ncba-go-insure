@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import DropDown from '../../Component/DropDown'
 import { Alert } from 'react-native';
 import HomeCss from '../HomeCss';
+import { api } from '../../Services';
 const datas = [
   { label: 'First time', value: '1' },
-  { label: 'Renewing', value: '2' },
+  { label: 'Renewal', value: '2' },
 ];
 
 const data = [
@@ -16,13 +17,11 @@ const data = [
 ];
 
 const QuoteRequest = ({ onNextStepPress }: any) => {
-  const [value, setValue] = useState('');
-  const [values, setValues] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('')
-  const [windscreen, setWindScreen] = useState('')
-  const [eunit, setEunit] = useState('')
-  const [capacity, setCapacity] = useState('')
+  const [value, setValue] = useState(null);
+  const [windscreen, setWindScreen] = useState('');
+  const [eunit, setEunit] = useState('');
+  const [capacity, setCapacity] = useState('');
+  const [dateRange, setDateRange] = useState([])
 
   const handleQuote = () => {
     onNextStepPress();
@@ -41,6 +40,51 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
         { text: 'Send to my email', onPress: () => console.log('OK Pressed') },
       ]);
   }
+
+  const handleGenerateYears = () => {
+    const currentYear = new Date().getFullYear();
+    const years40YearsAgo: any = [];
+
+    for (let year = currentYear - 34; year < currentYear; year++) {
+      years40YearsAgo.push({ year: (year + 1).toString(), value: years40YearsAgo.length + 1 });
+    }
+    const reverse = years40YearsAgo.reverse()
+    setDateRange(reverse)
+
+  }
+
+  const handleCoverType = () => {
+    api.get("https://ncbadigitalapi.pensoft.co.ke/api/Common/CoverTypes")
+      .then(response => {
+        const data = response.data
+        console.log(data)
+      }).catch(error => {
+        console.log(error.response?.data?.message)
+      })
+  }
+
+
+  const handleMotorType = () => {
+    api.get("https://ncbadigitalapi.pensoft.co.ke/api/Common/ProductClasses")
+      .then(response => {
+        const data = response.data
+        console.log(data)
+      }).catch(error => {
+        console.log(error.response?.data?.message)
+      })
+  }
+
+  const handleMake = () => {
+    api.get("https://ncbadigitalapi.pensoft.co.ke/api/MotorQuotes/Makes")
+      .then(response => {
+        const data = response.data
+        console.log(data)
+      }).catch(error => {
+        console.log(error.response?.data?.message)
+      })
+  }
+
+
   return (
     <View className=''>
       <ScrollView >
@@ -106,10 +150,10 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
 
             <Text className='mb-1 mt-3 font-[gothici-Regular]'>What is the year of manufacture?*</Text>
             <DropDown
-              label={"label"}
-              value={"value"}
-              onchange={(item: any) => setValue(item?.value)}
-              datas={data}
+              label={"year"}
+              value={"year"}
+              onchange={(item: any) => setValue(item?.year)}
+              datas={dateRange}
               placeholder='---Select year of manufacture---'
             />
 
@@ -158,7 +202,7 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
             {/** End of Logic need to change after adding apis */}
 
             <View className='item-center bg-primary p-4 mt-4 rounded-md '>
-              <TouchableOpacity onPress={() => handleQuote()}>
+              <TouchableOpacity onPress={() => handleMake()}>
                 <Text className='text-center text-white font-["gothici-Bold"]'>GET QUOTE</Text>
               </TouchableOpacity>
             </View>
