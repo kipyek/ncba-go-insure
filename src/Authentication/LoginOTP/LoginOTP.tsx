@@ -10,7 +10,7 @@ const validationSchema = Yup.object().shape({
   code: Yup
     .string()
     .required('Code is required')
-    .trim()
+    .trim(),
 })
 
 const LoginOTP = ({ route }: any) => {
@@ -64,7 +64,7 @@ const LoginOTP = ({ route }: any) => {
           errors,
           handleSubmit,
         }) => (
-          <View className='mr-2 ml-2 mt-10'>
+          <View className='mr-4 ml-4 mt-10'>
             <TextInput
               className='p-1 rounded-md '
               style={{ borderWidth: 1 }}
