@@ -5,6 +5,7 @@ import AuthCss from '../AuthCss'
 import { Formik } from 'formik'
 import * as Yup from "yup"
 import { api } from '../../Services'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const validationSchema = Yup.object().shape({

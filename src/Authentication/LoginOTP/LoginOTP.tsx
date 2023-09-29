@@ -5,6 +5,7 @@ import AuthCss from '../AuthCss'
 import { api } from '../../Services'
 import { Formik } from 'formik'
 import * as Yup from "yup"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const validationSchema = Yup.object().shape({
   code: Yup
@@ -39,6 +40,7 @@ const LoginOTP = ({ route }: any) => {
       .then(response => {
         const data = response.data
         console.log(data)
+        AsyncStorage.setItem('activeUser', JSON.stringify(data.body))
         handleSuccess()
       }).catch(error => {
         console.log(error)

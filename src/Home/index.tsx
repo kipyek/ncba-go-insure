@@ -15,6 +15,11 @@ import Claim from "./Claim";
 import ClaimForm from "./ClaimForm";
 import QuoteDetails from "./QuoteDetails";
 import ClaimDocuments from "./ClaimDocuments";
+import BenefitSelection from "./Quote/BenefitSelection";
+import QuoteRequest from "./Quote/QuoteRequest";
+import QuoteList from "./Quote/QuoteList";
+import QuoteFinish from "./Quote/QuoteFinish";
+import QuoteConfirm from "./Quote/QuoteConfirm";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -90,6 +95,11 @@ export const HomeNavigator = () => {
       <Stack.Screen name="ClaimForm" component={ClaimForm} />
       <Stack.Screen name="QuoteDetails" component={QuoteDetails} />
       <Stack.Screen name="ClaimDocuments" component={ClaimDocuments} />
+      <Stack.Screen name="QuoteConfirm" component={QuoteConfirm} />
+      <Stack.Screen name="QuoteFinish" component={QuoteFinish} />
+      <Stack.Screen name="QuoteList" component={QuoteList} />
+      <Stack.Screen name="QuoteRequest" component={QuoteRequest} />
+      <Stack.Screen name="BenefitSelection" component={BenefitSelection} />
 
     </Stack.Navigator>
   )

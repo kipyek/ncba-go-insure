@@ -8,6 +8,7 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import { ModalPortal } from 'react-native-modals';
 
 
+
 // Fonts
 const fonts = {
   "SFProText-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
@@ -25,6 +26,8 @@ import { HomeNavigator } from "./src/Home";
 import { AuthenticationNavigator } from "./src/Authentication";
 import Android from './src/Component/Android';
 import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux';
+import { store } from "./Store";
 
 // Init Routes
 const AppStack = createNativeStackNavigator<AppRoutes>();
@@ -32,37 +35,41 @@ const AppStack = createNativeStackNavigator<AppRoutes>();
 // AuthPath: Starts With Login
 const AuthPath = () => {
   return (
-    <ThemeProvider {...{ theme }}>
-      <LoadAssets {...{ fonts }}>
-        <SafeAreaView style={Android.AndroidSafeArea}>
-          <AppStack.Navigator initialRouteName="Authentication" screenOptions={{ headerShown: false }}>
-            <AppStack.Group>
-              <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
-              <AppStack.Screen name="Home" component={HomeNavigator} />
-            </AppStack.Group>
-          </AppStack.Navigator>
-          <ModalPortal />
-        </SafeAreaView>
-      </LoadAssets>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider {...{ theme }}>
+        <LoadAssets {...{ fonts }}>
+          <SafeAreaView style={Android.AndroidSafeArea}>
+            <AppStack.Navigator initialRouteName="Authentication" screenOptions={{ headerShown: false }}>
+              <AppStack.Group>
+                <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
+                <AppStack.Screen name="Home" component={HomeNavigator} />
+              </AppStack.Group>
+            </AppStack.Navigator>
+            <ModalPortal />
+          </SafeAreaView>
+        </LoadAssets>
+      </ThemeProvider>
+    </Provider>
   )
 }
 
 // HomePaths: Authenticated Users Path
 const HomePath = () => {
   return (
-    <ThemeProvider {...{ theme }}>
-      <LoadAssets {...{ fonts }}>
-        <SafeAreaView style={Android.AndroidSafeArea}>
-          <AppStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-            <AppStack.Screen name="Home" component={HomeNavigator} />
-            <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
-          </AppStack.Navigator>
-          <ModalPortal />
+    <Provider store={store}>
+      <ThemeProvider {...{ theme }}>
+        <LoadAssets {...{ fonts }}>
+          <SafeAreaView style={Android.AndroidSafeArea}>
+            <AppStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+              <AppStack.Screen name="Home" component={HomeNavigator} />
+              <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
+            </AppStack.Navigator>
+            <ModalPortal />
 
-        </SafeAreaView>
-      </LoadAssets>
-    </ThemeProvider>
+          </SafeAreaView>
+        </LoadAssets>
+      </ThemeProvider>
+    </Provider>
   )
 }
 
