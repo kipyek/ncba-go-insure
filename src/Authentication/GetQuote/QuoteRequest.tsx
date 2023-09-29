@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import React, { useState } from 'react'
 import DropDown from '../../Component/DropDown'
 import { Alert } from 'react-native';
+import AuthCss from '../AuthCss';
 const datas = [
   { label: 'First time', value: '1' },
   { label: 'Renewing', value: '2' },
@@ -29,20 +30,20 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
   };
 
   const handleMorethan15 = () => {
-    Alert.alert('Warning!!', 
-    'We note that your vehicle is over 15 years old from the date of manufacture. Kindly note that Comprehensive covers are mostly issued for vehicles below 15 years of age unless the insurance is being renewed at the same insurer. To purchase comprehensive cover, please select your current insurer from the list on the next page, otherwise your cover may be downgraded to a third party cover.', 
-    [
-   {
-     text: 'Cancel',
-     onPress: () => console.log('Cancel Pressed'),
-     style: 'cancel',
-   },
-   {text: 'Send to my email', onPress: () => console.log('OK Pressed')},
- ]);
- }
+    Alert.alert('Warning!!',
+      'We note that your vehicle is over 15 years old from the date of manufacture. Kindly note that Comprehensive covers are mostly issued for vehicles below 15 years of age unless the insurance is being renewed at the same insurer. To purchase comprehensive cover, please select your current insurer from the list on the next page, otherwise your cover may be downgraded to a third party cover.',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'Send to my email', onPress: () => console.log('OK Pressed') },
+      ]);
+  }
   return (
     <View className=''>
-        <View style={styles.introCard}>
+      <View style={AuthCss.introCard}>
         <Text className='font-[gothici-Regular]'>Please fill in the details below to generate a quotation</Text>
       </View>
       <ScrollView >
@@ -121,7 +122,7 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
 
           {/** Logic need to change after adding apis */}
           <Text className='mb-1 mt-3 font-[gothici-Regular]'>What is the value of windscreen?*</Text>
-              <TextInput
+          <TextInput
             className='p-1 rounded-md flex-1'
             style={{ borderWidth: 1 }}
             onChangeText={text => setWindScreen(text)}
@@ -132,8 +133,8 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
 
 
           <Text className='mb-1 mt-3 font-[gothici-Regular]'>What is the value of the entertainment unit?*</Text>
-       
-               <TextInput
+
+          <TextInput
             className='p-1 rounded-md flex-1'
             style={{ borderWidth: 1 }}
             onChangeText={text => setEunit(text)}
@@ -142,9 +143,9 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
             keyboardType="default"
           />
 
-         <Text className='mb-1 mt-3 font-[gothici-Regular]'>Key in seating capacity of your vehicle</Text>
-       
-               <TextInput
+          <Text className='mb-1 mt-3 font-[gothici-Regular]'>Key in seating capacity of your vehicle</Text>
+
+          <TextInput
             className='p-1 rounded-md flex-1'
             style={{ borderWidth: 1 }}
             onChangeText={text => setCapacity(text)}
@@ -152,7 +153,7 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
             placeholder="2"
             keyboardType="default"
           />
-         {/** End of Logic need to change after adding apis */}  
+          {/** End of Logic need to change after adding apis */}
 
           <Text className='mb-1 mt-3 font-[gothici-Regular]'>Enter your email address*</Text>
           <TextInput
@@ -174,7 +175,7 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
             keyboardType="default"
           />
 
-          <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
+          <View className='item-center bg-primary p-4 mt-4 rounded-md '>
             <TouchableOpacity onPress={() => handleQuote()}>
               <Text className='text-center text-white font-["gothici-Bold"]'>GET QUOTE</Text>
             </TouchableOpacity>
@@ -187,18 +188,4 @@ const QuoteRequest = ({ onNextStepPress }: any) => {
   )
 }
 
-export default QuoteRequest
-
-const styles = StyleSheet.create({
-  introCard: {
-    backgroundColor: '#87CEEB',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})
+export default QuoteRequest;

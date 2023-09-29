@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-const CQuote = ({ Quote, Product, Insurer, Reg, Gross, Amount, Oustanding }: any) => {
+const CQuote = ({ Quote, Product, Insurer, Reg, Gross, Amount, Oustanding, onPress }: any) => {
     return (
         <View className='flex-1'>
             <ScrollView>
@@ -35,8 +35,8 @@ const CQuote = ({ Quote, Product, Insurer, Reg, Gross, Amount, Oustanding }: any
                         <Text>{Oustanding}</Text>
                     </View>
 
-                    <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md '>
-                        <TouchableOpacity onPress={() => { }}>
+                    <View className='item-center bg-primary p-2 mt-4 rounded-md '>
+                        <TouchableOpacity onPress={onPress}>
                             <Text className='text-center text-white font-["gothici-Bold"]'>DETAILS</Text>
                         </TouchableOpacity>
                     </View>

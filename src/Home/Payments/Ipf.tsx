@@ -40,6 +40,4 @@ const Ipf = () => {
     )
 }
 
-export default Ipf
-
-const styles = StyleSheet.create({})
+export default Ipf;

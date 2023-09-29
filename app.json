@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -20,11 +20,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo1.png",
+        "foregroundImage": "./assets/images/logo3.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.pensoftlimited.ncbagoinsure",
-      "versionCode": 2
+      "permissions": [
+        "CAMERA"
+      ],
+      "versionCode": 8
     },
     "web": {
       "favicon": "./assets/favicon.png"

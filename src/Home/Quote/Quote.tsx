@@ -8,6 +8,8 @@ import QuoteConfirm from './QuoteConfirm';
 import QuoteFinish from './QuoteFinish';
 import QuoteRequest from './QuoteRequest';
 import { Header } from '../../Component/Header';
+import HomeCss from '../HomeCss';
+import { StatusBar } from 'expo-status-bar';
 
 const firstIndicatorStyles = {
   stepIndicatorSize: 30,
@@ -42,6 +44,10 @@ export default function Quote() {
     setCurrentPage((i) => i + 1)
   }
 
+  const handleBackStep = () => {
+    setCurrentPage((i) => i - 1)
+  }
+
   const handleNewQuote = () => {
     setCurrentPage(0);
   };
@@ -49,11 +55,12 @@ export default function Quote() {
 
 
   return (
-    <View style={styles.container}>
+    <View className='flex-1 bg-white'>
+      <StatusBar backgroundColor='#87CEEB' />
       <Header
         label={"Get Quote"}
       />
-      <View style={styles.stepIndicator}>
+      <View style={HomeCss.stepIndicator}>
         <StepIndicator
           customStyles={firstIndicatorStyles}
           currentPosition={currentPage}
@@ -64,7 +71,7 @@ export default function Quote() {
             'Quote Confirmation',
             'Finish',]}
           renderLabel={renderLabel}
-          onPress={onStepPress}
+        //onPress={onStepPress}
         />
       </View>
 
@@ -76,43 +83,14 @@ export default function Quote() {
             <QuoteList onNextStepPressList={() => handleNextStep()} />
             :
             currentPage === 2 ?
-              <BenefitSelection onNextStepPressSelection={() => handleNextStep()} />
+              <BenefitSelection onNextStepPressSelection={() => handleNextStep()} handleBackStep={() => handleBackStep()} />
               :
               currentPage === 3 ?
-                <QuoteConfirm onNextStepPressConfirm={() => handleNextStep()} />
+                <QuoteConfirm onNextStepPressConfirm={() => handleNextStep()} handleBackStep={() => handleBackStep()} />
                 :
                 <QuoteFinish onNewQuote={handleNewQuote} />
         }
       </View>
-      {/* <Swiper
-        style={{ flexGrow: 1 }}
-        loop={false}
-        index={currentPage}
-        autoplay={false}
-        showsButtons
-        showsPagination={false}
-        onIndexChanged={(page) => {
-          setCurrentPage(page);
-        }}
-      >
-        {PAGES.map((page) => renderViewPagerPage(page))}
-      </Swiper> */}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  stepIndicator: {
-    marginTop: 10,
-    marginBottom: 20
-  },
-  page: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

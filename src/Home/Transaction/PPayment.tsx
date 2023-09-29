@@ -37,6 +37,4 @@ const PPayment = () => {
     )
 }
 
-export default PPayment
-
-const styles = StyleSheet.create({})
+export default PPayment;

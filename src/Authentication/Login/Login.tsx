@@ -1,11 +1,27 @@
-import { Linking, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Linking, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import AuthCss from '../AuthCss'
+import { Formik } from 'formik'
+import * as Yup from "yup"
+import { api } from '../../Services'
+
+
+const validationSchema = Yup.object().shape({
+  email: Yup
+    .string()
+    .email('Please enter valid email')
+    .trim()
+    .required('Email is required'),
+  password: Yup
+    .string()
+    .required('Password is required')
+    .trim(),
+})
 
 const Login = () => {
   const navigation: any = useNavigation()
-  const [email, setEmail] = useState('')
-  const [password, SetPassword] = useState('')
+  const [isLoading, setisLoading] = useState(false)
 
   const privacyPolicy = () => {
     Linking.canOpenURL("https://ke.ncbagroup.com/privacy-policy/").then(supported => {
@@ -16,50 +32,98 @@ const Login = () => {
       }
     });
   };
+
+  const handleLogin = (values: any) => {
+    setisLoading(true)
+    const payload = {
+      "Email": values.email,
+      "Password": values.password,
+    }
+
+    api.post("authentication/Login", payload)
+      .then(response => {
+        const data = response.data;
+        const email = data.body;
+        navigation.navigate("LoginOTP", { item: email })
+        console.log(data)
+      }).catch(error => {
+        alert(error.response?.data?.message)
+      }).finally(() => {
+        setisLoading(false)
+      })
+  }
+
+
   return (
     <View className='bg-white flex-1'>
-      <View className='mt-14 ml-4' style={styles.card}>
+      <View className='mt-14 ml-4' style={AuthCss.card}>
         <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to NCBA Go Insure</Text>
         <Text className='font-["gothici-Regular"]'>Login to your account</Text>
       </View>
 
-      <View className='mr-2 ml-2 mt-10'>
-        <TextInput
-          className='p-1 rounded-md '
-          style={{ borderWidth: 1 }}
-          onChangeText={text => setEmail(text)}
-          value={email}
-          placeholder="Enter your email"
-          keyboardType="default"
-        />
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={values => handleLogin(values)}>
+        {({
+          handleChange,
+          handleBlur,
+          errors,
+          handleSubmit,
+        }) => (
+          <View>
+            <View className='mr-2 ml-2 mt-10'>
+              <View className='mb--2'>
+                <TextInput
+                  className='p-1 rounded-md '
+                  style={{ borderWidth: 1 }}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  placeholder="Enter your email"
+                  keyboardType="default"
+                />
+                {errors && <Text className='text-red-400 font-light'>{errors.email}</Text>}
+              </View>
 
-        <TextInput
-          className='p-1 rounded-md mt-2'
-          style={{ borderWidth: 1 }}
-          onChangeText={text => SetPassword(text)}
-          value={password}
-          placeholder="Type your password"
-          keyboardType="default"
-        />
+              <View>
+                <TextInput
+                  className='p-1 rounded-md mt-2'
+                  style={{ borderWidth: 1 }}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  placeholder="Type your password"
+                  autoCorrect={false}
+                  keyboardType="visible-password"
+                />
+                {errors && <Text className='text-red-400 font-light'>{errors.password}</Text>}
+              </View>
 
-        <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
-          <TouchableOpacity onPress={() => navigation.navigate("LoginOTP")}>
-            <Text className='text-center text-white font-["gothici-Bold"]'>LOGIN</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-          <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-6' >Not Registered? Click here to register</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
-          <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4' >Forgot your password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("GetQuote")}>
-          <Text className='mt-4 font-["gothici-Regular"] text-[#00BFFF]'>Get Motor Quote</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={privacyPolicy}>
-          <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4'>Privacy policy</Text>
-        </TouchableOpacity>
-      </View>
+
+              <View className='item-center bg-primary p-4 mt-4 rounded-md '>
+                {!isLoading ?
+                  <TouchableOpacity onPress={() => handleSubmit()}>
+                    <Text className='text-center text-white font-["gothici-Bold"]'>LOGIN</Text>
+                  </TouchableOpacity>
+                  :
+                  <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>
+                }
+              </View>
+              <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-6' >Not Registered? Click here to register</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+                <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4' >Forgot your password?</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("GetQuote")}>
+                <Text className='mt-4 font-["gothici-Regular"] text-[#00BFFF]'>Get Motor Quote</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={privacyPolicy}>
+                <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4'>Privacy policy</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+      </Formik>
 
 
     </View>
@@ -67,18 +131,4 @@ const Login = () => {
   )
 }
 
-export default Login
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})
+export default Login;

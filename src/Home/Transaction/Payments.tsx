@@ -35,6 +35,4 @@ const Payments = () => {
     )
 }
 
-export default Payments
-
-const styles = StyleSheet.create({})
+export default Payments;

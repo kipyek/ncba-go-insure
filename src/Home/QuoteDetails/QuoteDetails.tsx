@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { Header } from '../../Component/Header';
 import { Feather } from '@expo/vector-icons';
@@ -36,11 +36,12 @@ const QuoteDetails = () => {
     return (
         <View className='flex-1'>
             <Header
-                label={moves === 2 ? "Payments" : "Quote Details"}
+                label={moves === 2 ? "Payments" : moves === 1 ? "Quote Details" : "Upload Documents"}
                 rightButton={{
                     child: <Feather
                         name="more-vertical"
-                        size={24} color="black"
+                        size={24}
+                        color="black"
                         onPress={() => showMenu()}
                     />
                 }}
@@ -74,5 +75,3 @@ const QuoteDetails = () => {
 }
 
 export default QuoteDetails
-
-const styles = StyleSheet.create({})

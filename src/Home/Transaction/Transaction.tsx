@@ -11,7 +11,6 @@ import Payments from './Payments';
 
 const Drawer = createDrawerNavigator();
 
-
 const Transaction = () => {
 
   return (
@@ -43,6 +42,4 @@ const Transaction = () => {
   )
 }
 
-export default Transaction
-
-const styles = StyleSheet.create({})
+export default Transaction;

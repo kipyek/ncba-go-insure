@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useState } from 'react';
+import HomeCss from '../HomeCss';
 
 const Additionals = [
   {
@@ -16,7 +17,7 @@ const Additionals = [
   },
 ]
 
-const BenefitSelection = ({ onNextStepPressSelection }: any) => {
+const BenefitSelection = ({ onNextStepPressSelection, handleBackStep }: any) => {
   const [total, setTotal] = useState(0);
   const [checkedState, setCheckedState] = useState(
     new Array(Additionals.length).fill(false)
@@ -24,6 +25,10 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
   const handleNext = () => {
     onNextStepPressSelection()
   };
+
+  const handleBack = () => {
+    handleBackStep()
+  }
 
   const handleOptional = (position: any) => {
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -44,21 +49,22 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
 
     setTotal(totalPrice);
   };
+
   return (
     <View>
       <ScrollView>
         <View className='mb-52'>
-          <View style={styles.introCard}>
+          <View style={HomeCss.introCard}>
             <Text className='font-[gothici-Regular]'>Please review the details of your quote including the scope of the cover under Cover Summary. To buy the cover, click "NEXT"</Text>
           </View>
 
-          <View style={styles.card}>
+          <View style={HomeCss.card}>
             <View className='flex-row items-center'>
               <Image source={require("../../../assets/images/uap.jpg")} className='w-32 h-32' />
               <View className='w-48'>
                 <Text>UAP Insurance Company Ltd</Text>
                 <Text >MOTOR PSV - SELF DRIVE COMPREHENSIVE</Text>
-                <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md '>
+                <View className='item-center bg-primary p-2 mt-4 rounded-md '>
                   <TouchableOpacity>
                     <Text className='text-center text-white font-["gothici-Bold"]'>SEND TO MY EMAIL</Text>
                   </TouchableOpacity>
@@ -111,12 +117,12 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
               </View>
 
               <View className='flex-row justify-between mt-10'>
-                <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md w-36'>
-                  <TouchableOpacity >
+                <View className='item-center bg-primary p-2 mt-4 rounded-md w-36'>
+                  <TouchableOpacity onPress={handleBack}>
                     <Text className='text-center text-white font-["gothici-Bold"]'>BACK</Text>
                   </TouchableOpacity>
                 </View>
-                <View className='item-center bg-[#302A29] p-2 mt-4 rounded-md w-36'>
+                <View className='item-center bg-primary p-2 mt-4 rounded-md w-36'>
                   <TouchableOpacity onPress={() => handleNext()} >
                     <Text className='text-center text-white font-["gothici-Bold"]'>NEXT</Text>
                   </TouchableOpacity>
@@ -133,29 +139,4 @@ const BenefitSelection = ({ onNextStepPressSelection }: any) => {
   )
 }
 
-export default BenefitSelection
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  introCard: {
-    backgroundColor: '#87CEEB',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  }
-})
+export default BenefitSelection;

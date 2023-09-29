@@ -3,6 +3,8 @@ import React from 'react';
 import Toast from 'react-native-root-toast'
 import { Header } from '../../Component/Header';
 import { Feather } from '@expo/vector-icons';
+import HomeCss from '../HomeCss';
+import { StatusBar } from 'expo-status-bar';
 
 const Dashboard = () => {
   const handleToastTest = () => {
@@ -18,29 +20,14 @@ const Dashboard = () => {
   }
   return (
     <SafeAreaView className='flex-1 '>
+      <StatusBar backgroundColor='#87CEEB' />
       <Header
         label="Dashboard"
       />
-      <Image source={require("../../../assets/images/background.png")} style={styles.image} />
-      <TouchableOpacity onPress={handleToastTest}>
-        <Text style={styles.text} className='font-["SFProText-Bold"] '>Dashboard</Text>
-      </TouchableOpacity>
+      <Image source={require("../../../assets/images/background.png")} style={HomeCss.homeImage} />
 
     </SafeAreaView>
   )
 }
 
-export default Dashboard
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 30
-  },
-  image: {
-    width: "100%",
-    height: '100%',
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    opacity: 0.4
-  },
-})
+export default Dashboard;

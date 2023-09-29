@@ -7,6 +7,7 @@ import { Fontisto, FontAwesome, MaterialIcons } from "@expo/vector-icons"
 import Moment from 'moment';
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation } from '@react-navigation/native';
+import HomeCss from '../HomeCss';
 
 const data = [
     { label: 'Health', value: '1' },
@@ -50,7 +51,7 @@ const ClaimForm = () => {
                     }}
                 />
                 {/**Intro */}
-                <View style={styles.introCard}>
+                <View style={HomeCss.introCard}>
                     <Text className='font-[gothici-Regular]'>
                         Please enter details about your claim, A customer support agent will contact you as soon as possible.
                     </Text>
@@ -158,8 +159,8 @@ const ClaimForm = () => {
                             null
                         }
 
-                        <View className='item-center bg-[#302A29] p-4 mt-4 rounded-md '>
-                            <TouchableOpacity>
+                        <View className='item-center bg-primary p-4 mt-4 rounded-md '>
+                            <TouchableOpacity onPress={() => navigation.navigate("ClaimDocuments")}>
                                 <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT</Text>
                             </TouchableOpacity>
                         </View>
@@ -184,15 +185,5 @@ const ClaimForm = () => {
 export default ClaimForm
 
 const styles = StyleSheet.create({
-    introCard: {
-        backgroundColor: '#87CEEB',
-        borderRadius: 10,
-        padding: 10,
-        margin: 10,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 4,
-    }
+
 })

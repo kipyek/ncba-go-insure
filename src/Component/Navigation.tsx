@@ -36,6 +36,7 @@ export type AuthenticationRoutes = {
   GetQuote: any;
   LoginOTP: any;
   ForgotPassword: any;
+  RegisterOTP: any;
 
 };
 
@@ -49,4 +50,5 @@ export type HomeRoutes = {
   Claim: any;
   ClaimForm: any;
   QuoteDetails: any;
+  ClaimDocuments: any;
 }

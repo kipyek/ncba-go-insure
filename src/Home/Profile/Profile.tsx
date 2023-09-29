@@ -5,6 +5,7 @@ import { MaterialIcons, Feather } from '@expo/vector-icons';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import { Header } from '../../Component/Header';
 import { Button } from '@rneui/themed';
+import { StatusBar } from 'expo-status-bar';
 
 const Profile = () => {
   const navigation: any = useNavigation();
@@ -32,6 +33,7 @@ const Profile = () => {
   return (
     <Fragment>
       <View className='flex-1 bg-white'>
+        <StatusBar backgroundColor='#87CEEB' />
         <Header
           label="Profile"
         />
@@ -109,7 +111,7 @@ const Profile = () => {
             onChangeText={(text) => setUserName(text.trim())}
           />
           <View className='bottom-2 mt-2'>
-            <View className='item-center bg-[#302A29] p-3 mt-4 rounded-md '>
+            <View className='item-center bg-primary p-3 mt-4 rounded-md '>
               <TouchableOpacity>
                 <Text className='text-center text-white font-["gothici-Bold"]'>CHANGE EMAIL</Text>
               </TouchableOpacity>
@@ -134,7 +136,7 @@ const Profile = () => {
             onChangeText={(text) => setLocation(text.trim())}
           />
           <View className='bottom-2 mt-2'>
-            <View className='item-center bg-[#302A29] p-3 mt-4 rounded-md '>
+            <View className='item-center bg-primary p-3 mt-4 rounded-md '>
               <TouchableOpacity>
                 <Text className='text-center text-white font-["gothici-Bold"]'>SAVE</Text>
               </TouchableOpacity>
@@ -173,7 +175,7 @@ const Profile = () => {
             onChangeText={(text) => setConfirmPass(text.trim())}
           />
           <View className='bottom-2 mt-2'>
-            <View className='item-center bg-[#302A29] p-3 mt-4 rounded-md '>
+            <View className='item-center bg-primary p-3 mt-4 rounded-md '>
               <TouchableOpacity>
                 <Text className='text-center text-white font-["gothici-Bold"]'>UPDATE PASSWORD</Text>
               </TouchableOpacity>

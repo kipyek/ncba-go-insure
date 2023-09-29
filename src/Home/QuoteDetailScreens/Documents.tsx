@@ -9,6 +9,4 @@ const Documents = () => {
     )
 }
 
-export default Documents
-
-const styles = StyleSheet.create({})
+export default Documents;
