@@ -16,10 +16,10 @@ import ClaimForm from "./ClaimForm";
 import QuoteDetails from "./QuoteDetails";
 import ClaimDocuments from "./ClaimDocuments";
 import BenefitSelection from "./Quote/BenefitSelection";
-import QuoteRequest from "./Quote/QuoteRequest";
-import QuoteList from "./Quote/QuoteList";
 import QuoteFinish from "./Quote/QuoteFinish";
 import QuoteConfirm from "./Quote/QuoteConfirm";
+import QuoteRequest from "./QuoteRequest";
+import QuoteList from "./QuoteList";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -56,7 +56,7 @@ const ManageStackScreens = () => {
       <Tab.Screen name="Home" component={Dashboard}
         options={{ unmountOnBlur: true, }}
       />
-      <Tab.Screen name="Quote" component={Quote}
+      <Tab.Screen name="QuoteRequest" component={QuoteRequest}
         options={{
           tabBarIcon: ({ focused }) => (focused ?
             <MaterialIcons name="request-quote" size={24} color="#87CEEB" />
@@ -98,7 +98,6 @@ export const HomeNavigator = () => {
       <Stack.Screen name="QuoteConfirm" component={QuoteConfirm} />
       <Stack.Screen name="QuoteFinish" component={QuoteFinish} />
       <Stack.Screen name="QuoteList" component={QuoteList} />
-      <Stack.Screen name="QuoteRequest" component={QuoteRequest} />
       <Stack.Screen name="BenefitSelection" component={BenefitSelection} />
 
     </Stack.Navigator>
