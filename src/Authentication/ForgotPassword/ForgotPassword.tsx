@@ -1,9 +1,21 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import AuthCss from '../AuthCss';
+import { apis } from '../../Services';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+
+  const handleResetPassword = () => {
+    email !== '' &&
+      apis.post(`authentication/Reset/Otp?email=${email}`)
+        .then(response => {
+          const data = response.data
+          console.log("success", data)
+        }).catch(error => {
+          console.log(error.response?.data?.message)
+        })
+  }
   return (
     <View >
       <View className='mt-14'>
@@ -24,7 +36,7 @@ const ForgotPassword = () => {
           />
 
           <View className='item-center bg-primary p-3 mt-4 rounded-md '>
-            <TouchableOpacity >
+            <TouchableOpacity onPress={() => handleResetPassword()}>
               <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT</Text>
             </TouchableOpacity>
           </View>

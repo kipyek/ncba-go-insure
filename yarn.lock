@@ -7107,6 +7107,11 @@ react-native-swiper@^1.6.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-three-dots-loader@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-three-dots-loader/-/react-native-three-dots-loader-1.0.1.tgz#31ec821865eea6615ce5a1c509d0a8ae78e374b6"
+  integrity sha512-5K/n89+UUm2QNeVum34pycelBhTsOTCtSk3e8Hn6BSXZWfhtJDma+RfdJYGw/uzO/YZH+mPteyS4lhMH/kbVyw==
+
 react-native-uuid@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"

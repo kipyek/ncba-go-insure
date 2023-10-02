@@ -9,11 +9,16 @@ import HomeCss from '../HomeCss';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { apis } from '../../Services';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectFirstTime } from '../../../Slices/QuoteSlice';
+import { Ionicons } from "@expo/vector-icons"
 
 const QuoteList = () => {
   const navigation: any = useNavigation()
   const [modalVisibles, setModalVisibles] = useState(false);
   const [listData, setListData] = useState([])
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +39,7 @@ const QuoteList = () => {
 
 
   const handleApplicableBenefits = (item: any) => {
-    apis.get("Common/GetApplicableBenefits?productId=116")
+    apis.get(`Common/GetApplicableBenefits?productId=${item.productId}`)
       .then(response => {
         const data = response.data
         navigation.navigate("QuoteBenefit", { item: item, benefits: data })
@@ -43,10 +48,11 @@ const QuoteList = () => {
         console.log(error.response?.data?.message)
       })
   }
-
+  const first = useSelector(selectFirstTime)
 
   const Item = ({ item }: any) => (
     <View style={HomeCss.card}>
+
       <View className='flex-row items-center'>
         <Image source={{ uri: item.insurerLogo }} className='w-28 h-28' resizeMode='contain' />
         <View className='w-48 ml-4'>
@@ -73,6 +79,10 @@ const QuoteList = () => {
       <View>
         <Header
           label={"Get Quote"}
+          leftButton={{
+            child: <Ionicons name="arrow-back" size={24} color="black" />,
+            onPress: () => { navigation.goBack() }
+          }}
         />
         <StepperComponet currentPage={1} />
 

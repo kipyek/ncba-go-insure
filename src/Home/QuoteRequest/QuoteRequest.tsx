@@ -334,7 +334,7 @@ const QuoteRequest = () => {
                   <Text className='text-center text-white font-["gothici-Bold"]'>GET QUOTE</Text>
                 </TouchableOpacity>
                 :
-                <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>
+                <Text className='text-center text-white font-["gothici-Bold"]'>Getting quote...</Text>
               }
             </View>
 

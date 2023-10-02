@@ -6,8 +6,9 @@ import StepperComponet from '../../Component/StepperComponet';
 import Humanize from 'humanize-plus';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import { useNavigation } from '@react-navigation/native';
-import { Entypo, FontAwesome, Feather } from "@expo/vector-icons"
+import { Entypo, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons"
 import { apis } from '../../Services';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Additionals = [
     {
@@ -26,20 +27,55 @@ const Additionals = [
 
 const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) => {
     const { item, benefits } = route?.params
+    console.log("Items", item)
+    console.log("Benefits", benefits)
     const navigation: any = useNavigation();
     const [total, setTotal] = useState(0);
+    const [listData, setListData] = useState([])
     const [coverNotes, setCoverNotes] = useState([]);
     const [selected, setSelected] = useState([])
+    const [select, setSelect] = useState(new Array(benefits.length).fill(false))
     const [show, setShow] = useState(false);
     const [modalVisibles, setModalVisibles] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const [checkedState, setCheckedState] = useState(
         new Array(Additionals.length).fill(false)
     );
 
 
+    const levy = (item.stampDuty) + (item?.trainingLevy) + (item?.phcf)
     useEffect(() => {
         handleNotes()
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const storedData = await AsyncStorage.getItem('motorQuote');
+                if (storedData !== null) {
+                    const parsedData = JSON.parse(storedData);
+                    setListData(parsedData)
+                    console.log("incoming data", parsedData)
+                }
+            } catch (error) {
+                console.error('Error retrieving data:', error);
+            }
+        }
+        fetchData()
+    }, []);
+
+    // const handleToggle = () => {
+    //     setSelect(!select)
+    // }
+
+    const handleToggle = (position: any) => {
+        const updatedCheckedState = checkedState.map((item, index) =>
+            index === position ? !item : item
+        );
+        setSelect(updatedCheckedState);
+        console.log(select)
+    }
+
     const handleNext = () => {
         onNextStepPressSelection()
     };
@@ -70,6 +106,34 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
         setTotal(totalPrice);
     };
 
+    const handleAddBenefit = () => {
+        const payload = {
+            "quoteId": "string",
+            "productId": item?.productId,
+            "policyPeriod": 12,
+            "basicPremium": item?.basicPremium,
+            "sumInsured": item?.sumInsured,
+            "capacity": 0,
+            "quoteType": 0,
+            "additionalBenefits": [
+                {
+                    "benefitId": 0,
+                    "noOfInsured": 0,
+                    "benefit": "string",
+                    "premium": 0,
+                    "benefitOptions": []
+                }
+            ]
+        }
+        apis.post("Common/AddBenefits", payload)
+            .then(response => {
+                const data = response.data
+                console.log(data)
+            }).catch(error => {
+                console.log(error.response?.data?.message)
+            })
+    }
+
     const handleNotes = () => {
         apis.get(`Common/CoverNotesWithInsured?productId=${item?.productId}&benefits=${""}&windScreen=${item?.windscreenPremium}&entertainmentUnit=${item?.entertainmentPremium}`)
             .then(response => {
@@ -90,15 +154,15 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
     }
 
     const Item = ({ item }: any) => (
-        <View className='bg-gray-200 ml-4 mr-4 pl-1 pr-1 '>
-            <TouchableOpacity onPress={() => handleSelection(item)}>
+        <View className='pl-1 pr-1'>
+            <TouchableOpacity onPress={() => handleToggle(item)}>
                 <View className='flex-1 flex-row justify-between bg-gray-200 mt-2 '>
                     <Text className='text-center font-["gothici-Bold"]'>{item?.benefitName}</Text>
                     <View className=''>
-                        {selected === item ?
-                            <FontAwesome name="circle" size={20} color="#0066F6" />
+                        {select[item.index] ?
+                            <MaterialCommunityIcons name="checkbox-marked" size={24} color="black" />
                             :
-                            <Feather name="circle" size={20} color="black" />
+                            <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color="black" />
                         }
                     </View>
                 </View>
@@ -107,23 +171,16 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
         </View>
     );
 
-    const renderApplicableBenefits = () => {
-        return (
-            show && <FlatList
-                data={benefits}
-                renderItem={({ item }) => <Item item={item} />}
-                keyExtractor={(item: any) => item.benefitId}
-            />
-        )
-    }
-
-
 
     return (
         <Fragment>
             <View>
                 <Header
                     label={"Get Quote"}
+                    leftButton={{
+                        child: <Ionicons name="arrow-back" size={24} color="black" />,
+                        onPress: () => { navigation.goBack() }
+                    }}
                 />
                 <StepperComponet currentPage={2} />
                 <ScrollView>
@@ -134,7 +191,7 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
 
                         {/**Start of Applicable Benefits */}
                         <TouchableOpacity
-                            onPress={() => handleToggling()}
+                            onPress={() => setModalVisible(true)}
                             className='flex-row justify-between bg-gray-200 ml-4 mr-4 pl-1 pr-1'>
                             <Text className='font-[gothici-Regular]'>Click here to see applicable benefits</Text>
                             {!show ?
@@ -143,8 +200,6 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                                 <Entypo name="chevron-small-down" size={24} color="black" />
                             }
                         </TouchableOpacity>
-
-                        {renderApplicableBenefits()}
 
                         <View style={HomeCss.card}>
                             <View className='item-center bg-primary p-1 mb-2 w-32  justify-end rounded-md '>
@@ -168,15 +223,6 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                             </View>
 
                             <View style={{ borderWidth: 0.6, opacity: 0.5, borderColor: 'grey' }} />
-                            {/**Start of Additional selections */}
-                            <View>
-                                {/* {Additionals.map(({ name, price }, index) => {
-        <View>
-          <Text>{name}{price}</Text>
-        </View>
-      })} */}
-                            </View>
-                            {/**End of Additional selections */}
                             {/**Pricing */}
                             <View>
                                 <View className='flex-row mt-4 justify-between bg-gray-200'>
@@ -202,7 +248,7 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                                 </View>
                                 <View className='flex-row mt-2 justify-between bg-gray-200'>
                                     <Text>Levies:</Text>
-                                    <Text className='font-bold ml-16'>Kes {Humanize.formatNumber(item?.trainingLevy, 2)}</Text>
+                                    <Text className='font-bold ml-16'>Kes {Humanize.formatNumber(levy, 2)}</Text>
                                 </View>
                                 <View className='flex-row mt-2 justify-between bg-gray-200'>
                                     <Text className='font-bold '>Gross premium:</Text>
@@ -227,6 +273,7 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                     </View>
                 </ScrollView>
             </View>
+
             {/**Cover Summary */}
             <BottomModal
                 visible={modalVisibles}
@@ -245,6 +292,25 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                                 )}
                             </View>
                         )}
+                    </View>
+                </ModalContent>
+            </BottomModal>
+
+            {/**Applicable Benefits */}
+            <BottomModal
+                visible={modalVisible}
+                onTouchOutside={() => setModalVisible(false)}
+                onHardwareBackPress={() => true}
+                onSwipeOut={() => setModalVisible(false)}
+            >
+                <ModalContent>
+                    <View style={{ borderWidth: 1, width: 50, alignSelf: 'center', marginBottom: 12, borderColor: 'gray' }} />
+                    <View>
+                        <FlatList
+                            data={benefits}
+                            renderItem={({ item }) => <Item item={item} />}
+                            keyExtractor={(item: any) => item.benefitId}
+                        />
                     </View>
                 </ModalContent>
             </BottomModal>
