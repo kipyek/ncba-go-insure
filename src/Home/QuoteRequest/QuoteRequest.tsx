@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import StepperComponet from '../../Component/StepperComponet'
 import { Header } from '../../Component/Header'
+import Humanize from 'humanize-plus';
 
 const datas = [
   { label: 'First time', value: '1' },
@@ -282,7 +283,7 @@ const QuoteRequest = () => {
               onChangeText={text => setVehicleCost(text)}
               value={vehicleCost}
               placeholder="1,500,000"
-              keyboardType="default"
+              keyboardType="phone-pad"
             />
 
             {/** Start Logic need to change after adding apis */}
@@ -295,7 +296,7 @@ const QuoteRequest = () => {
                   onChangeText={text => setWindScreen(text)}
                   value={windscreen}
                   placeholder="50,000"
-                  keyboardType="default"
+                  keyboardType="numeric"
                 />
 
 
@@ -307,7 +308,7 @@ const QuoteRequest = () => {
                   onChangeText={text => setEunit(text)}
                   value={eunit}
                   placeholder="30,000"
-                  keyboardType="default"
+                  keyboardType="numeric"
                 />
               </View>
             }
@@ -321,7 +322,7 @@ const QuoteRequest = () => {
                   onChangeText={text => setCapacity(text)}
                   value={capacity}
                   placeholder="2"
-                  keyboardType="default"
+                  keyboardType="numeric"
                 />
               </View>
             }

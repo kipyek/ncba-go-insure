@@ -46,7 +46,7 @@ export type HomeRoutes = {
   Profile: any;
   Transaction: any;
   Quote: any;
-  BenefitSelection: any;
+  QuoteBenefit: any;
   QuoteRequest: any;
   QuoteList: any;
   QuoteFinish: any;

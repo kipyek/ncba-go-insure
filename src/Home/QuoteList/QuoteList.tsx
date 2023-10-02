@@ -4,11 +4,14 @@ import StepperComponet from '../../Component/StepperComponet'
 import { Header } from '../../Component/Header'
 import { Cover } from '../../../DummyData/Data';
 import { BottomModal, ModalContent } from 'react-native-modals';
+import Humanize from 'humanize-plus';
 import HomeCss from '../HomeCss';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { apis } from '../../Services';
 
 const QuoteList = () => {
-
+  const navigation: any = useNavigation()
   const [modalVisibles, setModalVisibles] = useState(false);
   const [listData, setListData] = useState([])
 
@@ -29,6 +32,19 @@ const QuoteList = () => {
   }, [])
 
 
+
+  const handleApplicableBenefits = (item: any) => {
+    apis.get("Common/GetApplicableBenefits?productId=116")
+      .then(response => {
+        const data = response.data
+        navigation.navigate("QuoteBenefit", { item: item, benefits: data })
+        console.log("current data", data)
+      }).catch(error => {
+        console.log(error.response?.data?.message)
+      })
+  }
+
+
   const Item = ({ item }: any) => (
     <View style={HomeCss.card}>
       <View className='flex-row items-center'>
@@ -38,13 +54,13 @@ const QuoteList = () => {
           <Text className='font-[gothici-Bold]'>{item.insurerName} </Text>
           <View className='flex-row mt-2'>
             <Text>Premium: </Text>
-            <Text className='font-[gothici-Bold]'> {item.grossPremium}</Text>
+            <Text className='font-[gothici-Bold]'> {Humanize.formatNumber(item.grossPremium, 2)}</Text>
           </View>
         </View>
       </View>
 
       <View className='item-center bg-primary p-3 mt-4 rounded-md '>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => handleApplicableBenefits(item)}>
           <Text className='text-center text-white font-["gothici-Bold"]'>BUY</Text>
         </TouchableOpacity>
       </View>
@@ -64,11 +80,11 @@ const QuoteList = () => {
           <Text className='font-[gothici-Regular]'>Please review the quotes below from different insurers. Click "BUY" against your preferred insurer to add optional benefits.</Text>
         </View>
 
-        <View className='item-center bg-primary p-1 mt-4 w-32 ml-4 justify-end rounded-md '>
+        {/* <View className='item-center bg-primary p-1 mt-4 w-32 ml-4 justify-end rounded-md '>
           <TouchableOpacity onPress={() => setModalVisibles(true)}>
             <Text className='text-center text-white font-["gothici-Bold"]'>Cover Summary</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <FlatList
           data={listData}
           renderItem={({ item }) => <Item item={item} />}
