@@ -75,7 +75,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
     }
 
     const handleNext = () => {
-        onNextStepPressConfirm()
+        navigation.navigate("QuoteFinish")
     }
 
     const handleBack = () => {
