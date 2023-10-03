@@ -7,7 +7,6 @@ import * as Yup from "yup"
 import { api } from '../../Services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-
 const validationSchema = Yup.object().shape({
   email: Yup
     .string()
@@ -115,9 +114,9 @@ const Login = () => {
               <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
                 <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4' >Forgot your password?</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate("GetQuote")}>
+              {/* <TouchableOpacity onPress={() => navigation.navigate("GetQuote")}>
                 <Text className='mt-4 font-["gothici-Regular"] text-[#00BFFF]'>Get Motor Quote</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity onPress={privacyPolicy}>
                 <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4'>Privacy policy</Text>
               </TouchableOpacity>

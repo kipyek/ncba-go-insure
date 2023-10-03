@@ -8,18 +8,17 @@ import { HomeRoutes } from "../Component/Navigation";
 
 // App Screens
 import Dashboard from "./Dashboard";
-import Quote from "./Quote";
 import Profile from "./Profile";
 import Transaction from "./Transaction";
 import Claim from "./Claim";
 import ClaimForm from "./ClaimForm";
 import QuoteDetails from "./QuoteDetails";
 import ClaimDocuments from "./ClaimDocuments";
-import BenefitSelection from "./Quote/BenefitSelection";
-import QuoteFinish from "./Quote/QuoteFinish";
-import QuoteConfirm from "./Quote/QuoteConfirm";
 import QuoteRequest from "./QuoteRequest";
 import QuoteList from "./QuoteList";
+import QuoteConfirm from "./QuoteConfirm";
+import QuoteFinish from "./QuoteFinish";
+import QuoteBenefit from "./QuoteBenefit";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -54,9 +53,9 @@ const ManageStackScreens = () => {
       })}
     >
       <Tab.Screen name="Home" component={Dashboard}
-        options={{ unmountOnBlur: true, }}
+      // options={{ unmountOnBlur: true, }}
       />
-      <Tab.Screen name="QuoteRequest" component={QuoteRequest}
+      <Tab.Screen name="Quote" component={QuoteRequest}
         options={{
           tabBarIcon: ({ focused }) => (focused ?
             <MaterialIcons name="request-quote" size={24} color="#87CEEB" />
@@ -64,7 +63,7 @@ const ManageStackScreens = () => {
             <MaterialIcons name="request-quote" size={24} color="grey" />),
         }} />
       <Tab.Screen name="Claim" component={Claim}
-        options={{ unmountOnBlur: true, }}
+      // options={{ unmountOnBlur: true, }}
       />
 
       <Tab.Screen name="Transaction" component={Transaction}
@@ -75,7 +74,7 @@ const ManageStackScreens = () => {
             <FontAwesome name="money" size={24} color="grey" />),
         }} />
       <Tab.Screen name="Profile" component={Profile}
-        options={{ unmountOnBlur: true, }}
+      //options={{ unmountOnBlur: true, }}
       />
       {/* Add more screens here as need be */}
     </Tab.Navigator>
@@ -98,7 +97,7 @@ export const HomeNavigator = () => {
       <Stack.Screen name="QuoteConfirm" component={QuoteConfirm} />
       <Stack.Screen name="QuoteFinish" component={QuoteFinish} />
       <Stack.Screen name="QuoteList" component={QuoteList} />
-      <Stack.Screen name="BenefitSelection" component={BenefitSelection} />
+      <Stack.Screen name="QuoteBenefit" component={QuoteBenefit} />
 
     </Stack.Navigator>
   )

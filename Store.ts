@@ -3,6 +3,6 @@ import ServiceSlice from './Slices/QuoteSlice'
 
 export const store = configureStore({
     reducer: {
-        Quote: ServiceSlice,
+        job: ServiceSlice,
     },
 })

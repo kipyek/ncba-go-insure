@@ -12,6 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import StepperComponet from '../../Component/StepperComponet'
 import { Header } from '../../Component/Header'
+import Humanize from 'humanize-plus';
+import { setFirstTime, setCapacitys } from '../../../Slices/QuoteSlice';
 
 const datas = [
   { label: 'First time', value: '1' },
@@ -65,9 +67,7 @@ const QuoteRequest = () => {
 
   const handleQuote = () => {
 
-    navigation.navigate("QuoteList")
-    //onNextStepPress();
-    //handleMorethan15()
+    navigation.navigate("QuoteList", {})
   };
 
   console.log(selectedMake)
@@ -102,7 +102,6 @@ const QuoteRequest = () => {
       .then(response => {
         const data = response.data
         setCoverType(data)
-        console.log(data)
       }).catch(error => {
         console.log(error.response?.data?.message)
       })
@@ -114,7 +113,6 @@ const QuoteRequest = () => {
       .then(response => {
         const data = response.data
         setMotorType(data)
-        console.log(data)
       }).catch(error => {
         console.log(error.response?.data?.message)
       })
@@ -125,7 +123,6 @@ const QuoteRequest = () => {
       .then(response => {
         const data = response.data
         setMake(data)
-        console.log(data)
       }).catch(error => {
         console.log(error.response?.data?.message)
       })
@@ -146,7 +143,6 @@ const QuoteRequest = () => {
       .then(response => {
         const data = response.data
         setModel(data)
-        console.log(data)
       }).catch(error => {
         console.log(error.response.data.message)
       })
@@ -187,6 +183,7 @@ const QuoteRequest = () => {
         //dispatch({ type: 'FETCH_DATA_SUCCESS', payload: data })
         const datas = JSON.stringify(data)
         AsyncStorage.setItem('motorQuote', datas);
+        AsyncStorage.setItem("quoteData", JSON.stringify(payload))
         handleQuote()
       }).catch(error => {
         console.log("error", error.response?.data)
@@ -215,7 +212,7 @@ const QuoteRequest = () => {
             <DropDown
               label={"label"}
               value={"value"}
-              onchange={(item: any) => setValue(item?.value)}
+              onchange={(item: any) => setValue(item.value)}
               datas={datas}
               placeholder='---Select one---'
             />
@@ -282,7 +279,7 @@ const QuoteRequest = () => {
               onChangeText={text => setVehicleCost(text)}
               value={vehicleCost}
               placeholder="1,500,000"
-              keyboardType="default"
+              keyboardType="phone-pad"
             />
 
             {/** Start Logic need to change after adding apis */}
@@ -295,7 +292,7 @@ const QuoteRequest = () => {
                   onChangeText={text => setWindScreen(text)}
                   value={windscreen}
                   placeholder="50,000"
-                  keyboardType="default"
+                  keyboardType="numeric"
                 />
 
 
@@ -307,7 +304,7 @@ const QuoteRequest = () => {
                   onChangeText={text => setEunit(text)}
                   value={eunit}
                   placeholder="30,000"
-                  keyboardType="default"
+                  keyboardType="numeric"
                 />
               </View>
             }
@@ -321,7 +318,7 @@ const QuoteRequest = () => {
                   onChangeText={text => setCapacity(text)}
                   value={capacity}
                   placeholder="2"
-                  keyboardType="default"
+                  keyboardType="numeric"
                 />
               </View>
             }
@@ -333,7 +330,7 @@ const QuoteRequest = () => {
                   <Text className='text-center text-white font-["gothici-Bold"]'>GET QUOTE</Text>
                 </TouchableOpacity>
                 :
-                <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>
+                <Text className='text-center text-white font-["gothici-Bold"]'>Getting quote...</Text>
               }
             </View>
 

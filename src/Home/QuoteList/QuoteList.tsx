@@ -4,13 +4,23 @@ import StepperComponet from '../../Component/StepperComponet'
 import { Header } from '../../Component/Header'
 import { Cover } from '../../../DummyData/Data';
 import { BottomModal, ModalContent } from 'react-native-modals';
+import Humanize from 'humanize-plus';
 import HomeCss from '../HomeCss';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { apis } from '../../Services';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCapacity, selectFirstTime } from '../../../Slices/QuoteSlice';
+import { Ionicons } from "@expo/vector-icons"
 
 const QuoteList = () => {
-
+  const navigation: any = useNavigation()
   const [modalVisibles, setModalVisibles] = useState(false);
   const [listData, setListData] = useState([])
+
+  const origin = useSelector(selectFirstTime)
+  const destination = useSelector(selectCapacity)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +29,6 @@ const QuoteList = () => {
         if (storedData !== null) {
           const parsedData = JSON.parse(storedData);
           setListData(parsedData)
-          console.log("incoming data", parsedData)
         }
       } catch (error) {
         console.error('Error retrieving data:', error);
@@ -29,22 +38,38 @@ const QuoteList = () => {
   }, [])
 
 
+
+  const handleApplicableBenefits = (item: any) => {
+    apis.get(`Common/GetApplicableBenefits?productId=${item.productId}`)
+      .then(response => {
+        let data = response.data
+        data.forEach((element: any) => {
+          element.checked = false
+        });
+        navigation.navigate("QuoteBenefit", { item: item, benefits: data })
+      }).catch(error => {
+        console.log(error.response?.data?.message)
+      })
+  }
+
   const Item = ({ item }: any) => (
     <View style={HomeCss.card}>
+
       <View className='flex-row items-center'>
+        <Text>{origin}{destination}</Text>
         <Image source={{ uri: item.insurerLogo }} className='w-28 h-28' resizeMode='contain' />
         <View className='w-48 ml-4'>
           <Text>Insurance company:</Text>
           <Text className='font-[gothici-Bold]'>{item.insurerName} </Text>
           <View className='flex-row mt-2'>
             <Text>Premium: </Text>
-            <Text className='font-[gothici-Bold]'> {item.grossPremium}</Text>
+            <Text className='font-[gothici-Bold]'> {Humanize.formatNumber(item.grossPremium, 2)}</Text>
           </View>
         </View>
       </View>
 
       <View className='item-center bg-primary p-3 mt-4 rounded-md '>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => handleApplicableBenefits(item)}>
           <Text className='text-center text-white font-["gothici-Bold"]'>BUY</Text>
         </TouchableOpacity>
       </View>
@@ -57,6 +82,10 @@ const QuoteList = () => {
       <View>
         <Header
           label={"Get Quote"}
+          leftButton={{
+            child: <Ionicons name="arrow-back" size={24} color="black" />,
+            onPress: () => { navigation.goBack() }
+          }}
         />
         <StepperComponet currentPage={1} />
 
@@ -64,11 +93,11 @@ const QuoteList = () => {
           <Text className='font-[gothici-Regular]'>Please review the quotes below from different insurers. Click "BUY" against your preferred insurer to add optional benefits.</Text>
         </View>
 
-        <View className='item-center bg-primary p-1 mt-4 w-32 ml-4 justify-end rounded-md '>
+        {/* <View className='item-center bg-primary p-1 mt-4 w-32 ml-4 justify-end rounded-md '>
           <TouchableOpacity onPress={() => setModalVisibles(true)}>
             <Text className='text-center text-white font-["gothici-Bold"]'>Cover Summary</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <FlatList
           data={listData}
           renderItem={({ item }) => <Item item={item} />}

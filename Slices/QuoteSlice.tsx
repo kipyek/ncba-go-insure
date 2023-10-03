@@ -2,27 +2,32 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 const initialState = {
-  data: [],
+  firstTime: null,
+  capacitys: null
 }
 
 export const ServiceSlice = createSlice({
-  name: "quote",
+  name: "job",
   initialState,
   reducers: {
-    setData: (state: any, action: any) => {
-      state.data = action.payload;
+    setFirstTime: (state: any, action: any) => {
+      state.firstTime = action.payload;
     },
-
+    setCapacitys: (state: any, action: any) => {
+      state.capacitys = action.payload;
+    },
   }
 })
 
 export const {
-  setData
+  setFirstTime,
+  setCapacitys,
 } = ServiceSlice.actions;
 
 
 // Selectors
-export const selectData = (state: any) => state.job.data;
+export const selectFirstTime = (state: any) => state.job.data;
+export const selectCapacity = (state: any) => state.job.data;
 
 
 export default ServiceSlice.reducer;
