@@ -9,6 +9,10 @@ import { useNavigation } from '@react-navigation/native';
 import { Entypo, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons"
 import { apis } from '../../Services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
+import { selectFirstTime } from '../../../Slices/QuoteSlice';
+import { concat } from 'react-native-reanimated';
+import userData from '../../Component/UserData';
 
 const Additionals = [
     {
@@ -25,28 +29,75 @@ const Additionals = [
     },
 ]
 
-const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) => {
-    const { item, benefits } = route?.params
-    console.log("Items", item)
-    console.log("Benefits", benefits)
+const QuoteBenefit = ({ route }: any) => {
+    let { item, benefits } = route?.params
     const navigation: any = useNavigation();
-    const [total, setTotal] = useState(0);
+
     const [listData, setListData] = useState([])
+    const [listDatas, setListDatas] = useState(Object)
     const [coverNotes, setCoverNotes] = useState([]);
-    const [selected, setSelected] = useState([])
-    const [select, setSelect] = useState(new Array(benefits.length).fill(false))
+    const [selectedBenefits, setSelectedBenefits] = useState([])
+    const [allBenefits, setAllBenefits] = useState<any>([])
+    const [addedBenefits, setAddedBenefits] = useState(Object)
+    const [currentSelected, setCurrentSelected] = useState(Object)
+    const [selectKey, setSelectKey] = useState(Math.random())
     const [show, setShow] = useState(false);
+    const [unify, setUnify] = useState(item);
+    const [selection, setSelection] = useState(benefits);
     const [modalVisibles, setModalVisibles] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const [checkedState, setCheckedState] = useState(
-        new Array(Additionals.length).fill(false)
-    );
+    const levy = (unify.stampDuty) + (unify?.trainingLevy) + (unify?.phcf)
 
 
-    const levy = (item.stampDuty) + (item?.trainingLevy) + (item?.phcf)
     useEffect(() => {
         handleNotes()
     }, []);
+
+    useEffect(() => {
+        setSelectedBenefits([])
+        let bens: any = [];
+        selection.forEach((element: any) => {
+
+            if (element.benefitId === currentSelected.benefitId) {
+                element = currentSelected
+            }
+
+            if (element.checked) {
+                let benefit = {
+                    "benefit": element.benefitName,
+                    "benefitId": element.benefitId,
+                    "noOfInsured": 0,
+                    "premium": 0
+                }
+
+                bens.push(benefit)
+
+            }
+        })
+        setSelectedBenefits(bens)
+        setSelection(selection)
+
+    }, [selectKey])
+
+    useEffect(() => {
+        handleAddBenefit()
+    }, [selectedBenefits])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const storedData = await AsyncStorage.getItem('quoteData');
+                if (storedData !== null) {
+                    const parsedData = JSON.parse(storedData);
+                    setListDatas(parsedData)
+                    //console.log("outgoing data", parsedData)
+                }
+            } catch (error) {
+                console.error('Error retrieving data:', error);
+            }
+        }
+        fetchData()
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,7 +106,7 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                 if (storedData !== null) {
                     const parsedData = JSON.parse(storedData);
                     setListData(parsedData)
-                    console.log("incoming data", parsedData)
+                    //console.log("incoming data", parsedData)
                 }
             } catch (error) {
                 console.error('Error retrieving data:', error);
@@ -64,73 +115,37 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
         fetchData()
     }, []);
 
-    // const handleToggle = () => {
-    //     setSelect(!select)
-    // }
 
-    const handleToggle = (position: any) => {
-        const updatedCheckedState = checkedState.map((item, index) =>
-            index === position ? !item : item
-        );
-        setSelect(updatedCheckedState);
-        console.log(select)
+
+    const handleToggle = (item: any) => {
+        item.checked = !item.checked
+        setCurrentSelected(item)
+        setSelectKey(Math.random())
+
+
     }
-
-    const handleNext = () => {
-        onNextStepPressSelection()
-    };
-
-    const handleBack = () => {
-        handleBackStep()
-    }
-    const handleToggling = () => {
-        setShow(!show)
-    };
-
-    const handleOptional = (position: any) => {
-        const updatedCheckedState = checkedState.map((item, index) =>
-            index === position ? !item : item
-        );
-
-        setCheckedState(updatedCheckedState);
-
-        const totalPrice = updatedCheckedState.reduce(
-            (sum, currentState, index) => {
-                if (currentState === true) {
-                    return sum + Additionals[index].price;
-                }
-                return sum;
-            },
-            0
-        );
-        setTotal(totalPrice);
-    };
 
     const handleAddBenefit = () => {
         const payload = {
-            "quoteId": "string",
             "productId": item?.productId,
             "policyPeriod": 12,
             "basicPremium": item?.basicPremium,
             "sumInsured": item?.sumInsured,
-            "capacity": 0,
-            "quoteType": 0,
-            "additionalBenefits": [
-                {
-                    "benefitId": 0,
-                    "noOfInsured": 0,
-                    "benefit": "string",
-                    "premium": 0,
-                    "benefitOptions": []
-                }
-            ]
+            "capacity": listDatas?.capacity,
+            "quoteType": listDatas?.quoteType,
+            "additionalBenefits": selectedBenefits
         }
+        console.log("Payload", payload)
         apis.post("Common/AddBenefits", payload)
             .then(response => {
                 const data = response.data
-                console.log(data)
+                const datas = data.additionalBenefits
+                setAllBenefits(datas)
+                setAddedBenefits(data)
+                setUnify(data)
+                console.log("Add benefits", data)
             }).catch(error => {
-                console.log(error.response?.data?.message)
+                console.log("error", error.response?.data?.message)
             })
     }
 
@@ -145,21 +160,26 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
             })
     }
 
-    const handleSelection = (value: any) => {
-        const updatedData: any = selected.filter((selected) => {
-            //return selected.benefitId === value.benefitId
-        })
-        const data: any = [...selected, value]
-        setSelected(data)
-    }
 
     const Item = ({ item }: any) => (
         <View className='pl-1 pr-1'>
             <TouchableOpacity onPress={() => handleToggle(item)}>
                 <View className='flex-1 flex-row justify-between bg-gray-200 mt-2 '>
                     <Text className='text-center font-["gothici-Bold"]'>{item?.benefitName}</Text>
+                    <View>
+                        {allBenefits.map((i: any) => (
+                            <View>
+                                {item.benefitId === i.benefitId &&
+                                    <View>
+                                        <Text>{i.premium}</Text>
+                                    </View>}
+                            </View>
+                        ))}
+                    </View>
+
+
                     <View className=''>
-                        {select[item.index] ?
+                        {item.checked == true ?
                             <MaterialCommunityIcons name="checkbox-marked" size={24} color="black" />
                             :
                             <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color="black" />
@@ -170,7 +190,6 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
 
         </View>
     );
-
 
     return (
         <Fragment>
@@ -193,7 +212,7 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                         <TouchableOpacity
                             onPress={() => setModalVisible(true)}
                             className='flex-row justify-between bg-gray-200 ml-4 mr-4 pl-1 pr-1'>
-                            <Text className='font-[gothici-Regular]'>Click here to see applicable benefits</Text>
+                            <Text className='font-[gothici-Bold]'>Click here to see applicable benefits</Text>
                             {!show ?
                                 <Entypo name="chevron-small-up" size={24} color="black" />
                                 :
@@ -219,7 +238,6 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                                     </View> */}
 
                                 </View>
-
                             </View>
 
                             <View style={{ borderWidth: 0.6, opacity: 0.5, borderColor: 'grey' }} />
@@ -240,7 +258,7 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                                 </View>
                                 <View className='flex-row mt-2 justify-between bg-gray-200'>
                                     <Text>Extensions:</Text>
-                                    <Text className='font-bold ml-14'>Kes {Humanize.formatNumber(item?.extensions, 2)}</Text>
+                                    <Text className='font-bold ml-14'>Kes {Humanize.formatNumber(unify?.extensions, 2)}</Text>
                                 </View>
                                 <View className='flex-row mt-2 justify-between bg-gray-200'>
                                     <Text>Total premium:</Text>
@@ -252,7 +270,7 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                                 </View>
                                 <View className='flex-row mt-2 justify-between bg-gray-200'>
                                     <Text className='font-bold '>Gross premium:</Text>
-                                    <Text className='font-bold ml-2'>Kes {Humanize.formatNumber(item?.grossPremium, 2)}</Text>
+                                    <Text className='font-bold ml-2'>Kes {Humanize.formatNumber(unify.grossPremium, 2)}</Text>
                                 </View>
 
                                 <View className='flex-row justify-between mt-4'>
@@ -262,7 +280,7 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
                                         </TouchableOpacity>
                                     </View>
                                     <View className='item-center bg-primary p-2 mt-4 rounded-md w-36'>
-                                        <TouchableOpacity onPress={() => navigation.navigate("QuoteConfirm")} >
+                                        <TouchableOpacity onPress={() => navigation.navigate("QuoteConfirm", { item: item, addedBenefits: addedBenefits, allBenefits: allBenefits })} >
                                             <Text className='text-center text-white font-["gothici-Bold"]'>NEXT</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -305,9 +323,15 @@ const QuoteBenefit = ({ onNextStepPressSelection, handleBackStep, route }: any) 
             >
                 <ModalContent>
                     <View style={{ borderWidth: 1, width: 50, alignSelf: 'center', marginBottom: 12, borderColor: 'gray' }} />
+                    <TouchableOpacity
+                        onPress={() => setModalVisible(false)}
+                        className='justify-end items-center self-end mb-2 bg-primary rounded-full w-10 p-2'
+                    >
+                        <Text className='text-white'>Ok</Text>
+                    </TouchableOpacity>
                     <View>
                         <FlatList
-                            data={benefits}
+                            data={selection}
                             renderItem={({ item }) => <Item item={item} />}
                             keyExtractor={(item: any) => item.benefitId}
                         />

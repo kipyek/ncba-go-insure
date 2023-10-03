@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, } from 'react-native';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Moment from 'moment';
 import { Fontisto, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import DropDown from '../../Component/DropDown';
@@ -7,6 +7,9 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Header } from '../../Component/Header';
 import StepperComponet from '../../Component/StepperComponet';
 import { useNavigation } from '@react-navigation/native';
+import { apis } from '../../Services';
+import userData from '../../Component/UserData';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const data = [
     { label: 'Health', value: '1' },
@@ -15,8 +18,10 @@ const data = [
     { label: 'Car Insurance', value: '4' },
 ];
 
-const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep }: any) => {
+const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) => {
+    const { item, addedBenefits, allBenefits } = route.params
     const navigation: any = useNavigation()
+    const activeUser = userData()
     const [number, setNumber] = useState("");
     const [value, setValue] = useState('')
     const [date, setDate] = useState(null);
@@ -25,6 +30,23 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep }: any) => {
     const [isDatePickerVisibles, setDatePickerVisibilitys] = useState(false);
     const [finance, setFinance] = useState(false)
     const [confirmed, setConfirmed] = useState(false)
+    const [listData, setListData] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const storedData = await AsyncStorage.getItem('quoteData');
+                if (storedData !== null) {
+                    const parsedData = JSON.parse(storedData);
+                    setListData(parsedData)
+                    console.log(parsedData)
+                }
+            } catch (error) {
+                console.error('Error retrieving data:', error);
+            }
+        }
+        fetchData()
+    }, [])
 
     const handlefinance = () => {
         setFinance(!finance)
@@ -59,6 +81,62 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep }: any) => {
     const handleBack = () => {
         handleBackStep()
     }
+
+    const handleConfirmQUote = () => {
+        const payload = {
+            "commencementDate": new Date(),
+            "expiryDate": new Date(),
+            "productId": item?.productId,
+            "sumInsured": addedBenefits?.sumInsured,
+            "basicPremium": addedBenefits?.basicPremium,
+            "extensions": addedBenefits?.extensions,
+            "phcf": addedBenefits?.phcf,
+            "stampDuty": addedBenefits?.stampDuty,
+            "trainingLevy": addedBenefits?.trainingLevy,
+            "whTax": addedBenefits?.whTax,
+            "grossPremium": addedBenefits?.grossPremium,
+            "customerId": 0,
+            "userID": activeUser.userId,
+            "sessionId": "string",
+            "referralSource": 0,
+            "customer": null,
+            "policyId": 0,
+            "branchId": 0,
+            "additionalBenefits": [
+                {
+                    "benefitId": allBenefits.benefitId,
+                    "noOfInsured": 0,
+                    "benefit": allBenefits.benefit,
+                    "premium": allBenefits.premium,
+
+                }
+            ],
+            "phoneNumber": activeUser?.userPhone,
+            "registrationNo": null, //registration number
+            "make": "string",
+            "model": "string",
+            "yom": 0,
+            "agentId": null,
+            "isClient": true,
+            "windscreen": 0,
+            "entertainment": 0,
+            "windscreenPremium": addedBenefits?.windscreenPremium,
+            "entertainmentPremium": addedBenefits?.entertainmentPremium,
+            "isFinanced": false,
+            "paypoint": 0,
+            "insurerId": 0
+
+        }
+        apis.post("MotorQuotes/ConfirmQuoteClient", payload)
+            .then(response => {
+                const data = response.data
+                console.log("Benefits confirm Quote", data)
+                navigation.navigate("QuoteConfirm")
+            }).catch(error => {
+                console.log(error.response?.data?.message)
+            })
+    }
+
 
 
 

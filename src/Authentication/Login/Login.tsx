@@ -7,7 +7,6 @@ import * as Yup from "yup"
 import { api } from '../../Services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-
 const validationSchema = Yup.object().shape({
   email: Yup
     .string()

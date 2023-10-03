@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { apis } from '../../Services';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFirstTime } from '../../../Slices/QuoteSlice';
+import { selectCapacity, selectFirstTime } from '../../../Slices/QuoteSlice';
 import { Ionicons } from "@expo/vector-icons"
 
 const QuoteList = () => {
@@ -18,7 +18,9 @@ const QuoteList = () => {
   const [modalVisibles, setModalVisibles] = useState(false);
   const [listData, setListData] = useState([])
 
-  const dispatch = useDispatch()
+  const origin = useSelector(selectFirstTime)
+  const destination = useSelector(selectCapacity)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +29,6 @@ const QuoteList = () => {
         if (storedData !== null) {
           const parsedData = JSON.parse(storedData);
           setListData(parsedData)
-          console.log("incoming data", parsedData)
         }
       } catch (error) {
         console.error('Error retrieving data:', error);
@@ -41,19 +42,21 @@ const QuoteList = () => {
   const handleApplicableBenefits = (item: any) => {
     apis.get(`Common/GetApplicableBenefits?productId=${item.productId}`)
       .then(response => {
-        const data = response.data
+        let data = response.data
+        data.forEach((element: any) => {
+          element.checked = false
+        });
         navigation.navigate("QuoteBenefit", { item: item, benefits: data })
-        console.log("current data", data)
       }).catch(error => {
         console.log(error.response?.data?.message)
       })
   }
-  const first = useSelector(selectFirstTime)
 
   const Item = ({ item }: any) => (
     <View style={HomeCss.card}>
 
       <View className='flex-row items-center'>
+        <Text>{origin}{destination}</Text>
         <Image source={{ uri: item.insurerLogo }} className='w-28 h-28' resizeMode='contain' />
         <View className='w-48 ml-4'>
           <Text>Insurance company:</Text>
