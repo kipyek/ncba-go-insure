@@ -2,15 +2,28 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import HomeCss from '../HomeCss';
+import Humanize from 'humanize-plus';
 import StepperComponet from '../../Component/StepperComponet';
 import { Header } from '../../Component/Header';
 import { Ionicons } from "@expo/vector-icons"
+import { apis } from '../../Services';
 
-const QuoteFinish = ({ onNewQuote }: any) => {
+const QuoteFinish = ({ route }: any) => {
+    const { item } = route.params
+    console.log("Finally", item)
     const navigation: any = useNavigation();
 
     const handleOnClick = () => {
         navigation.navigate("Quote")
+    }
+
+    const handleSubmitQuote = () => {
+        apis.get("Common/Paypoints")
+            .then(response => {
+                const data = response.data
+            }).catch(error => {
+                console.log(error.response?.data?.message)
+            })
     }
 
     return (
@@ -24,7 +37,7 @@ const QuoteFinish = ({ onNewQuote }: any) => {
             />
             <StepperComponet currentPage={4} />
             <View style={HomeCss.introCard}>
-                <Text className='font-[gothici-Regular]'>Your quotation number is <Text className='font-bold font-[gothici-Regular]'>Q01721</Text> and total payable is <Text className='font-bold font-[gothici-Regular]'>Kes 184,868.00.</Text></Text>
+                <Text className='font-[gothici-Regular]'>Your quotation number is <Text className='font-bold font-[gothici-Regular]'>{item?.quoteNo}</Text> and total payable is <Text className='font-bold font-[gothici-Regular]'>Kes {Humanize.formatNumber(item?.premiumAmount, 2)}</Text></Text>
                 <Text className='font-[gothici-Regular]'>Please click on  <Text className='font-bold font-[gothici-Regular]'>"GO FOR IT"</Text> to proceed to buy the cover. If you wish to quote for another vehicle, please click on <Text className='font-bold font-[gothici-Regular]'>"QUOTE FOR ANOTHER VEHICLE"</Text></Text>
 
                 <View className='flex-row justify-between'>

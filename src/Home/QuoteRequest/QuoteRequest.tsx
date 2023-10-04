@@ -25,8 +25,8 @@ const QuoteRequest = () => {
   const [value, setValue] = useState(null);
   const [uid, setUid] = useState<any>('');
   const [vehicleCost, setVehicleCost] = useState('');
-  const [windscreen, setWindScreen] = useState('');
-  const [eunit, setEunit] = useState('');
+  const [windscreen, setWindScreen] = useState<any>(null);
+  const [eunit, setEunit] = useState<any>(null);
   const [isLoading, setisLoading] = useState(false);
   const [capacity, setCapacity] = useState('');
   const [dateRange, setDateRange] = useState([]);
@@ -39,7 +39,7 @@ const QuoteRequest = () => {
   const [selectedCoverType, setSelectedCoverType] = useState<any>(Object);
   const [selectedMotorType, setSelectedMotorType] = useState<any>('');
   const [selectedMake, setSelectedMake] = useState<any>('');
-  const [selectedModel, setSelectedModel] = useState('');
+  const [selectedModel, setSelectedModel] = useState<any>('');
   const [selectedVehicleUsed, setSelectedVehicleUsed] = useState<any>(Object);
 
   const activeUser = userData();
@@ -59,7 +59,7 @@ const QuoteRequest = () => {
 
   useEffect(() => {
     handleModel();
-  }, [selectedMake, selectedMotorType]);
+  }, [selectedMake?.id, selectedMotorType]);
 
   useEffect(() => {
     handleVehicleUsed()
@@ -70,7 +70,7 @@ const QuoteRequest = () => {
     navigation.navigate("QuoteList", {})
   };
 
-  console.log(selectedMake)
+
 
   const handleMorethan15 = () => {
     Alert.alert('Warning!!',
@@ -139,7 +139,7 @@ const QuoteRequest = () => {
   }
 
   const handleModel = () => {
-    apis.get(`MotorQuotes/Models?makeId=${selectedMake}&prodClass=${selectedMotorType}`)
+    apis.get(`MotorQuotes/Models?makeId=${selectedMake?.id}&prodClass=${selectedMotorType}`)
       .then(response => {
         const data = response.data
         setModel(data)
@@ -158,9 +158,9 @@ const QuoteRequest = () => {
 
   const selectedFields = {
     "yom": date,
-    "make": selectedMake,
-    "model": selectedModel,
-    "coverTypeId": selectedCoverType.id,
+    "make": selectedMake.description,
+    "model": selectedModel.description,
+    "coverTypeId": selectedCoverType.description,
     "vehicleValue": vehicleCost,
     "sessionId": uid,
     "quoteType": value,
@@ -253,7 +253,7 @@ const QuoteRequest = () => {
             <DropDown
               label={"description"}
               value={"id"}
-              onchange={(item: any) => setSelectedMake(item?.id)}
+              onchange={(item: any) => setSelectedMake(item)}
               datas={make}
               placeholder='---Select vehicle make---'
             />
@@ -262,7 +262,7 @@ const QuoteRequest = () => {
             <DropDown
               label={"description"}
               value={"id"}
-              onchange={(item: any) => setSelectedModel(item?.id)}
+              onchange={(item: any) => setSelectedModel(item)}
               datas={model}
               placeholder='---Select vehicle model---'
             />

@@ -20,15 +20,22 @@ const data = [
 
 const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) => {
     const { item, addedBenefits, allBenefits } = route.params
+
     const navigation: any = useNavigation()
-    const activeUser = userData()
+    const activeUser = userData();
+    console.log(activeUser)
     const [number, setNumber] = useState("");
     const [value, setValue] = useState('')
     const [date, setDate] = useState(null);
+    const [referral, setReferral] = useState([]);
+    const [payPoints, setPayPoints] = useState([]);
+    const [selectedReferral, setSelectedReferral] = useState(null);
+    const [selectedPayPoints, setSelectedPayPoints] = useState(null);
     const [policyDate, setPolicyDate] = useState(null);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isDatePickerVisibles, setDatePickerVisibilitys] = useState(false);
     const [finance, setFinance] = useState(false)
+    const [visible, setVisible] = useState(false)
     const [confirmed, setConfirmed] = useState(false)
     const [listData, setListData] = useState<any>([])
 
@@ -39,13 +46,15 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                 if (storedData !== null) {
                     const parsedData = JSON.parse(storedData);
                     setListData(parsedData)
-
+                    console.log("ParsedData", parsedData)
                 }
             } catch (error) {
                 console.error('Error retrieving data:', error);
             }
         }
-        fetchData()
+        fetchData();
+        handleReferral();
+        handlePaypoints()
     }, [])
 
     const handlefinance = () => {
@@ -83,7 +92,29 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
         handleBackStep()
     }
 
+
+    const handleReferral = () => {
+        apis.get("Common/ReferralSources")
+            .then(response => {
+                const data = response.data
+                setReferral(data)
+            }).catch(error => {
+                console.log(error.response?.data?.message)
+            })
+    }
+
+    const handlePaypoints = () => {
+        apis.get("Common/Paypoints")
+            .then(response => {
+                const data = response.data
+                setPayPoints(data)
+            }).catch(error => {
+                console.log(error.response?.data?.message)
+            })
+    }
+
     const handleConfirmQUote = () => {
+        setVisible(true)
         const payload = {
             "commencementDate": new Date(),
             "expiryDate": new Date(),
@@ -99,38 +130,52 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
             "customerId": 0,
             "userID": activeUser.userId,
             "sessionId": listData?.sessionId,
-            "referralSource": 0,
-            "customer": null,
+            "referralSource": selectedReferral ? selectedReferral : 0,
+            "customer": {
+                "surname": activeUser.surname,
+                "firstName": activeUser.firstName,
+                "otherNames": activeUser.otherName,
+                "mobileNo": activeUser.userPhone,
+                "emailAddress": activeUser.userEmail,
+                "physicalAddress": "",
+                "clientType": 0,
+                "dateOfBirth": activeUser.dob,
+                "idNumber": activeUser.userId,
+                "gender": "",
+                "pin": activeUser.pin,
+                "id": 0,
+                "idType": 0,
+                "customerType": 1
+            },
             "policyId": 0,
             "branchId": 0,
-            "additionalBenefits": [
-                allBenefits
-            ],
+            "additionalBenefits": allBenefits,
             "phoneNumber": activeUser?.userPhone,
             "registrationNo": number, //registration number
             "make": listData?.make,
             "model": listData?.model,
             "yom": listData?.yom,
-            "agentId": null,
+            "agentId": "",
             "isClient": true,
             "windscreen": listData.windscreenValue,
             "entertainment": listData.entertainmentValue,
             "windscreenPremium": addedBenefits?.windscreenPremium,
             "entertainmentPremium": addedBenefits?.entertainmentPremium,
-            "isFinanced": false,
-            "paypoint": 0,
-            "insurerId": 0
+            "isFinanced": finance,
+            "paypoint": selectedPayPoints ? selectedPayPoints : 0,
+            "insurerId": item?.insurerId
 
         }
-        console.log("this is the data", payload)
+        //console.log("this is the data", payload)
         apis.post("MotorQuotes/ConfirmQuoteClient", payload)
             .then(response => {
                 const data = response.data
-                console.log("Benefits confirm Quote", data)
-                navigation.navigate("QuoteConfirm")
+                navigation.navigate("QuoteFinish", { item: data })
             }).catch(error => {
-                console.log(error.response.data)
-            })
+                console.log("error", error.response?.data?.message)
+            }).finally(() =>
+                setVisible(false)
+            )
     }
 
 
@@ -195,10 +240,10 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                                 <View>
                                     <Text className=' mt-1 font-[gothici-Regular]'>Select the financial institution here</Text>
                                     <DropDown
-                                        label={"label"}
-                                        value={"value"}
-                                        onchange={(item: any) => setValue(item?.value)}
-                                        datas={data}
+                                        label={"description"}
+                                        value={"id"}
+                                        onchange={(item: any) => setSelectedPayPoints(item?.id)}
+                                        datas={payPoints}
                                         placeholder=''
                                     />
                                 </View>
@@ -210,10 +255,10 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                         <View className='mb-2'>
                             <Text className=' mb-1 mt-3 font-[gothici-Regular]'>How did you hear about us?</Text>
                             <DropDown
-                                label={"label"}
-                                value={"value"}
-                                onchange={(item: any) => setValue(item?.value)}
-                                datas={data}
+                                label={"description"}
+                                value={"id"}
+                                onchange={(item: any) => setSelectedReferral(item?.id)}
+                                datas={referral}
                                 placeholder=''
                             />
                         </View>
@@ -240,9 +285,14 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                             </View>
                             {confirmed ?
                                 <View className='item-center bg-[#EEE017] p-3 mt-2 rounded-md w-32'>
-                                    <TouchableOpacity onPress={handleNext}>
-                                        <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
-                                    </TouchableOpacity>
+                                    {!visible ?
+                                        <TouchableOpacity onPress={handleNext}>
+                                            <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
+                                        </TouchableOpacity>
+                                        :
+                                        <Text className='text-center font-["gothici-Bold"]'>Processing...</Text>
+                                    }
+
                                 </View>
                                 :
                                 null}
