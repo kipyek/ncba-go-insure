@@ -156,6 +156,19 @@ const QuoteRequest = () => {
   //   setSe
   // }
 
+  const selectedFields = {
+    "yom": date,
+    "make": selectedMake,
+    "model": selectedModel,
+    "coverTypeId": selectedCoverType.id,
+    "vehicleValue": vehicleCost,
+    "sessionId": uid,
+    "quoteType": value,
+    "capacity": capacity ? capacity : 0,
+    "windscreenValue": windscreen,
+    "entertainmentValue": eunit,
+  }
+
 
   const handleGetQuote = () => {
     setisLoading(true)
@@ -184,6 +197,7 @@ const QuoteRequest = () => {
         const datas = JSON.stringify(data)
         AsyncStorage.setItem('motorQuote', datas);
         AsyncStorage.setItem("quoteData", JSON.stringify(payload))
+        AsyncStorage.setItem("filledData", JSON.stringify(selectedFields))
         handleQuote()
       }).catch(error => {
         console.log("error", error.response?.data)

@@ -30,16 +30,16 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
     const [isDatePickerVisibles, setDatePickerVisibilitys] = useState(false);
     const [finance, setFinance] = useState(false)
     const [confirmed, setConfirmed] = useState(false)
-    const [listData, setListData] = useState([])
+    const [listData, setListData] = useState<any>([])
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const storedData = await AsyncStorage.getItem('quoteData');
+                const storedData = await AsyncStorage.getItem('filledData');
                 if (storedData !== null) {
                     const parsedData = JSON.parse(storedData);
                     setListData(parsedData)
-                    console.log(parsedData)
+
                 }
             } catch (error) {
                 console.error('Error retrieving data:', error);
@@ -75,7 +75,8 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
     }
 
     const handleNext = () => {
-        navigation.navigate("QuoteFinish")
+        handleConfirmQUote()
+
     }
 
     const handleBack = () => {
@@ -97,29 +98,23 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
             "grossPremium": addedBenefits?.grossPremium,
             "customerId": 0,
             "userID": activeUser.userId,
-            "sessionId": "string",
+            "sessionId": listData?.sessionId,
             "referralSource": 0,
             "customer": null,
             "policyId": 0,
             "branchId": 0,
             "additionalBenefits": [
-                {
-                    "benefitId": allBenefits.benefitId,
-                    "noOfInsured": 0,
-                    "benefit": allBenefits.benefit,
-                    "premium": allBenefits.premium,
-
-                }
+                allBenefits
             ],
             "phoneNumber": activeUser?.userPhone,
-            "registrationNo": null, //registration number
-            "make": "string",
-            "model": "string",
-            "yom": 0,
+            "registrationNo": number, //registration number
+            "make": listData?.make,
+            "model": listData?.model,
+            "yom": listData?.yom,
             "agentId": null,
             "isClient": true,
-            "windscreen": 0,
-            "entertainment": 0,
+            "windscreen": listData.windscreenValue,
+            "entertainment": listData.entertainmentValue,
             "windscreenPremium": addedBenefits?.windscreenPremium,
             "entertainmentPremium": addedBenefits?.entertainmentPremium,
             "isFinanced": false,
@@ -127,13 +122,14 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
             "insurerId": 0
 
         }
+        console.log("this is the data", payload)
         apis.post("MotorQuotes/ConfirmQuoteClient", payload)
             .then(response => {
                 const data = response.data
                 console.log("Benefits confirm Quote", data)
                 navigation.navigate("QuoteConfirm")
             }).catch(error => {
-                console.log(error.response?.data?.message)
+                console.log(error.response.data)
             })
     }
 
