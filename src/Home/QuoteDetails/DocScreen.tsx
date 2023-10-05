@@ -11,13 +11,14 @@ import * as DocumentPicker from 'expo-document-picker';
 
 
 const DocScreen = ({ item }: any) => {
-    console.log("Datasdats", item)
     const [national, setNational] = useState('');
     const [importDoc, setImportDoc] = useState('');
     const [kra, setKra] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [imageUri, setImageUri] = useState("")
+    const [imageUri, setImageUri] = useState("");
+    const [selectedFile, setSelectedFile] = useState(Object);
+    const [selectedDoc, setSelectedDoc] = useState<any>(null)
 
     const documents = item?.documents
 
@@ -38,34 +39,26 @@ const DocScreen = ({ item }: any) => {
         return cameraPermission.granted;
     };
 
-    const takePicture = async () => {
-        setVisible(true)
-        const { uri } = await cameraRef?.current?.takePictureAsync();
-        setImageUri(uri)
-        // navigation.navigate("Camera", { item: uri })
-    };
 
-    if (!getPermissions()) {
-        return Alert.alert(
-            "Permissions Required!",
-            "You need to provide the permissions to access the camera",
-            [{ text: "Got it" }]
-        );
+    const handleOptions = (i: any) => {
+        setModalVisible(true)
+        setSelectedFile(i)
+        setSelectedDoc(null)
     }
+
+
 
 
 
     const pickImage = async () => {
         let result = await DocumentPicker.getDocumentAsync({});
-        alert(result);
-        console.log(result);
 
-        // console.log("Message", result);
-
-        // if (!result.canceled) {
-        //     setNational(result.assets[0].uri);
-        //     setModalVisible(false)
-        // }
+        setSelectedDoc({
+            "name": result.name,
+            "fileName": selectedFile.documentName,
+            "fileId": selectedFile.documentRefId
+        });
+        console.warn("this is it", selectedDoc.name)
     };
 
 
@@ -76,11 +69,14 @@ const DocScreen = ({ item }: any) => {
             allowsEditing: false,
             quality: 1,
         });
-        setNational(uri);
-        console.log("last", result);
 
         if (!result.canceled) {
             setNational(result.assets[0].uri);
+            setSelectedDoc({
+                "fileName": selectedFile.documentName,
+                "fileId": selectedFile.documentRefId
+            });
+            console.warn("this is itdfg", selectedDoc)
             setModalVisible(false)
         }
     }
@@ -96,13 +92,20 @@ const DocScreen = ({ item }: any) => {
 
                             {documents.map((i: any) => (
                                 <View style={HomeCss.container1} className='mt-2'>
-                                    <View style={HomeCss.uploadBtnContainer1}>
-                                        {/* {kra && <Image source={{ uri: kra }} style={{ width: 400, height: 100 }} />} */}
-                                        <TouchableOpacity onPress={() => { }} style={HomeCss.uploadBtn} >
-                                            <Text className='font-[gothici-Regular]'>{i.documentName}</Text>
-                                            <AntDesign name="plus" size={20} color="black" />
-                                        </TouchableOpacity>
-                                    </View>
+                                    {i.fileContent !== null &&
+                                        <Text className='text-center'>{i.fileName}</Text>
+                                    }
+                                    {i.documentName !== "Fully Filled Proposal Forms" &&
+
+                                        <View style={HomeCss.uploadBtnContainer1}>
+
+
+                                            <TouchableOpacity onPress={() => handleOptions(i)} style={HomeCss.uploadBtn} >
+                                                <Text className='font-[gothici-Regular]'>{i.documentName}</Text>
+                                                <AntDesign name="plus" size={20} color="black" />
+                                            </TouchableOpacity>
+                                        </View>
+                                    }
                                 </View>
                             ))}
 
