@@ -10,6 +10,7 @@ import { apis } from '../../Services';
 import userData from '../../Component/UserData';
 import uuid from 'react-native-uuid';
 import CryptoJS from 'crypto-js';
+import axios from 'axios';
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 const Base64 = {

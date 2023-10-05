@@ -19,6 +19,8 @@ const DocScreen = ({ item }: any) => {
     const [visible, setVisible] = useState(false);
     const [imageUri, setImageUri] = useState("")
 
+    const documents = item?.documents
+
 
     const cameraRef = useRef();
 
@@ -90,54 +92,19 @@ const DocScreen = ({ item }: any) => {
                     <View className='ml-4 mr-4 mt-2'>
                         <Text className='font-[gothici-Regular]'>Upload all required documents first before you can proceed to next steps</Text>
                         <Box className='mt-4'>
-                            <View className='mb-4'>
-                                <View style={HomeCss.container1}>
-                                    {national && <Image source={{ uri: national }} style={{ width: 400, height: 100 }} />}
-                                    <View style={HomeCss.uploadBtnContainer1}>
 
-                                        <TouchableOpacity onPress={pickImage} style={HomeCss.uploadBtn} >
-                                            <Text className='font-[gothici-Regular]'>Upload National ID /Passport</Text>
+
+                            {documents.map((i: any) => (
+                                <View style={HomeCss.container1} className='mt-2'>
+                                    <View style={HomeCss.uploadBtnContainer1}>
+                                        {/* {kra && <Image source={{ uri: kra }} style={{ width: 400, height: 100 }} />} */}
+                                        <TouchableOpacity onPress={() => { }} style={HomeCss.uploadBtn} >
+                                            <Text className='font-[gothici-Regular]'>{i.documentName}</Text>
                                             <AntDesign name="plus" size={20} color="black" />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                            </View>
-
-                            <View className='mb-4'>
-                                <View style={HomeCss.container1}>
-                                    {importDoc && <Image source={{ uri: importDoc }} style={{ width: 400, height: 100 }} />}
-                                    <View style={HomeCss.uploadBtnContainer1}>
-                                        <TouchableOpacity onPress={() => setModalVisible(true)} style={HomeCss.uploadBtn} >
-                                            <Text className='font-[gothici-Regular]'>Upload Logbook or Import Documents</Text>
-                                            <AntDesign name="plus" size={20} color="black" />
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-
-                            <View className='mb-4'>
-                                <View style={HomeCss.container1}>
-                                    <View style={HomeCss.uploadBtnContainer1}>
-                                        {/* <TouchableOpacity onPress={() => { }} style={HomeCss.uploadBtn} >
-                                        <Text className='font-[gothici-Regular]'>Fully Filled Proposal Forms</Text>
-                                        <AntDesign name="plus" size={20} color="black" />
-                                    </TouchableOpacity> */}
-                                    </View>
-                                </View>
-                            </View>
-
-
-
-
-                            <View style={HomeCss.container1}>
-                                <View style={HomeCss.uploadBtnContainer1}>
-                                    {kra && <Image source={{ uri: kra }} style={{ width: 400, height: 100 }} />}
-                                    <TouchableOpacity onPress={() => { }} style={HomeCss.uploadBtn} >
-                                        <Text className='font-[gothici-Regular]'>Copy of KRA PIN</Text>
-                                        <AntDesign name="plus" size={20} color="black" />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                            ))}
 
                         </Box>
                     </View>
