@@ -6,10 +6,12 @@ import HomeCss from '../HomeCss';
 import * as ImagePicker from 'expo-image-picker';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import { Camera, requestCameraPermissionsAsync, getCameraPermissionsAsync } from "expo-camera";
+import * as DocumentPicker from 'expo-document-picker';
 
 
 
-const DocScreen = () => {
+const DocScreen = ({ item }: any) => {
+    console.log("Datasdats", item)
     const [national, setNational] = useState('');
     const [importDoc, setImportDoc] = useState('');
     const [kra, setKra] = useState('');
@@ -52,18 +54,16 @@ const DocScreen = () => {
 
 
     const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            quality: 1,
-        });
+        let result = await DocumentPicker.getDocumentAsync({});
+        alert(result);
+        console.log(result);
 
-        console.log("Message", result);
+        // console.log("Message", result);
 
-        if (!result.canceled) {
-            setNational(result.assets[0].uri);
-            setModalVisible(false)
-        }
+        // if (!result.canceled) {
+        //     setNational(result.assets[0].uri);
+        //     setModalVisible(false)
+        // }
     };
 
 
@@ -74,7 +74,7 @@ const DocScreen = () => {
             allowsEditing: false,
             quality: 1,
         });
-
+        setNational(uri);
         console.log("last", result);
 
         if (!result.canceled) {

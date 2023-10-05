@@ -23,7 +23,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
 
     const navigation: any = useNavigation()
     const activeUser = userData();
-    console.log(activeUser)
+
     const [number, setNumber] = useState("");
     const [value, setValue] = useState('')
     const [date, setDate] = useState(null);
@@ -114,6 +114,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
     }
 
     const handleConfirmQUote = () => {
+        console.log("ALldewdew", activeUser?.userPhone)
         setVisible(true)
         const payload = {
             "commencementDate": new Date(),
@@ -166,7 +167,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
             "insurerId": item?.insurerId
 
         }
-        //console.log("this is the data", payload)
+        console.log("this is the data", payload)
         apis.post("MotorQuotes/ConfirmQuoteClient", payload)
             .then(response => {
                 const data = response.data

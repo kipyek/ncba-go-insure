@@ -8,7 +8,8 @@ import PaymentScreen from './PaymentScreen';
 import { useNavigation } from '@react-navigation/native';
 import DocScreen from './DocScreen';
 
-const QuoteDetails = () => {
+const QuoteDetails = ({ route }: any) => {
+    const { item } = route.params
     const navigation: any = useNavigation()
     const [visible, setVisible] = useState(false)
     const [show, setShow] = useState(false)
@@ -66,7 +67,7 @@ const QuoteDetails = () => {
                     moves === 2 ?
                         <PaymentScreen />
                         :
-                        <DocScreen />
+                        <DocScreen item={item} />
             }
 
 

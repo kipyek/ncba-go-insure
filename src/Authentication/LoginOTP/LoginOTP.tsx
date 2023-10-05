@@ -7,6 +7,7 @@ import { Formik } from 'formik'
 import * as Yup from "yup"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+
 const validationSchema = Yup.object().shape({
   code: Yup
     .string()
@@ -48,6 +49,7 @@ const LoginOTP = ({ route }: any) => {
         setisLoading(false)
       )
   }
+
 
   return (
     <View className='bg-white flex-1'>
