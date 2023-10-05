@@ -24,9 +24,9 @@ const Login = () => {
   const [isLoading, setisLoading] = useState(false)
 
   const privacyPolicy = () => {
-    Linking.canOpenURL("https://ke.ncbagroup.com/privacy-policy/").then(supported => {
+    Linking.canOpenURL("https://www.co-opbank.co.ke/privacy-statement/").then(supported => {
       if (supported) {
-        Linking.openURL("https://ke.ncbagroup.com/privacy-policy/");
+        Linking.openURL("https://www.co-opbank.co.ke/privacy-statement/");
       } else {
         console.log("Unable to open link. Please Download a browser");
       }
@@ -57,7 +57,7 @@ const Login = () => {
   return (
     <View className='bg-white flex-1'>
       <View className='mt-14 ml-4' style={AuthCss.card}>
-        <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to NCBA Go Insure</Text>
+        <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to CO-OPERATIVE Bank Insure</Text>
         <Text className='font-["gothici-Regular"]'>Login to your account</Text>
       </View>
 
@@ -109,16 +109,16 @@ const Login = () => {
                 }
               </View>
               <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-                <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-6' >Not Registered? Click here to register</Text>
+                <Text className='font-["gothici-Regular"] text-[#047857] mt-6' >Not Registered? Click here to register</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
-                <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4' >Forgot your password?</Text>
+                <Text className='font-["gothici-Regular"] text-[#047857] mt-4' >Forgot your password?</Text>
               </TouchableOpacity>
               {/* <TouchableOpacity onPress={() => navigation.navigate("GetQuote")}>
                 <Text className='mt-4 font-["gothici-Regular"] text-[#00BFFF]'>Get Motor Quote</Text>
               </TouchableOpacity> */}
               <TouchableOpacity onPress={privacyPolicy}>
-                <Text className='font-["gothici-Regular"] text-[#00BFFF] mt-4'>Privacy policy</Text>
+                <Text className='font-["gothici-Regular"] text-[#047857] mt-4'>Privacy policy</Text>
               </TouchableOpacity>
             </View>
           </View>

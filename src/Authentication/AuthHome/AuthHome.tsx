@@ -9,7 +9,7 @@ const AuthHome = () => {
   return (
     <View className='flex-1 bg-white'>
       <StatusBar backgroundColor='#87CEEB' />
-      <Image source={location[0]} style={AuthCss.image} />
+      <Image source={location[0]} style={AuthCss.images} />
       <View className='ml-3 mr-3 flex-1'>
         <View className='item-center bg-primary mt-20 p-4 mb-4 rounded-md'>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
@@ -50,4 +50,4 @@ const AuthHome = () => {
 }
 
 export default AuthHome
-const location = [require("../../../assets/images/landing.jpg")]
+const location = [require("../../../assets/images/homeCop.jpg")]

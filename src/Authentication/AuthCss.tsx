@@ -7,9 +7,18 @@ export default StyleSheet.create({
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10
     },
+    images: {
+        width: "90%",
+        height: '20%',
+        alignSelf: 'center',
+        marginTop: 40,
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10
+    },
     helpImage: {
-        width: "100%",
+        width: "90%",
         height: '15%',
+        alignSelf: 'center',
         marginTop: 40,
         backgroundColor: 'grey',
 
