@@ -37,23 +37,26 @@ const Base64 = {
 
 const QuoteFinish = ({ route }: any) => {
     const { item } = route.params;
+    const activeUser = userData()
     const [security, setSecurity] = useState<any>(null)
     const [userSession, setUserSession] = useState<any>(null)
+    const [visible, setVisible] = useState(false)
     const navigation: any = useNavigation();
 
     useEffect(() => {
         sendTest()
-    }, [])
+    }, [activeUser.userId])
 
 
     function sendTest() {
-        let userId = "34567567";
+        let userId = activeUser.userId;
         let uid: any = uuid.v4();
         let base64 = Base64.btoa(uid);
         let userKey = base64 + 'Digitek22';
 
         let securityToken = encrypt(userId, userKey);
         setSecurity(securityToken)
+        console.log(userId)
 
         let UserSessionId = base64;
         setUserSession(UserSessionId)
@@ -82,6 +85,7 @@ const QuoteFinish = ({ route }: any) => {
     }
 
     const handleSubmitQuote = () => {
+        setVisible(true)
         apis.get(`Common/GetQuote?quoteId=${item.quoteId}`, {
             headers: {
                 "SecurityToken": security,
@@ -91,8 +95,11 @@ const QuoteFinish = ({ route }: any) => {
             .then(response => {
                 const data = response.data
                 navigation.navigate("QuoteDetails", { item: data })
+                console.log("all data", data)
             }).catch(error => {
-                console.log(error.response?.data?.message)
+                console.log(error.response)
+            }).finally(() => {
+                setVisible(false)
             })
     }
 
@@ -111,10 +118,14 @@ const QuoteFinish = ({ route }: any) => {
                 <Text className='font-[gothici-Regular]'>Please click on  <Text className='font-bold font-[gothici-Regular]'>"GO FOR IT"</Text> to proceed to buy the cover. If you wish to quote for another vehicle, please click on <Text className='font-bold font-[gothici-Regular]'>"QUOTE FOR ANOTHER VEHICLE"</Text></Text>
 
                 <View className='flex-row justify-between'>
-                    <View className='item-center bg-[#EEE017] p-1 mt-4 rounded-md w-32'>
-                        <TouchableOpacity onPress={() => handleSubmitQuote()}>
-                            <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
-                        </TouchableOpacity>
+                    <View className='item-center bg-primary p-1 mt-4 rounded-md w-32'>
+                        {!visible ?
+                            <TouchableOpacity onPress={() => handleSubmitQuote()}>
+                                <Text className='text-center font-["gothici-Bold"] text-white'>Submit</Text>
+                            </TouchableOpacity>
+                            :
+                            <Text className='text-center font-["gothici-Bold"] text-white'>Processing...</Text>
+                        }
                     </View>
                     <View className='item-center bg-primary p-1 mt-4 rounded-md w-32'>
                         <TouchableOpacity onPress={handleOnClick}>

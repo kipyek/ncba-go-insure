@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
+import { Image, Text, TouchableOpacity, View, ScrollView, Alert, Platform } from 'react-native';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { Box } from '../../Component/Theme';
@@ -7,10 +7,40 @@ import * as ImagePicker from 'expo-image-picker';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import { Camera, requestCameraPermissionsAsync, getCameraPermissionsAsync } from "expo-camera";
 import * as DocumentPicker from 'expo-document-picker';
+import userData from '../../Component/UserData';
+import uuid from 'react-native-uuid';
+import { apis } from '../../Services';
+import CryptoJS from 'crypto-js';
+import * as FileSystem from 'expo-file-system';
+import { concat } from 'react-native-reanimated';
 
+
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+const Base64 = {
+    btoa: (input: string = '') => {
+        let str = input;
+        let output = '';
+
+        for (let block = 0, charCode, i = 0, map = chars;
+            str.charAt(i | 0) || (map = '=', i % 1);
+            output += map.charAt(63 & block >> 8 - i % 1 * 8)) {
+
+            charCode = str.charCodeAt(i += 3 / 4);
+
+            if (charCode > 0xFF) {
+                throw new Error("'btoa' failed: The string to be encoded contains characters outside of the Latin1 range.");
+            }
+
+            block = block << 8 | charCode;
+        }
+
+        return output;
+    },
+};
 
 
 const DocScreen = ({ item }: any) => {
+    const activeUser = userData()
     const [national, setNational] = useState('');
     const [importDoc, setImportDoc] = useState('');
     const [kra, setKra] = useState('');
@@ -19,25 +49,48 @@ const DocScreen = ({ item }: any) => {
     const [imageUri, setImageUri] = useState("");
     const [selectedFile, setSelectedFile] = useState(Object);
     const [selectedDoc, setSelectedDoc] = useState<any>(null)
-
-    const documents = item?.documents
-
-
-    const cameraRef = useRef();
+    const [security, setSecurity] = useState<any>(null)
+    const [userSession, setUserSession] = useState<any>(null)
+    const [updatedData, setUpdatedData] = useState(item)
 
     useEffect(() => {
-        requestPermissions();
-    }, []);
+        sendTest()
+    }, [activeUser.userId])
 
-    const requestPermissions = async () => {
-        await requestCameraPermissionsAsync();
-    };
 
-    const getPermissions = async () => {
-        const cameraPermission = await getCameraPermissionsAsync();
+    function sendTest() {
+        let userId = activeUser.userId;
+        let uid: any = uuid.v4();
+        let base64 = Base64.btoa(uid);
+        let userKey = base64 + 'Digitek22';
 
-        return cameraPermission.granted;
-    };
+        let securityToken = encrypt(userId, userKey);
+        setSecurity(securityToken)
+
+        let UserSessionId = base64;
+        setUserSession(UserSessionId)
+        console.log(securityToken, UserSessionId)
+
+    }
+
+
+    function encrypt(plainText: any, key: any) {
+        key = CryptoJS.enc.Utf8.parse(key);
+        key = CryptoJS.MD5(key)
+        key.words.push(key.words[0], key.words[1]);
+        var options = {
+            mode: CryptoJS.mode.ECB
+        };
+
+        let textWordArray = CryptoJS.enc.Utf8.parse(plainText);
+        let encrypted = CryptoJS.TripleDES.encrypt(textWordArray, key, options);
+        let base64String = encrypted.toString();
+        return base64String;
+    }
+
+    const documents = updatedData?.documents
+
+
 
 
     const handleOptions = (i: any) => {
@@ -46,39 +99,117 @@ const DocScreen = ({ item }: any) => {
         setSelectedDoc(null)
     }
 
+    const handleSubmitQuote = () => {
+        setVisible(true)
+        apis.get(`Common/GetQuote?quoteId=${item.id}`, {
+            headers: {
+                "SecurityToken": security,
+                "UserSessionId": userSession,
+            },
+        })
+            .then(response => {
+                const data = response.data
+                setUpdatedData(data)
+            }).catch(error => {
+                console.log(error.response)
+            }).finally(() => {
+                setVisible(false)
+            })
+    }
+
+
 
 
 
 
     const pickImage = async () => {
-        let result = await DocumentPicker.getDocumentAsync({});
+        let result = await DocumentPicker.getDocumentAsync({
+            copyToCacheDirectory: true
+        });
+        // let file = await toBase64(result);
+        console.log("file", result)
+        let uri = result.uri
+
+        if (Platform.OS === "android") {
+            console.log("ANdroid")
+            // change the file:// to content:// uri
+            // FileSystem.getContentUriAsync(file_path).then((uri) => {file_path = uri});
+            await FileSystem.getContentUriAsync(uri).then(cUri => {
+                console.log("jjjkbkbnm,", cUri);
+                uri = cUri
+
+            });
+        }
+
+        console.log("uri2", uri)
+        const file: any = await FileSystem.readAsStringAsync(
+            uri,
+            {
+                encoding: FileSystem?.EncodingType?.UTF8,
+            });
+
+        let base64File = concat(result?.mimeType, ";base64", file)
 
         setSelectedDoc({
-            "name": result.name,
             "fileName": selectedFile.documentName,
             "fileId": selectedFile.documentRefId
         });
-        console.warn("this is it", selectedDoc.name)
+        console.warn("this is it", selectedDoc)
     };
 
 
     const handleCamera = async () => {
         let result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.image,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             base64: true,
             allowsEditing: false,
             quality: 1,
         });
 
         if (!result.canceled) {
-            setNational(result.assets[0].uri);
-            setSelectedDoc({
+            // const docName = result.assets[0].base64;
+            // const docId = result.assets[0].uri;
+            // const fileName = selectedFile.documentName;
+            // const fileId = selectedFile.documentRefId
+            let uri = result.assets[0].uri
+
+            const lastItem = uri.substring(uri.lastIndexOf('/') + 1)
+
+            const payload = {
+                "docName": result.assets[0].base64,
+                "docId": lastItem,
                 "fileName": selectedFile.documentName,
                 "fileId": selectedFile.documentRefId
-            });
-            console.warn("this is itdfg", selectedDoc)
+            };
+            handleDocUpload(payload)
+            handleSubmitQuote()
+            console.log("this is itdfg", selectedFile)
+            //console.warn("this is itdfg22", result)
             setModalVisible(false)
         }
+    }
+
+
+    const handleDocUpload = (items: any) => {
+        const payload = {
+            "documentRefId": items.fileId,
+            "documentName": items.fileName,
+            "fileName": items.docId,
+            "fileContent": items.docName
+        }
+        apis.post("Common/UploadeQuoteDocument", payload, {
+            headers: {
+                "SecurityToken": security,
+                "UserSessionId": userSession,
+            },
+        })
+            .then(response => {
+                const data = response.data
+                console.log("Submiting....", data)
+                // navigation.navigate("QuoteDetails", { item: data })
+            }).catch(error => {
+                console.log(error.response?.data?.message)
+            })
     }
 
     return (
@@ -93,9 +224,12 @@ const DocScreen = ({ item }: any) => {
                             {documents.map((i: any) => (
                                 <View style={HomeCss.container1} className='mt-2'>
                                     {i.fileContent !== null &&
-                                        <Text className='text-center'>{i.fileName}</Text>
+                                        <View>
+                                            <Text className='text-center'>{i.documentName}</Text>
+                                            <Text className='text-center'>Uploaded</Text>
+                                        </View>
                                     }
-                                    {i.documentName !== "Fully Filled Proposal Forms" &&
+                                    {i.fileContent === null &&
 
                                         <View style={HomeCss.uploadBtnContainer1}>
 
