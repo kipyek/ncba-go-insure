@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const dev = 'https://definiteportal.pensoft.co.ke/api/';
+const dev = 'https://ncbaportal.pensoft.co.ke/api/';
 const qa = '';
 const prod = '';
 
@@ -11,3 +11,6 @@ const BaseApi = axios.create({
 });
 
 export default BaseApi;
+
+
+//https://ncbaportal.pensoft.co.ke/api/

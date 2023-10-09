@@ -9,25 +9,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Entypo, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons"
 import { apis } from '../../Services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
-import { selectFirstTime } from '../../../Slices/QuoteSlice';
-import { concat } from 'react-native-reanimated';
 import userData from '../../Component/UserData';
 
-const Additionals = [
-    {
-        name: "Capsicum",
-        price: 1.2
-    },
-    {
-        name: "Paneer",
-        price: 2.0
-    },
-    {
-        name: "Red Paprika",
-        price: 2.5
-    },
-]
 
 const QuoteBenefit = ({ route }: any) => {
     let { item, benefits } = route?.params
@@ -164,26 +147,29 @@ const QuoteBenefit = ({ route }: any) => {
     const Item = ({ item }: any) => (
         <View className='pl-1 pr-1'>
             <TouchableOpacity onPress={() => handleToggle(item)}>
-                <View className='flex-1 flex-row justify-between bg-gray-200 mt-2 '>
-                    <Text className='text-center font-["gothici-Bold"]'>{item?.benefitName}</Text>
+                <View className='bg-gray-200 mt-2'>
+                    <View className='flex-1 flex-row justify-between  '>
+                        <Text className='text-center font-["gothici-Bold"]'>{item?.benefitName}</Text>
+
+
+
+                        <View className=''>
+                            {item.checked == true ?
+                                <MaterialCommunityIcons name="checkbox-marked" size={24} color="black" />
+                                :
+                                <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color="black" />
+                            }
+                        </View>
+                    </View>
                     <View>
                         {allBenefits.map((i: any) => (
                             <View>
                                 {item.benefitId === i.benefitId &&
                                     <View>
-                                        <Text>{i.premium}</Text>
+                                        <Text>Premium: {i.premium}</Text>
                                     </View>}
                             </View>
                         ))}
-                    </View>
-
-
-                    <View className=''>
-                        {item.checked == true ?
-                            <MaterialCommunityIcons name="checkbox-marked" size={24} color="black" />
-                            :
-                            <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color="black" />
-                        }
                     </View>
                 </View>
             </TouchableOpacity>

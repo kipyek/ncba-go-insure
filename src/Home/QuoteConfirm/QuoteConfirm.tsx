@@ -291,7 +291,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                                             <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
                                         </TouchableOpacity>
                                         :
-                                        <Text className='text-center font-["gothici-Bold"]'>Processing...</Text>
+                                        <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>
                                     }
 
                                 </View>
