@@ -163,7 +163,6 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
             "insurerId": item?.insurerId
 
         }
-        console.log("this is the data", payload)
         apis.post("MotorQuotes/ConfirmQuoteClient", payload)
             .then(response => {
                 const data = response.data
@@ -287,10 +286,10 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                                 </TouchableOpacity>
                             </View>
                             {confirmed ?
-                                <View className='item-center bg-primary p-3 mt-2 rounded-md w-32'>
+                                <View className='item-center bg-[#EEE017] p-3 mt-2 rounded-md w-32'>
                                     {!visible ?
                                         <TouchableOpacity onPress={handleNext}>
-                                            <Text className='text-center font-["gothici-Bold"] text-white'>Submit</Text>
+                                            <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
                                         </TouchableOpacity>
                                         :
                                         <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>

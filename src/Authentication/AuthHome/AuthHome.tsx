@@ -42,9 +42,7 @@ const AuthHome = () => {
           </TouchableOpacity>
         </View> */}
       </View>
-
       <TouchableOpacity onPress={() => navigation.navigate("Help")}><Text className='text-center bottom-2 font-[gothici-Regular]'>Help?</Text></TouchableOpacity>
-
     </View >
   )
 }

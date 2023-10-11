@@ -10,7 +10,7 @@ import userData from '../../Component/UserData';
 import uuid from 'react-native-uuid';
 import { apis } from '../../Services';
 import CryptoJS from 'crypto-js';
-import * as FileSystem from 'expo-file-system';
+import { cacheDirectory, copyAsync, getInfoAsync, makeDirectoryAsync, EncodingType, readAsStringAsync } from 'expo-file-system'
 
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -39,7 +39,6 @@ const Base64 = {
 
 const Documents = (item: any) => {
     const data = item?.item?.item
-    console.log("All current data", item)
     const activeUser = userData()
     const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -48,11 +47,15 @@ const Documents = (item: any) => {
     const [security, setSecurity] = useState<any>(null);
     const [userSession, setUserSession] = useState<any>(null);
     const [updatedData, setUpdatedData] = useState(data);
+    const [convertedUri, setConvertedUri] = useState<any>(null);
 
     useEffect(() => {
         sendTest()
     }, [activeUser.userId])
 
+    // useEffect(() => {
+    //     handleSubmitQuote()
+    // }, [updatedData])
 
     function sendTest() {
         let userId = activeUser.userId;
@@ -87,8 +90,6 @@ const Documents = (item: any) => {
     const document = updatedData?.documents
 
 
-
-
     const handleOptions = (i: any) => {
         setModalVisible(true)
         setSelectedFile(i)
@@ -97,7 +98,7 @@ const Documents = (item: any) => {
 
     const handleSubmitQuote = () => {
         setVisible(true)
-        apis.get(`Common/GetQuote?quoteId=${data.id}`, {
+        apis.get(`Common/GetQuote?quoteId=${item.id}`, {
             headers: {
                 "SecurityToken": security,
                 "UserSessionId": userSession,
@@ -105,7 +106,7 @@ const Documents = (item: any) => {
         })
             .then(response => {
                 const data = response.data
-                setUpdatedData(data)
+                setUpdatedData(data.documents)
             }).catch(error => {
                 console.log(error.response)
             }).finally(() => {
@@ -113,44 +114,55 @@ const Documents = (item: any) => {
             })
     }
 
+    //converting to base64
+    async function convertUriToBase64(uri: any, result: any) {
+        if (Platform.OS === 'ios') {
+            const response = await fetch(uri);
+            const blob = await response.blob();
+            const base64 = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (error) => reject(error);
+                reader.readAsDataURL(blob);
+            });
+            return base64;
+        } else if (Platform.OS === 'android') {
+            const base64 = await readAsStringAsync(uri, { encoding: EncodingType.Base64 });
 
+            const payload = {
+                "docName": base64,
+                "docId": result.name,
+                "fileName": selectedFile.documentName,
+                "fileId": selectedFile.documentRefId
+            };
+            handleDocUpload(payload)
+            handleSubmitQuote()
+            return base64;
 
+        }
+    }
+
+    {/**With the uri provided by documentSelection.uri I am copying the file with the name (documentSelection.name) to a cache directory: */ }
+    const createCacheFile = async (result: any) => {
+        if (!(await getInfoAsync(cacheDirectory + "uploads/")).exists) {
+            await makeDirectoryAsync(cacheDirectory + "uploads/");
+        }
+        const cacheFilePath = cacheDirectory + "uploads/" + result.name;
+        await copyAsync({ from: result.uri, to: cacheFilePath });
+        return cacheFilePath;
+    }
 
 
 
     const pickImage = async () => {
-        let result = await DocumentPicker.getDocumentAsync({
-            copyToCacheDirectory: true
+        let result: any = await DocumentPicker.getDocumentAsync({
+            copyToCacheDirectory: false,
         });
-        // let file = await toBase64(result);
-        console.log("file", result)
-        let uri = result.uri
+        const file = await createCacheFile(result);
+        convertUriToBase64(file, result)
 
-        if (Platform.OS === "android") {
-            console.log("ANdroid")
-            // change the file:// to content:// uri
-            // FileSystem.getContentUriAsync(file_path).then((uri) => {file_path = uri});
-            await FileSystem.getContentUriAsync(uri).then(cUri => {
-                console.log("jjjkbkbnm,", cUri);
-                uri = cUri
+        setModalVisible(false)
 
-            });
-        }
-
-        console.log("uri2", uri)
-        const file: any = await FileSystem.readAsStringAsync(
-            uri,
-            {
-                encoding: FileSystem?.EncodingType?.UTF8,
-            });
-
-        // let base64File = concat(result?.mimeType, ";base64", file)
-
-        setSelectedDoc({
-            "fileName": selectedFile.documentName,
-            "fileId": selectedFile.documentRefId
-        });
-        console.warn("this is it", selectedDoc)
     };
 
 
@@ -174,12 +186,9 @@ const Documents = (item: any) => {
                 "fileId": selectedFile.documentRefId
             };
             handleDocUpload(payload)
-            handleSubmitQuote()
-            console.log("this is itdfg", selectedFile)
             setModalVisible(false)
         }
     }
-
 
     const handleDocUpload = (items: any) => {
         const payload = {
@@ -205,41 +214,44 @@ const Documents = (item: any) => {
 
     return (
         <Fragment>
-            <View>
-                <ScrollView>
-                    <View className='ml-4 mr-4 mt-2'>
-                        <Text className='font-[gothici-Regular]'>Upload all required documents first before you can proceed to next steps</Text>
-                        <Box className='mt-4'>
+            <ScrollView >
+                <View className='ml-4 mr-4 mt-2'>
+                    <Text className='font-[gothici-Regular]'>Upload all required documents first before you can proceed to next steps</Text>
+                    <Box className='mt-4'>
+
+                        {document.map((i: any) => (
+                            <View style={HomeCss.container1} className='mt-2' key={i.id}>
+                                {i.fileContent !== null &&
+                                    <View>
+                                        <Text className='text-center'>{i.documentName}</Text>
+                                        <Text className='text-center'>Uploaded</Text>
+                                    </View>
+                                }
+
+                                {i.fileContent === null &&
+
+                                    <View style={HomeCss.uploadBtnContainer1}>
 
 
-
-                            {document.map((i: any) => (
-                                <View style={HomeCss.container1} className='mt-2'>
-                                    {i.fileContent !== null &&
-                                        <View>
-                                            <Text className='text-center'>{i.documentName}</Text>
-                                            <Text className='text-center'>Uploaded</Text>
-                                        </View>
-                                    }
-                                    {i.fileContent === null &&
-
-                                        <View style={HomeCss.uploadBtnContainer1}>
-
-
+                                        {selectedFile.documentName === i.documentName && visible ?
+                                            < Text className='text-center text-2xl'> Loading...</Text>
+                                            :
                                             <TouchableOpacity onPress={() => handleOptions(i)} style={HomeCss.uploadBtn} >
                                                 <Text className='font-[gothici-Regular]'>{i.documentName}</Text>
                                                 <AntDesign name="plus" size={20} color="black" />
                                             </TouchableOpacity>
-                                        </View>
-                                    }
-                                </View>
-                            ))}
+                                        }
+                                    </View>
+                                }
+                            </View>
 
-                        </Box>
-                    </View>
-                </ScrollView>
+                        ))}
 
-            </View >
+                    </Box>
+                </View>
+            </ScrollView>
+
+
 
             <BottomModal
                 visible={modalVisible}

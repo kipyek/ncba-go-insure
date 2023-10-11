@@ -16,6 +16,17 @@ export default StyleSheet.create({
         shadowRadius: 4,
         elevation: 4,
     },
+    listCard: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10,
+        //margin: 10,
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 4,
+    },
     introCard: {
         backgroundColor: '#87CEEB',
         borderRadius: 10,

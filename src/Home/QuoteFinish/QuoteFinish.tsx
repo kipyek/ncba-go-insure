@@ -79,7 +79,7 @@ const QuoteFinish = ({ route }: any) => {
     }
 
     const handleOnClick = () => {
-        navigation.navigate("Quote")
+        navigation.replace("Quote")
 
     }
 
@@ -117,10 +117,10 @@ const QuoteFinish = ({ route }: any) => {
                 <Text className='font-[gothici-Regular]'>Please click on  <Text className='font-bold font-[gothici-Regular]'>"GO FOR IT"</Text> to proceed to buy the cover. If you wish to quote for another vehicle, please click on <Text className='font-bold font-[gothici-Regular]'>"QUOTE FOR ANOTHER VEHICLE"</Text></Text>
 
                 <View className='flex-row justify-between'>
-                    <View className='item-center bg-primary p-1 mt-4 rounded-md w-32'>
+                    <View className='item-center bg-[#EEE017] p-1 mt-4 rounded-md w-32'>
                         {!visible ?
                             <TouchableOpacity onPress={() => handleSubmitQuote()}>
-                                <Text className='text-center font-["gothici-Bold"] text-white'>Submit</Text>
+                                <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
                             </TouchableOpacity>
                             :
                             <Text className='text-center font-["gothici-Bold"] text-white'>Processing...</Text>

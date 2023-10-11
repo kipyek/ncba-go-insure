@@ -53,26 +53,26 @@ const QuoteList = () => {
   }
 
   const Item = ({ item }: any) => (
-    <View style={HomeCss.card}>
-
-      <View className='flex-row items-center'>
-        <Text>{origin}{destination}</Text>
-        <Image source={{ uri: item.insurerLogo }} className='w-28 h-28' resizeMode='contain' />
-        <View className='w-48 ml-4'>
-          <Text>Insurance company:</Text>
-          <Text className='font-[gothici-Bold]'>{item.insurerName} </Text>
-          <View className='flex-row mt-2'>
-            <Text>Premium: </Text>
-            <Text className='font-[gothici-Bold]'> {Humanize.formatNumber(item.grossPremium, 2)}</Text>
+    <View style={HomeCss.listCard} className='ml-3 mr-3 mb-1'>
+      <TouchableOpacity onPress={() => handleApplicableBenefits(item)}>
+        <View className='flex-row items-center'>
+          <Text>{origin}{destination}</Text>
+          <Image source={{ uri: item.insurerLogo }} className='w-28 h-28' resizeMode='contain' />
+          <View className='w-48 ml-4'>
+            <Text>Insurance company:</Text>
+            <Text className='font-[gothici-Bold]'>{item.insurerName} </Text>
+            <View className='flex-row mt-2'>
+              <Text>Premium: </Text>
+              <Text className='font-[gothici-Bold]'> {Humanize.formatNumber(item.grossPremium, 2)}</Text>
+            </View>
           </View>
         </View>
-      </View>
-
-      <View className='item-center bg-primary p-3 mt-4 rounded-md '>
-        <TouchableOpacity onPress={() => handleApplicableBenefits(item)}>
+      </TouchableOpacity>
+      {/* <View className='item-center bg-primary p-3 mt-4 rounded-md '>
+       
           <Text className='text-center text-white font-["gothici-Bold"]'>BUY</Text>
-        </TouchableOpacity>
-      </View>
+>
+      </View> */}
 
     </View>
   );
