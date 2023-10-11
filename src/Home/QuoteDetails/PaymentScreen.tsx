@@ -3,28 +3,27 @@ import React, { useState } from 'react'
 import CustomTabs from '../../Component/CustomTabs'
 import { Ipf, Mpesa, Ncba } from '../Payments';
 import HomeCss from '../HomeCss';
+import Humanize from 'humanize-plus';
 
-const PaymentScreen = () => {
+const PaymentScreen = (item: any) => {
+    const data = item?.item
     const [tabSelected, setTabSelected] = useState(1);
     const onTabSelected = (value: React.SetStateAction<number>) => {
         setTabSelected(value)
     }
 
-    const api = "Q01721";
-    const apiStatus = "NOT PAID";
-    const apiAmount = "184,828.00"
     return (
         <View>
             {/**Amount */}
             <View style={HomeCss.introCard} className='mt-1 mb-0'>
-                <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Total premium: Kes {apiAmount}
+                <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Total premium: Kes {Humanize.formatNumber(data.totalPremium, 2)}
                 </Text>
             </View>
             {/**Quote Card */}
             <View style={HomeCss.introCard} className='flex-row justify-between mt-1'>
-                <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Quote details ({api})</Text>
+                <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Quote details ({data.quotationNo})</Text>
                 <View className='bg-red-500 rounded-md p-1'>
-                    <Text className='text-white font-[gothici-Bold]'>{apiStatus}</Text>
+                    <Text className='text-white font-[gothici-Bold]'>{data.status}</Text>
                 </View>
             </View>
             <CustomTabs
@@ -35,7 +34,7 @@ const PaymentScreen = () => {
                 onSelectSwitch={onTabSelected}
 
             />
-            {tabSelected === 1 ? <Ncba /> : tabSelected === 2 ? <Mpesa /> : <Ipf />}
+            {tabSelected === 1 ? <Ncba item={item} /> : tabSelected === 2 ? <Mpesa item={item} /> : <Ipf />}
         </View>
     )
 }

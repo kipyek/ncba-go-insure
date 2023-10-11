@@ -1,19 +1,22 @@
+//Using ncbaPortal api for stk push
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import * as Clipboard from 'expo-clipboard';
 import { Entypo } from "@expo/vector-icons"
 import HomeCss from '../HomeCss';
-import Toast from 'react-native-root-toast';
+import Humanize from 'humanize-plus';
 import { handleToastCopied } from '../../Component/Toast';
+import { api } from '../../Services';
 
-const MPesa = () => {
+const MPesa = (item: any) => {
+    const data = item?.item?.item
     const [show, setShow] = useState(false);
-    const [phone, setPhone] = useState('');
-    const [amount, setAmount] = useState('')
-    const api = "Q01721";
+    const [visible, setVisible] = useState(false);
+    const [phone, setPhone] = useState<any>(null);
+    const [amount, setAmount] = useState<any>(null);
     const apiPaybill = "488496";
-    const apiAmount = "62,842.00"
 
+    const PayableAmount = (data.totalPremium / 2)
 
     const handleToggling = () => {
         setShow(!show)
@@ -25,10 +28,32 @@ const MPesa = () => {
         handleToastCopied(item)
     };
 
-    const copyAccount = async (item: any) => {
-        await Clipboard.setStringAsync(api);
-        handleToastCopied(item)
-    };
+    // const copyAccount = async (item: any) => {
+    //     await Clipboard.setStringAsync(api);
+    //     handleToastCopied(item)
+    // };
+
+    const handleStkPush = () => {
+        setVisible(true)
+        const payload = {
+            "phoneNumber": phone,
+            "amount": amount,
+            "refNo": data.quotationNo
+        }
+        api.post("mpesa/stk/initiate", payload)
+            .then(response => {
+                const data = response.data
+                console.log("STK", data)
+                setVisible(false)
+            }).catch(error => {
+                console.log(error.response)
+                setVisible(false)
+            }).finally(() => {
+                if (phone === null || amount === null) {
+                    alert("Enter valid phone number or amount")
+                }
+            })
+    }
 
     return (
         <ScrollView>
@@ -36,7 +61,7 @@ const MPesa = () => {
                 {/**STK Push */}
                 {!show &&
                     <View style={HomeCss.introCard}>
-                        <Text className='text-[#666666] font-[gothici-Bold]'>You are required to pay at least Kes 62,842.00 for your policy to be approved</Text>
+                        <Text className='text-[#666666] font-[gothici-Bold]'>You are required to pay at least Kes {Humanize.formatNumber(PayableAmount, 2)} for your policy to be approved</Text>
                         <View>
                             <Text className='mb-1 mt-3 font-[gothici-Regular]'>Enter your Mpesa phone number</Text>
                             <TextInput
@@ -44,7 +69,7 @@ const MPesa = () => {
                                 style={{ borderWidth: 1 }}
                                 onChangeText={text => setPhone(text)}
                                 value={phone}
-                                placeholder="0718477980"
+                                placeholder="07XX XXX XXX"
                                 keyboardType="default"
                             />
                         </View>
@@ -55,15 +80,20 @@ const MPesa = () => {
                                 style={{ borderWidth: 1 }}
                                 onChangeText={text => setAmount(text)}
                                 value={amount}
-                                placeholder="0718477980"
+                                placeholder="1,000,000"
                                 keyboardType="default"
                             />
                         </View>
 
-                        <View className='item-center bg-primary p-2 mt-4 rounded-md w-24'>
-                            <TouchableOpacity>
-                                <Text className='text-center text-white font-["gothici-Bold"]'>PAY</Text>
-                            </TouchableOpacity>
+                        <View className='item-center bg-primary p-2 mt-4 rounded-md w-28'>
+                            {!visible ?
+                                <TouchableOpacity onPress={handleStkPush}>
+                                    <Text className='text-center text-white font-["gothici-Bold"]'>PAY</Text>
+                                </TouchableOpacity>
+                                :
+                                <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>
+
+                            }
                         </View>
                     </View>
                 }
@@ -86,8 +116,8 @@ const MPesa = () => {
                         <Text className='font-[gothici-Regular] mb-1'>1. On M-Pesa menu, select <Text className='font-[gothici-Bold]'>Lipa na M-Pesa</Text></Text>
                         <Text className='font-[gothici-Regular] mb-1'>2. Choose <Text className='font-[gothici-Bold]'>Paybill</Text></Text>
                         <Text className='font-[gothici-Regular] mb-1'>3. Key in paybill number <Text className='font-[gothici-Bold] bg-gray-400' onPress={() => copyPaybill(apiPaybill)}>{apiPaybill}</Text></Text>
-                        <Text className='font-[gothici-Regular] mb-1'>4. Enter <Text className='font-[gothici-Bold] bg-gray-400' onPress={() => copyPaybill(api)}>{api}</Text> as the account number</Text>
-                        <Text className='font-[gothici-Regular] mb-1'>5. Enter amount to pay (You are required to pay at least Kes <Text className='font-[gothici-Bold]'>{apiAmount}</Text> for your policy to be approved)</Text>
+                        <Text className='font-[gothici-Regular] mb-1'>4. Enter <Text className='font-[gothici-Bold] bg-gray-400' onPress={() => copyPaybill(data.quotationNo)}>{data.quotationNo}</Text> as the account number</Text>
+                        <Text className='font-[gothici-Regular] mb-1'>5. Enter amount to pay (You are required to pay at least Kes <Text className='font-[gothici-Bold]'>{Humanize.formatNumber(PayableAmount, 2)}</Text> for your policy to be approved)</Text>
                         <Text className='font-[gothici-Regular] mb-1'>6. Submit</Text>
                     </View>
                 }

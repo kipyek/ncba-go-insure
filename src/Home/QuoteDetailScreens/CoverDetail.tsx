@@ -3,8 +3,11 @@ import React, { Fragment, useState } from 'react';
 import { Entypo } from "@expo/vector-icons";
 import { Cover } from '../../../DummyData/Data';
 import { BottomModal, ModalContent } from 'react-native-modals';
+import Humanize from 'humanize-plus';
 
-const CoverDetail = () => {
+
+const CoverDetail = (item: any) => {
+    const data = item?.item?.item
     const [show, setShow] = useState(false);
     const [showPremium, setShowPremium] = useState(false);
     const [modalVisibles, setModalVisibles] = useState(false);
@@ -18,16 +21,19 @@ const CoverDetail = () => {
         setShow(false)
         setShowPremium(!showPremium)
     }
+
+    const levy = (data.stampDuty) + (data?.trainingLevy) + (data?.phcf)
+
     return (
         <Fragment>
             <View>
                 <View className='ml-4 mr-4'>
                     {/**start of Insurance company logic*/}
                     <View className='flex-row items-center'>
-                        <Image source={require("../../../assets/images/uap.jpg")} className='w-32 h-32 mr-4' />
+                        <Image source={{ uri: data.insurerLogo }} className='w-32 h-32 mr-4' resizeMode='contain' />
                         <View className=' w-48'>
-                            <Text className='font-[gothici-Regular]'>UAP Insurance Company Ltd </Text>
-                            <Text className='font-[gothici-Bold]'>MOTOR PSV - SELF DRIVE COMPREHENSIVE</Text>
+                            <Text className='font-[gothici-Regular]'>{data.insurer}</Text>
+                            <Text className='font-[gothici-Bold]'>{data.product}</Text>
                         </View>
                     </View>
 
@@ -55,7 +61,7 @@ const CoverDetail = () => {
                                             //onChangeText={text => setPassword(text)}
                                             //value={password}
                                             editable={false}
-                                            placeholder="Denis Kipyegon"
+                                            placeholder={data.customer.firstName + data.customer.otherNames}
                                             keyboardType="default"
                                         />
                                     </View>
@@ -68,7 +74,7 @@ const CoverDetail = () => {
                                             //onChangeText={text => setPass(text)}
                                             //value={pass}
                                             editable={false}
-                                            placeholder="0719345756"
+                                            placeholder={data.customer.mobileNo}
                                             keyboardType="default"
                                         />
                                     </View>
@@ -83,7 +89,7 @@ const CoverDetail = () => {
                                         //onChangeText={text => setPass(text)}
                                         //value={pass}
                                         editable={false}
-                                        placeholder="d.kipyek@gmail.com"
+                                        placeholder={data.customer.emailAddress}
                                         keyboardType="default"
                                     />
                                 </View>
@@ -110,7 +116,7 @@ const CoverDetail = () => {
                                             //onChangeText={text => setPass(text)}
                                             //value={pass}
                                             editable={false}
-                                            placeholder="KAZ 123W"
+                                            placeholder={data.registrationNo ? data.registrationNo : "null"}
                                             keyboardType="default"
                                         />
                                     </View>
@@ -138,27 +144,27 @@ const CoverDetail = () => {
                             <View>
                                 <View className='flex-row justify-between rounded-sm mt-1'>
                                     <Text className='font-[gothici-Bold]' style={{ fontSize: 16 }}>Basic premium:</Text>
-                                    <Text className='font-[gothici-Regular]'>Kes 184,000</Text>
+                                    <Text className='font-[gothici-Regular]'>Kes {Humanize.formatNumber(data.basicPremium, 2)}</Text>
                                 </View>
 
                                 <View className='flex-row justify-between mt-1'>
                                     <Text className='font-[gothici-Bold]' style={{ fontSize: 16 }}>Extensions:</Text>
-                                    <Text className='font-[gothici-Regular]'>Kes 0</Text>
+                                    <Text className='font-[gothici-Regular]'>Kes {Humanize.formatNumber(data.extensions, 2)}</Text>
                                 </View>
 
                                 <View className='flex-row justify-between mt-1'>
                                     <Text className='font-[gothici-Bold]' style={{ fontSize: 16 }}>Total premium:</Text>
-                                    <Text className='font-[gothici-Regular]'>Kes 184,000</Text>
+                                    <Text className='font-[gothici-Regular]'>Kes {Humanize.formatNumber(data.totalPremium, 2)}</Text>
                                 </View>
 
                                 <View className='flex-row justify-between mt-1'>
                                     <Text className='font-[gothici-Bold]' style={{ fontSize: 16 }}>Levies:</Text>
-                                    <Text className='font-[gothici-Regular]'>Kes 828</Text>
+                                    <Text className='font-[gothici-Regular]'>Kes {Humanize.formatNumber(levy, 2)}</Text>
                                 </View>
 
                                 <View className='flex-row justify-between mt-1'>
                                     <Text className='font-[gothici-Bold]' style={{ fontSize: 16 }}>Gross premium: </Text>
-                                    <Text className='font-[gothici-Regular]'>Kes 184,828</Text>
+                                    <Text className='font-[gothici-Regular]'>Kes {Humanize.formatNumber(data.grossPremium, 2)}</Text>
                                 </View>
                             </View>
                         }
@@ -191,10 +197,12 @@ const CoverDetail = () => {
                 <ModalContent>
                     <View style={{ borderWidth: 1, width: 50, alignSelf: 'center', marginBottom: 12, borderColor: 'gray' }} />
                     <View>
-                        {Cover.map(i =>
-                            <View key={i.title}>
-                                <Text className='text-center mt-1 mb-1 font-[gothici-Bold]'>{i.title}</Text>
-                                <Text>{i.body}</Text>
+                        {data.coverNotes.map((i: any) =>
+                            <View key={i.description}>
+                                <Text className='text-center mt-1 mb-1 font-[gothici-Bold]'>{i.description}</Text>
+                                {i.coverNoteItems.map((item: any) =>
+                                    <Text key={item.name}>{item.name}</Text>
+                                )}
                             </View>
                         )}
                     </View>

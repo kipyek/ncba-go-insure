@@ -1,6 +1,5 @@
 import { ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import * as Crypto from 'expo-crypto';
 import uuid from 'react-native-uuid';
 import DropDown from '../../Component/DropDown'
 import { Alert } from 'react-native';

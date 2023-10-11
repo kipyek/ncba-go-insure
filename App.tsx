@@ -65,7 +65,6 @@ const HomePath = () => {
               <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
             </AppStack.Navigator>
             <ModalPortal />
-
           </SafeAreaView>
         </LoadAssets>
       </ThemeProvider>

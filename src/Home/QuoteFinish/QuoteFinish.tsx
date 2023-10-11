@@ -57,7 +57,6 @@ const QuoteFinish = ({ route }: any) => {
         let securityToken = encrypt(userId, userKey);
         setSecurity(securityToken)
         console.log(userId)
-
         let UserSessionId = base64;
         setUserSession(UserSessionId)
         console.log(securityToken, UserSessionId)
@@ -109,7 +108,7 @@ const QuoteFinish = ({ route }: any) => {
                 label={"Get Quote"}
                 leftButton={{
                     child: <Ionicons name="arrow-back" size={24} color="black" />,
-                    onPress: () => { navigation.goBack() }
+                    onPress: () => { navigation.navigate("Quote") }
                 }}
             />
             <StepperComponet currentPage={4} />

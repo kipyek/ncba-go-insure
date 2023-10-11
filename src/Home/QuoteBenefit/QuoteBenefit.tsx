@@ -146,7 +146,7 @@ const QuoteBenefit = ({ route }: any) => {
 
     const Item = ({ item }: any) => (
         <View className='pl-1 pr-1'>
-            <TouchableOpacity onPress={() => handleToggle(item)}>
+            <TouchableOpacity onPress={() => handleToggle(item)} key={item.benefitId}>
                 <View className='bg-gray-200 mt-2'>
                     <View className='flex-1 flex-row justify-between  '>
                         <Text className='text-center font-["gothici-Bold"]'>{item?.benefitName}</Text>

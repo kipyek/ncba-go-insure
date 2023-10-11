@@ -56,16 +56,16 @@ const QuoteDetails = ({ route }: any) => {
                 >
                     {!show && <MenuItem onPress={() => handleDocument()}>UPLOAD DOCUMENTS</MenuItem>}
                     <MenuItem onPress={() => handleQDetails()} >QUOTE DETAILS</MenuItem>
-                    {show && <MenuItem onPress={() => handlePayments()}>PAYMENTS</MenuItem>}
+                    {!show && <MenuItem onPress={() => handlePayments()}>PAYMENTS</MenuItem>}
                 </Menu>
             </View>
 
             {
                 moves === 1 ?
-                    <QDetails />
+                    <QDetails item={item} />
                     :
                     moves === 2 ?
-                        <PaymentScreen />
+                        <PaymentScreen item={item} />
                         :
                         <DocScreen item={item} />
             }

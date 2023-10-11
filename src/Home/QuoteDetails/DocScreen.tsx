@@ -1,11 +1,10 @@
-import { Image, Text, TouchableOpacity, View, ScrollView, Alert, Platform } from 'react-native';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native';
+import React, { Fragment, useEffect, useState } from 'react';
+import { AntDesign } from "@expo/vector-icons";
 import { Box } from '../../Component/Theme';
 import HomeCss from '../HomeCss';
 import * as ImagePicker from 'expo-image-picker';
 import { BottomModal, ModalContent } from 'react-native-modals';
-import { Camera, requestCameraPermissionsAsync, getCameraPermissionsAsync } from "expo-camera";
 import * as DocumentPicker from 'expo-document-picker';
 import userData from '../../Component/UserData';
 import uuid from 'react-native-uuid';
@@ -167,10 +166,6 @@ const DocScreen = ({ item }: any) => {
         });
 
         if (!result.canceled) {
-            // const docName = result.assets[0].base64;
-            // const docId = result.assets[0].uri;
-            // const fileName = selectedFile.documentName;
-            // const fileId = selectedFile.documentRefId
             let uri = result.assets[0].uri
 
             const lastItem = uri.substring(uri.lastIndexOf('/') + 1)
@@ -184,7 +179,6 @@ const DocScreen = ({ item }: any) => {
             handleDocUpload(payload)
             handleSubmitQuote()
             console.log("this is itdfg", selectedFile)
-            //console.warn("this is itdfg22", result)
             setModalVisible(false)
         }
     }
@@ -248,6 +242,7 @@ const DocScreen = ({ item }: any) => {
                 </ScrollView>
 
             </View >
+
             <BottomModal
                 visible={modalVisible}
                 onTouchOutside={() => setModalVisible(false)}
