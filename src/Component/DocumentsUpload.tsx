@@ -1,16 +1,17 @@
 import { Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native';
 import React, { Fragment, useEffect, useState } from 'react';
 import { AntDesign } from "@expo/vector-icons";
-import { Box } from '../../Component/Theme';
-import HomeCss from '../HomeCss';
 import * as ImagePicker from 'expo-image-picker';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import * as DocumentPicker from 'expo-document-picker';
-import userData from '../../Component/UserData';
 import uuid from 'react-native-uuid';
-import { apis } from '../../Services';
 import CryptoJS from 'crypto-js';
-import { cacheDirectory, copyAsync, getInfoAsync, makeDirectoryAsync, EncodingType, readAsStringAsync } from 'expo-file-system';
+import { cacheDirectory, copyAsync, getInfoAsync, makeDirectoryAsync, EncodingType, readAsStringAsync } from 'expo-file-system'
+import userData from './UserData';
+import { apis } from '../Services';
+import { Box } from './Theme';
+import HomeCss from '../Home/HomeCss';
+
 
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -37,8 +38,8 @@ const Base64 = {
 };
 
 
-const Documents = (item: any) => {
-    const data = item?.item?.item
+const DocumentsUpload = ({ item }: any) => {
+    const document = item.documents
     const activeUser = userData()
     const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -46,15 +47,21 @@ const Documents = (item: any) => {
     const [selectedDoc, setSelectedDoc] = useState<any>(null);
     const [security, setSecurity] = useState<any>(null);
     const [userSession, setUserSession] = useState<any>(null);
-    const [updatedData, setUpdatedData] = useState(data);
+    const [updatedData, setUpdatedData] = useState(document);
 
     useEffect(() => {
         sendTest()
     }, [activeUser.userId])
 
+    useEffect(() => {
+        setUpdatedData(updatedData)
+    }, [activeUser.userId])
+
     // useEffect(() => {
-    //     handleSubmitQuote()
+    //     handleSubmitQuote();
     // }, [updatedData])
+
+
 
     function sendTest() {
         let userId = activeUser.userId;
@@ -86,7 +93,7 @@ const Documents = (item: any) => {
         return base64String;
     }
 
-    const document = updatedData?.documents
+    const documents = updatedData
 
 
     const handleOptions = (i: any) => {
@@ -162,6 +169,7 @@ const Documents = (item: any) => {
 
     };
 
+
     const handleCamera = async () => {
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -202,50 +210,54 @@ const Documents = (item: any) => {
             .then(response => {
                 const data = response.data
                 console.log("Submiting....", data)
+                handleSubmitQuote()
                 // navigation.navigate("QuoteDetails", { item: data })
             }).catch(error => {
                 console.log(error.response?.data?.message)
             })
     }
 
+
     return (
         <Fragment>
-            <ScrollView >
-                <View className='ml-4 mr-4 mt-2'>
-                    <Text className='font-[gothici-Regular]'>Upload all required documents first before you can proceed to next steps</Text>
-                    <Box className='mt-4'>
+            <View className='flex-1'>
+                <ScrollView>
+                    <View className='ml-4 mr-4 mt-2'>
 
-                        {document.map((i: any) => (
-                            <View style={HomeCss.container1} className='mt-2' key={i.id}>
-                                {i.fileContent !== null &&
-                                    <View>
-                                        <Text className='text-center'>{i.documentName}</Text>
-                                        <Text className='text-center'>Uploaded</Text>
-                                    </View>
-                                }
 
-                                {i.fileContent === null &&
+                        <Box className='mt-4'>
 
-                                    <View style={HomeCss.uploadBtnContainer1}>
+                            {documents.map((i: any) => (
+                                <View style={HomeCss.container1} className='mt-2'>
+                                    {i.fileContent !== null &&
+                                        <View>
+                                            <Text className='text-center'>{i.documentName}</Text>
+                                            <Text className='text-center'>Uploaded</Text>
+                                        </View>
+                                    }
 
-                                        {selectedFile.documentName === i.documentName && visible ?
-                                            < Text className='text-center text-2xl'> Loading...</Text>
-                                            :
-                                            <TouchableOpacity onPress={() => handleOptions(i)} style={HomeCss.uploadBtn} >
-                                                <Text className='font-[gothici-Regular]'>{i.documentName}</Text>
-                                                <AntDesign name="plus" size={20} color="black" />
-                                            </TouchableOpacity>
-                                        }
-                                    </View>
-                                }
-                            </View>
+                                    {i.fileContent === null &&
 
-                        ))}
+                                        <View style={HomeCss.uploadBtnContainer1}>
 
-                    </Box>
-                </View>
-            </ScrollView>
+                                            {selectedFile.documentName === i.documentName && visible ?
+                                                < Text className='text-center text-2xl'> Loading...</Text>
+                                                :
+                                                <TouchableOpacity onPress={() => handleOptions(i)} style={HomeCss.uploadBtn} >
+                                                    <Text className='font-[gothici-Regular]'>{i.documentName}</Text>
+                                                    <AntDesign name="plus" size={20} color="black" />
+                                                </TouchableOpacity>
+                                            }
+                                        </View>
+                                    }
+                                </View>
+                            ))}
 
+                        </Box>
+                    </View>
+                </ScrollView>
+
+            </View >
 
             <BottomModal
                 visible={modalVisible}
@@ -272,8 +284,8 @@ const Documents = (item: any) => {
                     </View>
                 </ModalContent>
             </BottomModal>
-        </Fragment>
+        </Fragment >
     )
 }
 
-export default Documents;
+export default DocumentsUpload;

@@ -34,7 +34,7 @@ const PaymentScreen = (item: any) => {
                 onSelectSwitch={onTabSelected}
 
             />
-            {tabSelected === 1 ? <Ncba item={item} /> : tabSelected === 2 ? <Mpesa item={item} /> : <Ipf />}
+            {tabSelected === 1 ? <Ncba item={item} /> : tabSelected === 2 ? <Mpesa item={item} /> : <Ipf item={item} />}
         </View>
     )
 }
