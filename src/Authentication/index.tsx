@@ -11,6 +11,7 @@ import GetQuote from "./GetQuote/GetQuote";
 import LoginOTP from "./LoginOTP";
 import ForgotPassword from "./ForgotPassword";
 import RegisterOTP from "./RegisterOTP";
+import ResetPassword from "./ResetPassword";
 
 
 // Stack Defination
@@ -29,6 +30,7 @@ export const AuthenticationNavigator = () => {
         <AuthenticationStack.Screen name="LoginOTP" component={LoginOTP} />
         <AuthenticationStack.Screen name="ForgotPassword" component={ForgotPassword} />
         <AuthenticationStack.Screen name="RegisterOTP" component={RegisterOTP} />
+        <AuthenticationStack.Screen name="ResetPassword" component={ResetPassword} />
       </AuthenticationStack.Group>
     </AuthenticationStack.Navigator>
   );
@@ -45,6 +47,7 @@ export const RootNavigator = () => {
       <AuthenticationStack.Screen name="LoginOTP" component={LoginOTP} />
       <AuthenticationStack.Screen name="ForgotPassword" component={ForgotPassword} />
       <AuthenticationStack.Screen name="RegisterOTP" component={RegisterOTP} />
+      <AuthenticationStack.Screen name="ResetPassword" component={ResetPassword} />
     </AuthenticationStack.Navigator>
   );
 };

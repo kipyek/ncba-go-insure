@@ -1,20 +1,31 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import AuthCss from '../AuthCss';
-import { apis } from '../../Services';
+import { api } from '../../Services';
+import { useNavigation } from '@react-navigation/native';
 
 const ForgotPassword = () => {
+  const navigation: any = useNavigation()
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleResetPassword = () => {
-    email !== '' &&
-      apis.post(`authentication/Reset/Otp?email=${email}`)
-        .then(response => {
-          const data = response.data
-          console.log("success", data)
-        }).catch(error => {
-          console.log(error.response?.data?.message)
-        })
+    setLoading(true)
+    {
+      email !== '' &&
+        api.post(`authentication/Reset/Otp?email=${email}`)
+          .then(response => {
+            const data = response.data
+            navigation.navigate("ResetPassword", { item: data.body })
+            console.log("success", data)
+          }).catch(error => {
+            navigation.navigate("ResetPassword")
+            alert("An error as occured, make sure your email is correct")
+            console.log(error.response.data)
+          }).finally(() => {
+            setLoading(false)
+          })
+    }
   }
   return (
     <View >
@@ -36,12 +47,16 @@ const ForgotPassword = () => {
           />
 
           <View className='item-center bg-primary p-3 mt-4 rounded-md '>
-            <TouchableOpacity onPress={() => handleResetPassword()}>
-              <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT</Text>
-            </TouchableOpacity>
+            {!loading ?
+              <TouchableOpacity onPress={() => handleResetPassword()}>
+                <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT</Text>
+              </TouchableOpacity>
+              :
+              <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>
+            }
           </View>
           <TouchableOpacity >
-            <Text className='mt-4 font-["gothici-Regular"] text-[#00BFFF]'>Resend Email Confirmation</Text>
+            <Text className='mt-4 font-["gothici-Regular"] text-[#00BFFF]'>Resend code</Text>
           </TouchableOpacity>
         </View>
       </View>

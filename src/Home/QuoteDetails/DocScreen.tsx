@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView, Platform, ActivityIndicator } from 'react-native';
 import React, { Fragment, useEffect, useState } from 'react';
 import { AntDesign } from "@expo/vector-icons";
 import { Box } from '../../Component/Theme';
@@ -43,28 +43,32 @@ const DocScreen = ({ item }: any) => {
     const activeUser = userData()
     const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [imageUri, setImageUri] = useState("");
     const [selectedFile, setSelectedFile] = useState(Object);
-    const [selectedDoc, setSelectedDoc] = useState<any>(null)
-    const [security, setSecurity] = useState<any>(null)
-    const [userSession, setUserSession] = useState<any>(null)
+    const [selectedDoc, setSelectedDoc] = useState<any>(null);
+    const [security, setSecurity] = useState<any>(null);
+    const [userSession, setUserSession] = useState<any>(null);
     const [updatedData, setUpdatedData] = useState(document)
 
     useEffect(() => {
         sendTest()
     }, [activeUser.userId])
 
-
-
     useEffect(() => {
         setUpdatedData(updatedData)
     }, [activeUser.userId])
 
-    // useEffect(() => {
-    //     handleSubmitQuote();
-    // }, [updatedData])
+    useEffect(() => {
+        handleSubmitQuote();
+    }, [updatedData])
 
+    const handleLoading = () => {
+        return (
+            <View className=''>
+                <Text>Loading...</Text>
+            </View>
 
+        )
+    }
 
     function sendTest() {
         let userId = activeUser.userId;
@@ -116,6 +120,7 @@ const DocScreen = ({ item }: any) => {
             .then(response => {
                 const data = response.data
                 setUpdatedData(data.documents)
+
             }).catch(error => {
                 console.log(error.response)
             }).finally(() => {
@@ -160,8 +165,6 @@ const DocScreen = ({ item }: any) => {
         await copyAsync({ from: result.uri, to: cacheFilePath });
         return cacheFilePath;
     }
-
-
 
     const pickImage = async () => {
         let result: any = await DocumentPicker.getDocumentAsync({
@@ -223,7 +226,6 @@ const DocScreen = ({ item }: any) => {
             })
     }
 
-
     return (
         <Fragment>
             <View className=' flex-1'>
@@ -231,12 +233,16 @@ const DocScreen = ({ item }: any) => {
                     <View className='ml-4 mr-4 mt-2'>
                         <View>
                             <Text className='font-[gothici-Regular]'>Upload all required documents first before you can proceed to next steps</Text>
-                            {/* {
-                                < Text className='text-center text-2xl'>Loading...</Text>
-                            } */}
+
+                        </View>
+                        <View className='flex-1 justify-center items-center'>
+                            {documents.length < 1 &&
+                                <ActivityIndicator size="large" color="#00BFFF" />
+                            }
                         </View>
 
                         <Box className='mt-4'>
+
 
                             {documents.map((i: any) => (
                                 <View style={HomeCss.container1} className='mt-2'>

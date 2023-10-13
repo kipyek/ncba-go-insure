@@ -114,7 +114,7 @@ const ClaimForm = () => {
                                 style={{ borderWidth: 1 }}
                                 onChangeText={text => setDetail(text)}
                                 value={detail}
-                                placeholder="Enter the location"
+                                placeholder="Give brief description"
                                 keyboardType="default"
                             />
                         </View>
@@ -133,7 +133,7 @@ const ClaimForm = () => {
                         {report ?
                             <View>
                                 <View>
-                                    <Text className='mb-1 mt-3 font-[gothici-Regular]'>Which polic station did you report?*</Text>
+                                    <Text className='mb-1 mt-3 font-[gothici-Regular]'>Which police station did you report?*</Text>
                                     <TextInput
                                         className='p-1 rounded-md mt-1'
                                         style={{ borderWidth: 1 }}

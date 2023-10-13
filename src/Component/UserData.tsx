@@ -39,4 +39,5 @@ const userData = () => {
     return { userId, userEmail, userPhone, surname, firstName, otherName, dob, pin, id }
 }
 
+
 export default userData

@@ -134,7 +134,6 @@ const DocumentsUpload = ({ item }: any) => {
             return base64;
         } else if (Platform.OS === 'android') {
             const base64 = await readAsStringAsync(uri, { encoding: EncodingType.Base64 });
-
             const payload = {
                 "docName": base64,
                 "docId": result.name,

@@ -76,7 +76,7 @@ const ManageStackScreens = () => {
             <FontAwesome name="money" size={24} color="grey" />),
         }} />
       <Tab.Screen name="Profile" component={Profile}
-      //options={{ unmountOnBlur: true, }}
+        options={{ unmountOnBlur: true, }}
       />
       {/* Add more screens here as need be */}
     </Tab.Navigator>

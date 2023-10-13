@@ -1,4 +1,5 @@
-import { Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native';
+//This is one of the custom tabs
+import { Text, TouchableOpacity, View, ScrollView, Platform, FlatList, ActivityIndicator, Dimensions } from 'react-native';
 import React, { Fragment, useEffect, useState } from 'react';
 import { AntDesign } from "@expo/vector-icons";
 import { Box } from '../../Component/Theme';
@@ -39,6 +40,7 @@ const Base64 = {
 
 const Documents = (item: any) => {
     const data = item?.item?.item
+    const documents = data.documents
     const activeUser = userData()
     const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -46,15 +48,15 @@ const Documents = (item: any) => {
     const [selectedDoc, setSelectedDoc] = useState<any>(null);
     const [security, setSecurity] = useState<any>(null);
     const [userSession, setUserSession] = useState<any>(null);
-    const [updatedData, setUpdatedData] = useState(data);
+    const [updatedData, setUpdatedData] = useState(documents);
 
     useEffect(() => {
         sendTest()
     }, [activeUser.userId])
 
-    // useEffect(() => {
-    //     handleSubmitQuote()
-    // }, [updatedData])
+    useEffect(() => {
+        handleSubmitQuote()
+    }, [updatedData])
 
     function sendTest() {
         let userId = activeUser.userId;
@@ -86,7 +88,7 @@ const Documents = (item: any) => {
         return base64String;
     }
 
-    const document = updatedData?.documents
+    const document = updatedData
 
 
     const handleOptions = (i: any) => {
@@ -97,7 +99,7 @@ const Documents = (item: any) => {
 
     const handleSubmitQuote = () => {
         setVisible(true)
-        apis.get(`Common/GetQuote?quoteId=${item.id}`, {
+        apis.get(`Common/GetQuote?quoteId=${data.id}`, {
             headers: {
                 "SecurityToken": security,
                 "UserSessionId": userSession,
@@ -208,44 +210,59 @@ const Documents = (item: any) => {
             })
     }
 
+    const Item = ({ i }: any) => {
+        return (
+            <Box className='mt-1 ml-4 mr-4'>
+
+                <View style={HomeCss.container1} className='mt-2 ' key={i.id}>
+                    {i.fileContent !== null &&
+                        <View>
+                            <Text className='text-center'>{i.documentName}</Text>
+                            <Text className='text-center'>Uploaded</Text>
+                        </View>
+                    }
+
+                    {i.fileContent === null &&
+
+                        <View style={HomeCss.uploadBtnContainer1}>
+
+                            {selectedFile.documentName === i.documentName && visible ?
+                                < Text className='text-center text-2xl'> Loading...</Text>
+                                :
+                                <TouchableOpacity onPress={() => handleOptions(i)} style={HomeCss.uploadBtn} >
+                                    <Text className='font-[gothici-Regular]'>{i.documentName}</Text>
+                                    <AntDesign name="plus" size={20} color="black" />
+                                </TouchableOpacity>
+                            }
+                        </View>
+                    }
+                </View>
+
+            </Box>
+        )
+    }
+
     return (
         <Fragment>
-            <ScrollView >
-                <View className='ml-4 mr-4 mt-2'>
-                    <Text className='font-[gothici-Regular]'>Upload all required documents first before you can proceed to next steps</Text>
-                    <Box className='mt-4'>
+            <View>
+                <View className=' mt-2'>
+                    <Text className='font-[gothici-Regular] mr-4 ml-4'>Upload all required documents first before you can proceed to next steps</Text>
+                    <View className='flex-1 justify-center items-center mt-6'>
+                        {document.length < 1 &&
+                            <ActivityIndicator size="large" color="#00BFFF" />
+                        }
+                    </View>
 
-                        {document.map((i: any) => (
-                            <View style={HomeCss.container1} className='mt-2' key={i.id}>
-                                {i.fileContent !== null &&
-                                    <View>
-                                        <Text className='text-center'>{i.documentName}</Text>
-                                        <Text className='text-center'>Uploaded</Text>
-                                    </View>
-                                }
+                    <FlatList
+                        data={document}
+                        renderItem={({ item }) => <Item i={item} />}
+                        keyExtractor={(item: any) => item.productId}
+                        //contentContainerStyle={{ paddingBottom: 200 }}
+                        ListFooterComponent={<View style={{ height: Dimensions.get('window').height }}></View>}
+                    />
 
-                                {i.fileContent === null &&
-
-                                    <View style={HomeCss.uploadBtnContainer1}>
-
-                                        {selectedFile.documentName === i.documentName && visible ?
-                                            < Text className='text-center text-2xl'> Loading...</Text>
-                                            :
-                                            <TouchableOpacity onPress={() => handleOptions(i)} style={HomeCss.uploadBtn} >
-                                                <Text className='font-[gothici-Regular]'>{i.documentName}</Text>
-                                                <AntDesign name="plus" size={20} color="black" />
-                                            </TouchableOpacity>
-                                        }
-                                    </View>
-                                }
-                            </View>
-
-                        ))}
-
-                    </Box>
                 </View>
-            </ScrollView>
-
+            </View>
 
             <BottomModal
                 visible={modalVisible}

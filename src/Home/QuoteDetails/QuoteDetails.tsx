@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from '../../Component/Header';
 import { Feather } from '@expo/vector-icons';
 import { Menu, MenuItem } from 'react-native-material-menu';
@@ -10,10 +10,18 @@ import DocScreen from './DocScreen';
 
 const QuoteDetails = ({ route }: any) => {
     const { item } = route.params
+    const document = item.documents
+    console.log("Humbeger21")
     const navigation: any = useNavigation()
     const [visible, setVisible] = useState(false)
     const [show, setShow] = useState(false)
     const [moves, setMoves] = useState(1)
+    const [allDos, setAllDocs] = useState(document)
+    const [selected, setSelected] = useState([])
+
+    useEffect(() => {
+        document.map((i: any) => setSelected(i.documentName))
+    }, [])
 
     const hideMenu = () => setVisible(false);
 
@@ -32,6 +40,13 @@ const QuoteDetails = ({ route }: any) => {
         setMoves(2)
         hideMenu()
     }
+
+
+    console.log("all", selected)
+
+    // const isBelowThreshold = (currentValue: any) => currentValue === null;
+    // const isWorking = selected.every(isBelowThreshold)
+    // console.log(isWorking)
 
 
     return (

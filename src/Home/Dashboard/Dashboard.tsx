@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Toast from 'react-native-root-toast'
 import { Header } from '../../Component/Header';
 import { Feather } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import CryptoJS from 'crypto-js';
 import uuid from 'react-native-uuid';
 import userData from '../../Component/UserData';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 const Base64 = {
@@ -33,37 +34,28 @@ const Base64 = {
 };
 const Dashboard = () => {
   const activeUser = userData();
-  const handleToastTest = () => {
-    Toast.show("You have successfully created account", {
-      duration: Toast.durations.LONG,
-      position: Toast.positions.BOTTOM,
-      backgroundColor: 'green',
-      shadow: false,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-    })
-  }
 
+
+  {/**Start of headers encryption */ }
   useEffect(() => {
     sendTest()
-  }, [])
-
+  }, [activeUser.userId])
 
   function sendTest() {
-    let data = activeUser.userId
-    let userId = "12345678";
+    let userId = activeUser.userId;
     let uid: any = uuid.v4();
     let base64 = Base64.btoa(uid);
     let userKey = base64 + 'Digitek22';
 
-    let SecurityToken = encrypt(userId, userKey);
-    console.log("Security2", data)
-    console.log(userId)
-    let UserSessionId = base64;
-    console.log("UserSessionId2", UserSessionId)
-  }
+    let securityToken = encrypt(userId, userKey);
 
+    let userSessionId = base64;
+    const payload = {
+      "securityToken": securityToken,
+      "sessionId": userSessionId,
+    }
+    AsyncStorage.setItem("headers", JSON.stringify(payload))
+  }
 
   function encrypt(plainText: any, key: any) {
     key = CryptoJS.enc.Utf8.parse(key);
@@ -78,8 +70,7 @@ const Dashboard = () => {
     let base64String = encrypted.toString();
     return base64String;
   }
-
-
+  {/**End of headers encryption */ }
 
   return (
     <SafeAreaView className='flex-1 '>
