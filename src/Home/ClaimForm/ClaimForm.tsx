@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Header } from '../../Component/Header'
 import DropDown from '../../Component/DropDown'
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -8,6 +8,7 @@ import Moment from 'moment';
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation } from '@react-navigation/native';
 import HomeCss from '../HomeCss';
+import { apis } from '../../Services';
 
 const data = [
     { label: 'Health', value: '1' },
@@ -16,16 +17,45 @@ const data = [
     { label: 'Car Insurance', value: '4' },
 ];
 
-const ClaimForm = () => {
+const ClaimForm = ({ route }: any) => {
+    const { item } = route?.params
+    // console.log(item)
     const navigation: any = useNavigation()
-    const [value, setValue] = useState('');
-    const [date, setDate] = useState(null);
+    const [selectedClaim, setSelectedClaim] = useState(null);
+    const [selectedItem, setSelectedItem] = useState('');
+    const [insuredItems, setInsuredItems] = useState([])
+    const [date, setDate] = useState<any>(null);
     const [station, setStation] = useState('');
     const [refNumber, setRefNumber] = useState('');
     const [accident, setAccident] = useState('');
     const [detail, setDetail] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [report, setReport] = useState(false);
+    const [allInsuredItems, setAllInsuredItems] = useState<any>(null)
+
+    useEffect(() => {
+        handleInsuredItem()
+    }, [selectedClaim])
+
+    const startDate = allInsuredItems?.commencementDate;
+    const start = startDate?.split("T")[0];
+
+    const endDate = allInsuredItems?.expiryDate;
+    const end = endDate?.split("T")[0]
+
+    console.log("all of", end, start)
+
+    // Date to check
+    const targetDate = new Date('2023-10-15');
+    //const targetDate = Moment(date).format('YYYY-MM-DD')
+
+    const handleCheckDates = () => {
+        if (targetDate >= start && targetDate <= end) {
+            alert('The target date is between the start and end dates.');
+        } else {
+            alert('The target date is not between the start and end dates.');
+        }
+    }
 
     const hideDatePicker = () => {
         setDatePickerVisibility(false)
@@ -33,11 +63,25 @@ const ClaimForm = () => {
 
     const handleConfirmDate = (date: any) => {
         setDate(date)
+        handleCheckDates()
         hideDatePicker()
     }
 
     const handleReport = () => {
         setReport(!report)
+    }
+
+    const handleInsuredItem = async () => {
+        await apis.get(`MotorQuotes/GetPolicy?id=${selectedClaim}`)
+            .then(response => {
+                const allData = response.data
+                const data = response.data.insuredItems
+                setInsuredItems(data)
+                setAllInsuredItems(allData)
+            })
+            .catch(error => {
+                console.log(error.response.data.message)
+            })
     }
 
     return (
@@ -64,10 +108,10 @@ const ClaimForm = () => {
                         <View className='mb-2'>
                             <Text className=' mb-1 mt-3 font-[gothici-Regular]'>Select policy to claim*</Text>
                             <DropDown
-                                label={"label"}
-                                value={"value"}
-                                onchange={(item: any) => setValue(item?.value)}
-                                datas={data}
+                                label={"registrationNumber"}
+                                value={"id"}
+                                onchange={(item: any) => setSelectedClaim(item?.id)}
+                                datas={item}
                                 placeholder='---select policy---'
                             />
                         </View>
@@ -75,10 +119,10 @@ const ClaimForm = () => {
                         <View className='mb-2'>
                             <Text className=' mb-1 mt-3 font-[gothici-Regular]'>Select insured item below*</Text>
                             <DropDown
-                                label={"label"}
-                                value={"value"}
-                                onchange={(item: any) => setValue(item?.value)}
-                                datas={data}
+                                label={"itemName"}
+                                value={"itemId"}
+                                onchange={(item: any) => setSelectedItem(item)}
+                                datas={insuredItems}
                                 placeholder=''
                             />
                         </View>

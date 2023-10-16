@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { TextInput, View } from 'react-native'
 import React from 'react'
 import PPaymentComponent from '../../Component/PPaymentComponent'
 
@@ -23,7 +23,6 @@ const PPayment = () => {
                     placeholder="Enter text to search"
                 />
             </View>
-
 
             <PPaymentComponent
                 description="4"

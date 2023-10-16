@@ -42,8 +42,6 @@ const ConfirmedQuote = () => {
     }
 
 
-
-
     const Item = ({ item }: any) => {
         const outStanding = (item.grossPremium) - (item.paidAmount)
         return (

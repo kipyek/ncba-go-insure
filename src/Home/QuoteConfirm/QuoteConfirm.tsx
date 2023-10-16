@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { apis } from '../../Services';
 import userData from '../../Component/UserData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { companiesDetails } from '../../Component/util';
 
 const data = [
     { label: 'Health', value: '1' },
@@ -289,7 +290,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                                 <View className='item-center bg-[#EEE017] p-3 mt-2 rounded-md w-32'>
                                     {!visible ?
                                         <TouchableOpacity onPress={handleNext}>
-                                            <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
+                                            <Text className='text-center font-["gothici-Bold"]'>{companiesDetails.submission}</Text>
                                         </TouchableOpacity>
                                         :
                                         <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>

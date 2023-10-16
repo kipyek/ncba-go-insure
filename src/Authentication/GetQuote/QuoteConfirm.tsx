@@ -4,6 +4,7 @@ import Moment from 'moment';
 import { Fontisto, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import DropDown from '../../Component/DropDown';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { companiesDetails } from '../../Component/util';
 
 const data = [
   { label: 'Health', value: '1' },
@@ -266,7 +267,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, onBackStep }: any) => {
               {confirmed ?
                 <View className='item-center bg-primary p-3 mt-2 rounded-md w-32'>
                   <TouchableOpacity onPress={handleNext}>
-                    <Text className='text-center text-white font-["gothici-Bold"]'>GO FOR IT</Text>
+                    <Text className='text-center text-white font-["gothici-Bold"]'>{companiesDetails.submission}</Text>
                   </TouchableOpacity>
                 </View>
                 :

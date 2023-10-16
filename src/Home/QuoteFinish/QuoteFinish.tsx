@@ -11,6 +11,7 @@ import userData from '../../Component/UserData';
 import uuid from 'react-native-uuid';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
+import { companiesDetails } from '../../Component/util';
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 const Base64 = {
@@ -114,13 +115,13 @@ const QuoteFinish = ({ route }: any) => {
             <StepperComponet currentPage={4} />
             <View style={HomeCss.introCard}>
                 <Text className='font-[gothici-Regular]'>Your quotation number is <Text className='font-bold font-[gothici-Regular]'>{item?.quoteNo}</Text> and total payable is <Text className='font-bold font-[gothici-Regular]'>Kes {Humanize.formatNumber(item?.premiumAmount, 2)}</Text></Text>
-                <Text className='font-[gothici-Regular]'>Please click on  <Text className='font-bold font-[gothici-Regular]'>"GO FOR IT"</Text> to proceed to buy the cover. If you wish to quote for another vehicle, please click on <Text className='font-bold font-[gothici-Regular]'>"NEW QUOTE"</Text></Text>
+                <Text className='font-[gothici-Regular]'>Please click on  <Text className='font-bold font-[gothici-Regular]'>{companiesDetails.submission}</Text> to proceed to buy the cover. If you wish to quote for another vehicle, please click on <Text className='font-bold font-[gothici-Regular]'>"NEW QUOTE"</Text></Text>
 
                 <View className='flex-row justify-between'>
                     <View className='item-center bg-[#EEE017] p-1 mt-4 rounded-md w-32'>
                         {!visible ?
                             <TouchableOpacity onPress={() => handleSubmitQuote()}>
-                                <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
+                                <Text className='text-center font-["gothici-Bold"]'>{companiesDetails.submission}</Text>
                             </TouchableOpacity>
                             :
                             <Text className='text-center font-["gothici-Bold"] text-white'>Processing...</Text>

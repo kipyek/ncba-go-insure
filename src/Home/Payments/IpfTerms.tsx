@@ -5,6 +5,7 @@ import { FontAwesome, MaterialIcons } from "@expo/vector-icons"
 import { useNavigation } from '@react-navigation/native';
 import { apis } from '../../Services';
 import Humanize from 'humanize-plus';
+import { companiesDetails } from '../../Component/util';
 
 const IpfTerms = (item: any) => {
     const payload = item?.item
@@ -61,7 +62,7 @@ const IpfTerms = (item: any) => {
                     <View className='item-center bg-[#EEE017] p-3 mt-2 rounded-md w-32'>
                         {!show ?
                             <TouchableOpacity onPress={() => handleApplyIPF()}>
-                                <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
+                                <Text className='text-center font-["gothici-Bold"]'>{companiesDetails.submission}</Text>
                             </TouchableOpacity>
                             :
                             <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>

@@ -9,6 +9,7 @@ import CryptoJS from 'crypto-js';
 import uuid from 'react-native-uuid';
 import userData from '../../Component/UserData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { projectImages } from '../../Component/util';
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 const Base64 = {
@@ -78,7 +79,7 @@ const Dashboard = () => {
       <Header
         label="Dashboard"
       />
-      <Image source={require("../../../assets/images/background.png")} style={HomeCss.homeImage} />
+      <Image source={projectImages?.dashboardImage} style={HomeCss.homeImage} />
 
     </SafeAreaView>
   )

@@ -3,13 +3,14 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import AuthCss from '../AuthCss'
 import { StatusBar } from 'expo-status-bar'
+import { projectImages } from '../../Component/util'
 
 const AuthHome = () => {
   const navigation: any = useNavigation()
   return (
     <View className='flex-1 bg-white'>
       <StatusBar backgroundColor='#87CEEB' />
-      <Image source={location[0]} style={AuthCss.image} />
+      <Image source={projectImages.landing} style={AuthCss.image} />
       <View className='ml-3 mr-3 flex-1'>
         <View className='item-center bg-primary mt-20 p-4 mb-4 rounded-md'>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>

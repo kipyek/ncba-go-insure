@@ -11,7 +11,6 @@ export default StyleSheet.create({
         width: "100%",
         height: '15%',
         marginTop: 40,
-        backgroundColor: 'grey',
 
     },
     card: {

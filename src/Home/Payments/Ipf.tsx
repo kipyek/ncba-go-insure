@@ -4,6 +4,7 @@ import DropDown from '../../Component/DropDown';
 import { apis } from '../../Services';
 import IpfTerms from './IpfTerms';
 import Humanize from 'humanize-plus';
+import { companiesDetails } from '../../Component/util';
 
 const data = [
     { label: '1', value: '1' },
@@ -101,7 +102,7 @@ const Ipf = (item: any) => {
 
                     <View className='item-center bg-[#EEE017] p-3 mt-2 rounded-md w-32'>
                         <TouchableOpacity onPress={() => handleSwitchingScreens()}>
-                            <Text className='text-center font-["gothici-Bold"]'>GO FOR IT</Text>
+                            <Text className='text-center font-["gothici-Bold"]'>{companiesDetails.submission}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

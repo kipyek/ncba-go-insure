@@ -12,7 +12,6 @@ import Payments from './Payments';
 const Drawer = createDrawerNavigator();
 
 const Transaction = () => {
-
   return (
     <Drawer.Navigator
       screenOptions={{

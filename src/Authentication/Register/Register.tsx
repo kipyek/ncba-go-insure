@@ -9,6 +9,7 @@ import { api } from '../../Services';
 import AuthCss from '../AuthCss';
 import { Formik } from 'formik'
 import * as Yup from 'yup';
+import { companiesDetails } from '../../Component/util';
 
 
 const validationSchema = Yup.object().shape({
@@ -62,8 +63,8 @@ const Register = () => {
   }
 
   const handleConfirmEMail = () => {
-    Alert.alert('Welcome to NCBA Go Insure',
-      'Thank you for your interest in NCBA Go Insure. Please check your email for a link to activate your account.Incase you have not received the confirmation email, click "Resend" below to send a new code',
+    Alert.alert(`Welcome to ${companiesDetails.name}`,
+      `Thank you for your interest in ${companiesDetails.name}. Please check your email for a link to activate your account.Incase you have not received the confirmation email, click "Resend" below to send a new code`,
       [
         {
           text: 'Cancel',
@@ -113,7 +114,7 @@ const Register = () => {
     <Fragment>
       <View className='flex-1'>
         <View className='mt-14 ml-4' style={AuthCss.card}>
-          <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to NCBA Go Insure</Text>
+          <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to {companiesDetails.name}</Text>
           <Text className='font-["gothici-Regular"]'>Please register here</Text>
         </View>
         <View className='mt-1 ml-4 mr-4'>

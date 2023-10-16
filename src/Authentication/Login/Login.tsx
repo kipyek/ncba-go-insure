@@ -6,6 +6,7 @@ import { Formik } from 'formik'
 import * as Yup from "yup"
 import { api } from '../../Services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { companiesDetails } from '../../Component/util'
 
 const validationSchema = Yup.object().shape({
   email: Yup
@@ -58,7 +59,7 @@ const Login = () => {
   return (
     <View className='bg-white flex-1'>
       <View className='mt-14 ml-4' style={AuthCss.card}>
-        <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to NCBA Go Insure</Text>
+        <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to {companiesDetails.name}</Text>
         <Text className='font-["gothici-Regular"]'>Login to your account</Text>
       </View>
 

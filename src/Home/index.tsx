@@ -19,7 +19,6 @@ import QuoteList from "./QuoteList";
 import QuoteConfirm from "./QuoteConfirm";
 import QuoteFinish from "./QuoteFinish";
 import QuoteBenefit from "./QuoteBenefit";
-import IpfTerms from "./Payments/IpfTerms";
 import IpfDocument from "./IpfDocument";
 
 // Tabs Defination
@@ -65,7 +64,7 @@ const ManageStackScreens = () => {
             <MaterialIcons name="request-quote" size={24} color="grey" />),
         }} />
       <Tab.Screen name="Claim" component={Claim}
-      // options={{ unmountOnBlur: true, }}
+        options={{ unmountOnBlur: true, }}
       />
 
       <Tab.Screen name="Transaction" component={Transaction}
@@ -78,12 +77,11 @@ const ManageStackScreens = () => {
       <Tab.Screen name="Profile" component={Profile}
         options={{ unmountOnBlur: true, }}
       />
-      {/* Add more screens here as need be */}
     </Tab.Navigator>
   );
 }
 
-// Home Stack Defination
+
 const Stack = createNativeStackNavigator<HomeRoutes>();
 
 

@@ -5,6 +5,7 @@ import AuthCss from '../AuthCss'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { api } from '../../Services'
+import { companiesDetails } from '../../Component/util'
 
 const validationSchema = Yup.object().shape({
     code: Yup
@@ -40,7 +41,7 @@ const RegisterOTP = ({ route }: any) => {
     return (
         <View className='bg-white flex-1'>
             <View className='mt-14 ml-4' style={AuthCss.card}>
-                <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to NCBA Go Insure</Text>
+                <Text className='font-["gothici-Regular"] text-[#333333]' style={{ fontSize: 20 }}>Welcome to {companiesDetails.name}</Text>
                 <Text className='font-["gothici-Regular"]' style={{ fontSize: 12 }}>Enter your authenticator code sent to your phone number and email</Text>
             </View>
 

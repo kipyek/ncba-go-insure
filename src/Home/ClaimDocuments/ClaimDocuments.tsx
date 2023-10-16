@@ -4,6 +4,7 @@ import { Header } from '../../Component/Header';
 import HomeCss from '../HomeCss';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from "@expo/vector-icons"
+import { companiesDetails } from '../../Component/util';
 
 const ClaimDocuments = () => {
     const navigation: any = useNavigation();
@@ -20,7 +21,7 @@ const ClaimDocuments = () => {
 
                 {/**Intro statement */}
                 <View className='ml-2 mr-2 pt-4 '>
-                    <Text className='font-[gothici-Regular] pb-2'>-Thank you for visiting NCBA Go Insure App.</Text>
+                    <Text className='font-[gothici-Regular] pb-2'>-Thank you for visiting {companiesDetails.name} App.</Text>
                     <Text className='font-[gothici-Regular] pb-2'>-We have received your claim and one of our staff will reach out to you.</Text>
                     <Text className='font-[gothici-Regular] pb-2'>-Your Ticket number is M5674T.</Text>
                     <Text className='font-[gothici-Regular] pb-2'>-To complete claims application, download the claim form from the link below then upload the completed form alongside other documents requested below.</Text>
