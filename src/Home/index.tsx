@@ -20,6 +20,7 @@ import QuoteConfirm from "./QuoteConfirm";
 import QuoteFinish from "./QuoteFinish";
 import QuoteBenefit from "./QuoteBenefit";
 import IpfDocument from "./IpfDocument";
+import ClaimsDocumentsScreen from "./ClaimsDocumentsScreen";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -99,6 +100,7 @@ export const HomeNavigator = () => {
       <Stack.Screen name="QuoteList" component={QuoteList} />
       <Stack.Screen name="QuoteBenefit" component={QuoteBenefit} />
       <Stack.Screen name="IpfDocument" component={IpfDocument} />
+      <Stack.Screen name="ClaimsDocumentsScreen" component={ClaimsDocumentsScreen} />
 
     </Stack.Navigator>
   )

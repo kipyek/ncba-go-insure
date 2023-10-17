@@ -58,4 +58,5 @@ export type HomeRoutes = {
   QuoteDetails: any;
   ClaimDocuments: any;
   IpfDocument: any;
+  ClaimsDocumentsScreen: any;
 }

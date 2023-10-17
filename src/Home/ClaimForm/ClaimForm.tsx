@@ -10,19 +10,12 @@ import { useNavigation } from '@react-navigation/native';
 import HomeCss from '../HomeCss';
 import { apis } from '../../Services';
 
-const data = [
-    { label: 'Health', value: '1' },
-    { label: 'Life', value: '2' },
-    { label: 'Homeowner', value: '3' },
-    { label: 'Car Insurance', value: '4' },
-];
 
 const ClaimForm = ({ route }: any) => {
     const { item } = route?.params
-    // console.log(item)
     const navigation: any = useNavigation()
     const [selectedClaim, setSelectedClaim] = useState(null);
-    const [selectedItem, setSelectedItem] = useState('');
+    const [selectedItem, setSelectedItem] = useState<any>(null);
     const [insuredItems, setInsuredItems] = useState([])
     const [date, setDate] = useState<any>(null);
     const [station, setStation] = useState('');
@@ -30,6 +23,7 @@ const ClaimForm = ({ route }: any) => {
     const [accident, setAccident] = useState('');
     const [detail, setDetail] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [report, setReport] = useState(false);
     const [allInsuredItems, setAllInsuredItems] = useState<any>(null)
 
@@ -37,25 +31,6 @@ const ClaimForm = ({ route }: any) => {
         handleInsuredItem()
     }, [selectedClaim])
 
-    const startDate = allInsuredItems?.commencementDate;
-    const start = startDate?.split("T")[0];
-
-    const endDate = allInsuredItems?.expiryDate;
-    const end = endDate?.split("T")[0]
-
-    console.log("all of", end, start)
-
-    // Date to check
-    const targetDate = new Date('2023-10-15');
-    //const targetDate = Moment(date).format('YYYY-MM-DD')
-
-    const handleCheckDates = () => {
-        if (targetDate >= start && targetDate <= end) {
-            alert('The target date is between the start and end dates.');
-        } else {
-            alert('The target date is not between the start and end dates.');
-        }
-    }
 
     const hideDatePicker = () => {
         setDatePickerVisibility(false)
@@ -63,7 +38,7 @@ const ClaimForm = ({ route }: any) => {
 
     const handleConfirmDate = (date: any) => {
         setDate(date)
-        handleCheckDates()
+
         hideDatePicker()
     }
 
@@ -75,7 +50,7 @@ const ClaimForm = ({ route }: any) => {
         await apis.get(`MotorQuotes/GetPolicy?id=${selectedClaim}`)
             .then(response => {
                 const allData = response.data
-                const data = response.data.insuredItems
+                const data = response.data?.insuredItems
                 setInsuredItems(data)
                 setAllInsuredItems(allData)
             })
@@ -83,6 +58,85 @@ const ClaimForm = ({ route }: any) => {
                 console.log(error.response.data.message)
             })
     }
+
+    const handleClaimDetails = (id: any) => {
+        apis.get(`Claims/ClaimDetails?id=${id}`)
+            .then(response => {
+                const data = response.data
+                navigation.navigate("ClaimDocuments", { item: data })
+                console.log("claims details", data)
+            })
+            .catch(error => {
+                console.log(error.response.data.message)
+            })
+    }
+
+    const handleSaving = () => {
+        const startDate = allInsuredItems?.commencementDate;
+        const start = startDate?.split("T")[0];
+        const endDate = allInsuredItems?.expiryDate;
+        const end = endDate?.split("T")[0]
+        const targetDate = Moment(date).format('YYYY-MM-DD')
+        if (targetDate >= start && targetDate <= end) {
+            setIsLoading(true)
+            const policyId = item[0]?.policyID
+            const payload = {
+                "id": 0,
+                "claimDate": date,
+                "claimNo": "string",
+                "policyNo": null,
+                "customer": "string",
+                "dateOfLoss": date,
+                "dateReported": new Date(),
+                "claimDetails": detail,
+                "natureOfLoss": null,
+                "claimCausationId": 0,
+                "claimCausation": null,
+                "natureOfLossId": 0,
+                "natureOfLossCode": null,
+                "insuredItemId": selectedItem?.id,
+                "registrationNo": null,
+                "policyId": policyId,
+                "product": null,
+                "closureStatus": null,
+                "claimAmount": 0,
+                "estimatedClaimAmount": 0,
+                "claimCausationCode": null,
+                "reportedToPolice": report,
+                "policeStationReported": report ? station : null,
+                "obReferenceNo": report ? refNumber : null,
+                "riskLocation": accident,
+                "version": null,
+                "driverFirstName": null,
+                "driverMiddleName": null,
+                "driverSurname": null,
+                "driverLicenceNo": null,
+                "driverLicenceClass": null,
+                "driverNationalId": null,
+                "injuriesIncurred": null,
+                "vehicleMovability": null,
+                "progresses": [],
+                "documents": []
+            }
+            apis.post("Claims/SaveClaim", payload)
+                .then(response => {
+                    const data = response.data;
+                    handleClaimDetails(data)
+                    setIsLoading(false)
+                    console.log("saving", data)
+                })
+                .catch(error => {
+                    console.log(error.response.data.message)
+                    setIsLoading(false)
+                })
+        } else {
+            alert('Your selected date is not between the commencement and Expiry dates of your policy.');
+        }
+    }
+
+    //     const handleValidation = () => {
+    // if(selectedItem)
+    //     }
 
     return (
         <Fragment>
@@ -120,7 +174,7 @@ const ClaimForm = ({ route }: any) => {
                             <Text className=' mb-1 mt-3 font-[gothici-Regular]'>Select insured item below*</Text>
                             <DropDown
                                 label={"itemName"}
-                                value={"itemId"}
+                                value={"id"}
                                 onchange={(item: any) => setSelectedItem(item)}
                                 datas={insuredItems}
                                 placeholder=''
@@ -204,9 +258,13 @@ const ClaimForm = ({ route }: any) => {
                         }
 
                         <View className='item-center bg-primary p-4 mt-4 rounded-md '>
-                            <TouchableOpacity onPress={() => navigation.navigate("ClaimDocuments")}>
-                                <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT</Text>
-                            </TouchableOpacity>
+                            {!isLoading ?
+                                <TouchableOpacity onPress={() => handleSaving()}>
+                                    <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT</Text>
+                                </TouchableOpacity>
+                                :
+                                <Text className='text-center text-white font-["gothici-Bold"]'>Processing...</Text>
+                            }
                         </View>
 
                     </View>
@@ -220,6 +278,8 @@ const ClaimForm = ({ route }: any) => {
                 pickerContainerStyleIOS={{ justifyContent: "center", paddingHorizontal: 150 }}
                 onConfirm={handleConfirmDate}
                 onCancel={hideDatePicker}
+                minimumDate={new Date(new Date().getTime() - (1 * 24 * 60 * 60 * 1000))}
+                maximumDate={new Date()}
             />
         </Fragment>
 
@@ -227,7 +287,3 @@ const ClaimForm = ({ route }: any) => {
 }
 
 export default ClaimForm
-
-const styles = StyleSheet.create({
-
-})

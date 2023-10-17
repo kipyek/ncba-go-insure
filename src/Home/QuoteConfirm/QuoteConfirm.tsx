@@ -311,6 +311,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                 pickerContainerStyleIOS={{ justifyContent: "center", paddingHorizontal: 150 }}
                 onConfirm={handleConfirmPolicy}
                 onCancel={hideDatePickerPolicy}
+                minimumDate={new Date()}
             />
 
             <DateTimePicker

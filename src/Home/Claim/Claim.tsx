@@ -18,10 +18,10 @@ const Claim = () => {
 
   useEffect(() => {
     handleAllPolicies()
-  }, [activeUser.userId])
+  }, [])
 
-  const handleAllPolicies = async () => {
-    await apis.get("Common/AllMyPolicies?isAgent=false", {
+  const handleAllPolicies = () => {
+    apis.get("Common/AllMyPolicies?isAgent=false", {
       headers: {
         "SecurityToken": headers.securityToken,
         "UserSessionId": headers.sessionId,
@@ -31,14 +31,15 @@ const Claim = () => {
       .then(response => {
         const data = response.data
         setAllPolicies(data)
-        console.log("All policies", data)
-        //data.sort((a: any, b: any) => b.id - a.id);
-        console.log("I am re-rendering", data)
       }).catch(error => {
         console.log(error.response.data)
       })
   }
 
+  const handleMoveNext = () => {
+    handleAllPolicies();
+    navigation.navigate("ClaimForm", { item: allPolicies })
+  }
 
   return (
     <View className='flex-1'>
@@ -48,7 +49,7 @@ const Claim = () => {
 
       />
       <View className='item-center bg-primary p-4 rounded-md '>
-        <TouchableOpacity onPress={() => navigation.navigate("ClaimForm", { item: allPolicies })}>
+        <TouchableOpacity onPress={() => handleMoveNext()}>
           <Text className='text-center text-white font-["gothici-Bold"]'>Click Here to Book a Claim</Text>
         </TouchableOpacity>
       </View>
