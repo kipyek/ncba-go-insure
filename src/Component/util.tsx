@@ -1,6 +1,7 @@
 import help from "../../assets/images/ncba.png";
 import dashboard from "../../assets/images/background.png";
 import landing from "../../assets/images/landing.jpg";
+import claimSuc from "../../assets/images/claimsuccess.png";
 
 
 const companiesDetails = {
@@ -23,7 +24,8 @@ const helpDetails = {
 const projectImages = {
     "helpImage": help,
     "landing": landing,
-    "dashboardImage": dashboard
+    "dashboardImage": dashboard,
+    "claimsuccess": claimSuc
 }
 
 

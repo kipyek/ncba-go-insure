@@ -59,4 +59,5 @@ export type HomeRoutes = {
   ClaimDocuments: any;
   IpfDocument: any;
   ClaimsDocumentsScreen: any;
+  ClaimSuccess: any;
 }

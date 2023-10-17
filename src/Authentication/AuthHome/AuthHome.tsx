@@ -14,7 +14,7 @@ const AuthHome = () => {
       <View className='ml-3 mr-3 flex-1'>
         <View className='item-center bg-primary mt-20 p-4 mb-4 rounded-md'>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text className='text-center text-white font-[gothici-Regular]'>Login(test)</Text>
+            <Text className='text-center text-white font-[gothici-Regular]'>Login</Text>
           </TouchableOpacity>
         </View>
         {/* <View className='item-center bg-primary mt-2 p-4 mb-4 rounded-md'>

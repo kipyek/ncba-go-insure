@@ -21,6 +21,7 @@ import QuoteFinish from "./QuoteFinish";
 import QuoteBenefit from "./QuoteBenefit";
 import IpfDocument from "./IpfDocument";
 import ClaimsDocumentsScreen from "./ClaimsDocumentsScreen";
+import ClaimSuccess from "./ClaimSuccess";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -101,6 +102,7 @@ export const HomeNavigator = () => {
       <Stack.Screen name="QuoteBenefit" component={QuoteBenefit} />
       <Stack.Screen name="IpfDocument" component={IpfDocument} />
       <Stack.Screen name="ClaimsDocumentsScreen" component={ClaimsDocumentsScreen} />
+      <Stack.Screen name="ClaimSuccess" component={ClaimSuccess} />
 
     </Stack.Navigator>
   )

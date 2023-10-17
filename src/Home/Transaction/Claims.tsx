@@ -1,8 +1,54 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import ClaimComponent from '../../Component/ClaimComponent'
+import { apis } from '../../Services'
+import userData from '../../Component/UserData'
+import apiHeaders from '../../Component/apiHeaders'
 
 const Claims = () => {
+    const activeUser = userData();
+    const headers = apiHeaders()
+    const [availableClaims, setAvailableClaims] = useState([])
+
+    useEffect(() => {
+        handleClaims()
+    }, [])
+
+
+    const handleClaims = () => {
+        apis.get("Claims/ActiveClaimsClient?isAgent=false", {
+            headers: {
+                "SecurityToken": headers.securityToken,
+                "UserSessionId": headers.sessionId,
+            },
+        })
+            .then(response => {
+                const data = response.data
+                data.sort((a: any, b: any) => b.id - a.id);
+                setAvailableClaims(data)
+                console.log("Transaction Claims", data)
+            })
+            .catch(error => {
+                console.log(error.response.data.message)
+            })
+
+    }
+
+    const Item = ({ item }: any) => {
+        return (
+            <ClaimComponent
+                RNumber={item.registrationNo}
+                CNumber={item.claimNo}
+                PNumber={item.policyNo}
+                CDate={item.claimDate}
+                PType={item.product}
+                RLocation={item.riskLocation}
+                Status={item.closureStatus}
+            />
+
+        )
+    }
+
     return (
         <View className='flex-1'>
             <View className='mr-4 ml-4 mt-2'>
@@ -24,14 +70,12 @@ const Claims = () => {
                 />
             </View>
 
-            <ClaimComponent
-                RNumber="2"
-                CNumber="2"
-                PNumber="2"
-                CDate="2"
-                PType="2"
-                RLocation="2"
-                Status="2"
+            <FlatList
+                data={availableClaims}
+                renderItem={({ item }) => <Item item={item} />}
+                keyExtractor={(item: any) => item.quotationNo}
+            //contentContainerStyle={{ paddingBottom: 200 }}
+            //    ListFooterComponent={<View style={{ height: Dimensions.get('window').height }}></View>}
             />
         </View>
     )
