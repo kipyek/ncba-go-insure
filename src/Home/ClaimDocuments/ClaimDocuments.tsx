@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { companiesDetails } from '../../Component/util';
 
 const ClaimDocuments = ({ route }: any) => {
-    const { item } = route.params
+    const { item, id } = route.params
     const navigation: any = useNavigation();
     return (
         <View className='flex-1'>
@@ -35,7 +35,7 @@ const ClaimDocuments = ({ route }: any) => {
 
                 <View className='item-center bg-primary p-3 mt-2 rounded-md '>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate("ClaimsDocumentsScreen")}
+                        onPress={() => navigation.navigate("ClaimsDocumentsScreen", { item: item, id: id })}
                     >
                         <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT CLAIM DOCUMENTS</Text>
                     </TouchableOpacity>

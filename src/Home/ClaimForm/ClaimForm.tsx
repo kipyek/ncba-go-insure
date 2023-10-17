@@ -63,7 +63,7 @@ const ClaimForm = ({ route }: any) => {
         apis.get(`Claims/ClaimDetails?id=${id}`)
             .then(response => {
                 const data = response.data
-                navigation.navigate("ClaimDocuments", { item: data })
+                navigation.navigate("ClaimDocuments", { item: data, id: id })
                 console.log("claims details", data)
             })
             .catch(error => {
@@ -83,9 +83,9 @@ const ClaimForm = ({ route }: any) => {
             const payload = {
                 "id": 0,
                 "claimDate": date,
-                "claimNo": "string",
+                "claimNo": null,
                 "policyNo": null,
-                "customer": "string",
+                "customer": null,
                 "dateOfLoss": date,
                 "dateReported": new Date(),
                 "claimDetails": detail,
