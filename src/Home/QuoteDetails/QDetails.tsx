@@ -18,9 +18,9 @@ const QDetails = (item: any) => {
             <View className=''>
                 <View style={HomeCss.introCard} className='flex-row justify-between'>
                     <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Quote details ({item?.item.quotationNo})</Text>
-                    <View className='bg-red-500 rounded-md p-1'>
+                    {/* <View className='bg-red-500 rounded-md p-1'>
                         <Text className='text-white font-[gothici-Bold]'>{apiStatus}</Text>
-                    </View>
+                    </View> */}
                 </View>
                 <CustomTabs
                     selectionMode={1}

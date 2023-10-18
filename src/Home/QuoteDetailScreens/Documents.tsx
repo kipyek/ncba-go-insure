@@ -55,8 +55,12 @@ const Documents = (item: any) => {
     }, [activeUser.userId])
 
     useEffect(() => {
-        handleSubmitQuote()
-    }, [updatedData])
+        setUpdatedData(updatedData)
+    }, [activeUser.userId])
+
+    useEffect(() => {
+        setTimeout(() => handleSubmitQuote(), 1000)
+    }, [])
 
     function sendTest() {
         let userId = activeUser.userId;
@@ -215,14 +219,14 @@ const Documents = (item: any) => {
             <Box className='mt-1 ml-4 mr-4'>
 
                 <View style={HomeCss.container1} className='mt-2 ' key={i.id}>
-                    {i.fileContent !== null &&
+                    {i.fileName !== null &&
                         <View>
                             <Text className='text-center'>{i.documentName}</Text>
                             <Text className='text-center'>Uploaded</Text>
                         </View>
                     }
 
-                    {i.fileContent === null &&
+                    {i.fileName === null &&
 
                         <View style={HomeCss.uploadBtnContainer1}>
 

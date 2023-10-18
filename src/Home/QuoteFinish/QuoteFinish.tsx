@@ -10,7 +10,6 @@ import { apis } from '../../Services';
 import userData from '../../Component/UserData';
 import uuid from 'react-native-uuid';
 import CryptoJS from 'crypto-js';
-import axios from 'axios';
 import { companiesDetails } from '../../Component/util';
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -79,10 +78,10 @@ const QuoteFinish = ({ route }: any) => {
         return base64String;
     }
 
-    const handleOnClick = () => {
-        navigation.replace("Quote")
+    // const handleOnClick = () => {
+    //     navigation.replace("QuoteRequest")
 
-    }
+    // }
 
     const handleSubmitQuote = () => {
         setVisible(true)
@@ -128,7 +127,7 @@ const QuoteFinish = ({ route }: any) => {
                         }
                     </View>
                     <View className='item-center bg-primary p-1 mt-4 rounded-md w-32'>
-                        <TouchableOpacity onPress={handleOnClick}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Quote")}>
                             <Text className='text-center text-white font-["gothici-Bold"]'>NEW QUOTE</Text>
                         </TouchableOpacity>
                     </View>

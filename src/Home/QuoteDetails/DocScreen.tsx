@@ -11,6 +11,7 @@ import uuid from 'react-native-uuid';
 import { apis } from '../../Services';
 import CryptoJS from 'crypto-js';
 import { cacheDirectory, copyAsync, getInfoAsync, makeDirectoryAsync, EncodingType, readAsStringAsync } from 'expo-file-system'
+import apiHeaders from '../../Component/apiHeaders';
 
 
 
@@ -39,7 +40,9 @@ const Base64 = {
 
 
 const DocScreen = ({ item }: any) => {
+    console.log("docscreen", item.id)
     const document = item.documents
+    const headers = apiHeaders()
     const activeUser = userData()
     const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -54,12 +57,12 @@ const DocScreen = ({ item }: any) => {
     }, [activeUser.userId])
 
     useEffect(() => {
-        setUpdatedData(updatedData)
+        setUpdatedData(document)
     }, [activeUser.userId])
 
     useEffect(() => {
-        handleSubmitQuote();
-    }, [updatedData])
+        setTimeout(() => handleSubmitQuote(), 1000)
+    }, [])
 
     const handleLoading = () => {
         return (
@@ -102,11 +105,10 @@ const DocScreen = ({ item }: any) => {
 
     const documents = updatedData
 
-
     const handleOptions = (i: any) => {
         setModalVisible(true)
-        setSelectedFile(i)
         setSelectedDoc(null)
+        setSelectedFile(i)
     }
 
     const handleSubmitQuote = () => {
@@ -120,7 +122,6 @@ const DocScreen = ({ item }: any) => {
             .then(response => {
                 const data = response.data
                 setUpdatedData(data.documents)
-
             }).catch(error => {
                 console.log(error.response)
             }).finally(() => {
@@ -172,7 +173,6 @@ const DocScreen = ({ item }: any) => {
         });
         const file = await createCacheFile(result);
         convertUriToBase64(file, result)
-
         setModalVisible(false)
 
     };
@@ -219,10 +219,12 @@ const DocScreen = ({ item }: any) => {
             .then(response => {
                 const data = response.data
                 console.log("Submiting....", data)
-                handleSubmitQuote()
+
                 // navigation.navigate("QuoteDetails", { item: data })
             }).catch(error => {
                 console.log(error.response?.data?.message)
+            }).finally(() => {
+                handleSubmitQuote()
             })
     }
 
@@ -246,18 +248,18 @@ const DocScreen = ({ item }: any) => {
 
                             {documents.map((i: any) => (
                                 <View style={HomeCss.container1} className='mt-2'>
-                                    {i.fileContent !== null &&
+                                    {i.fileName !== null &&
                                         <View>
                                             <Text className='text-center'>{i.documentName}</Text>
                                             <Text className='text-center'>Uploaded</Text>
                                         </View>
                                     }
 
-                                    {i.fileContent === null &&
+                                    {i.fileName === null &&
 
                                         <View style={HomeCss.uploadBtnContainer1}>
 
-                                            {selectedFile.documentName === i.documentName && visible ?
+                                            {selectedFile.documentName === i.documentName || visible ?
                                                 < Text className='text-center text-2xl'> Loading...</Text>
                                                 :
                                                 <TouchableOpacity onPress={() => handleOptions(i)} style={HomeCss.uploadBtn} >

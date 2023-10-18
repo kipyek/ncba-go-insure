@@ -184,8 +184,8 @@ const QuoteRequest = () => {
       "userID": activeUser.userId,
       "quoteType": value,
       "capacity": capacity ? capacity : 0,
-      "windscreenValue": windscreen ? windscreen : "50000",
-      "entertainmentValue": eunit ? eunit : "30000",
+      "windscreenValue": windscreen,
+      "entertainmentValue": eunit,
       "productId": 0,
       "additionalBenefits": []
     }
@@ -304,7 +304,6 @@ const QuoteRequest = () => {
                   style={{ borderWidth: 1 }}
                   onChangeText={text => setWindScreen(text)}
                   value={windscreen}
-                  defaultValue={Humanize.formatNumber(50000)}
                   placeholder="50,000"
                   keyboardType="numeric"
                 />
@@ -317,7 +316,6 @@ const QuoteRequest = () => {
                   style={{ borderWidth: 1 }}
                   onChangeText={text => setEunit(text)}
                   value={eunit}
-                  defaultValue={Humanize.formatNumber(30000)}
                   placeholder="30,000"
                   keyboardType="numeric"
                 />

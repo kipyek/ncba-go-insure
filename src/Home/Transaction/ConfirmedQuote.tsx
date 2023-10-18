@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, TextInput, View, Text } from 'react-native'
+import { Dimensions, FlatList, TextInput, View, Text, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CQuote from '../../Component/CQuote'
 import { StatusBar } from 'expo-status-bar'
@@ -12,7 +12,6 @@ const ConfirmedQuote = () => {
     const navigation: any = useNavigation();
     const headers = apiHeaders();
     const activeUser = userData();
-    console.log(headers)
     const [visible, setVisible] = useState(false);
     const [confirmedQuotes, setConfirmedQuotes] = useState([])
 
@@ -33,7 +32,7 @@ const ConfirmedQuote = () => {
                 const data = response.data
                 data.sort((a: any, b: any) => b.id - a.id);
                 setConfirmedQuotes(data)
-                //console.log("I am re-rendering", sorted)
+                console.log("I am re-rendering", data)
             }).catch(error => {
                 console.log(error.response.data)
             }).finally(() => {
@@ -81,13 +80,20 @@ const ConfirmedQuote = () => {
                 />
 
             </View>
-            <FlatList
-                data={confirmedQuotes}
-                renderItem={({ item }) => <Item item={item} />}
-                keyExtractor={(item: any) => item.quotationNo}
-            //contentContainerStyle={{ paddingBottom: 200 }}
-            //    ListFooterComponent={<View style={{ height: Dimensions.get('window').height }}></View>}
-            />
+
+            {confirmedQuotes.length < 1 &&
+                <ActivityIndicator size="large" color="#00BFFF" />
+            }
+
+            {confirmedQuotes &&
+                <FlatList
+                    data={confirmedQuotes}
+                    renderItem={({ item }) => <Item item={item} />}
+                    keyExtractor={(item: any) => item.quotationNo}
+                //contentContainerStyle={{ paddingBottom: 200 }}
+                //    ListFooterComponent={<View style={{ height: Dimensions.get('window').height }}></View>}
+                />
+            }
 
         </View>
     )

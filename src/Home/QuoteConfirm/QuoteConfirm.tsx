@@ -175,7 +175,7 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
 
                 console.log("confirmed data", data)
             }).catch(error => {
-                console.log("error", error.response?.data?.message)
+                console.log("error", error.response.data)
             }).finally(() =>
                 setVisible(false)
             )

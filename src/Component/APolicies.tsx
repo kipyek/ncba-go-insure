@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-const APolicies = ({ Cdate, Product, Insurer, Reg, Edate, Sinsured, Gross }: any) => {
+const APolicies = ({ Cdate, Product, Insurer, Reg, Edate, Sinsured, Gross, ClaimClicked, UploadClicked, RenewClicked }: any) => {
     return (
         <View className=''>
             <View style={styles.card}>
@@ -36,10 +36,26 @@ const APolicies = ({ Cdate, Product, Insurer, Reg, Edate, Sinsured, Gross }: any
                 </View>
 
                 <View className='item-center bg-primary p-2 mt-4 rounded-md '>
-                    <TouchableOpacity onPress={() => { }}>
-                        <Text className='text-center text-white font-["gothici-Bold"]'>DETAILS</Text>
+                    <TouchableOpacity onPress={ClaimClicked}>
+                        <Text className='text-center text-white font-["gothici-Bold"]'>INITIATE A CLAIM</Text>
                     </TouchableOpacity>
                 </View>
+
+                <View className='flex-row justify-between'>
+
+                    <View className='item-center bg-primary p-2 mt-2 rounded-md flex-1 mr-1'>
+                        <TouchableOpacity onPress={UploadClicked}>
+                            <Text className='text-center text-white font-["gothici-Bold"]'>UPLOAD VALUATION</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View className='item-center bg-primary p-2 mt-2 rounded-md flex-1 ml-1'>
+                        <TouchableOpacity onPress={RenewClicked}>
+                            <Text className='text-center text-white font-["gothici-Bold"]'>RENEW</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
             </View>
         </View>
     )

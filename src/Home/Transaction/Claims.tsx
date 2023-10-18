@@ -6,13 +6,14 @@ import userData from '../../Component/UserData'
 import apiHeaders from '../../Component/apiHeaders'
 
 const Claims = () => {
+    const headers = apiHeaders();
     const activeUser = userData();
-    const headers = apiHeaders()
+    console.log("headersactive", headers)
     const [availableClaims, setAvailableClaims] = useState([])
 
     useEffect(() => {
         handleClaims()
-    }, [])
+    }, [activeUser.userId])
 
 
     const handleClaims = () => {
@@ -26,7 +27,7 @@ const Claims = () => {
                 const data = response.data
                 data.sort((a: any, b: any) => b.id - a.id);
                 setAvailableClaims(data)
-                console.log("Transaction Claims", data)
+                console.log(availableClaims)
             })
             .catch(error => {
                 console.log(error.response.data.message)
@@ -37,9 +38,9 @@ const Claims = () => {
     const Item = ({ item }: any) => {
         return (
             <ClaimComponent
-                RNumber={item.registrationNo}
+                RNumber={item.registrationNo ? item.registrationNo : "---"}
                 CNumber={item.claimNo}
-                PNumber={item.policyNo}
+                PNumber={item.policyNo ? item.policyNo : "---"}
                 CDate={item.claimDate}
                 PType={item.product}
                 RLocation={item.riskLocation}
@@ -73,7 +74,7 @@ const Claims = () => {
             <FlatList
                 data={availableClaims}
                 renderItem={({ item }) => <Item item={item} />}
-                keyExtractor={(item: any) => item.quotationNo}
+                keyExtractor={(item: any) => item.id}
             //contentContainerStyle={{ paddingBottom: 200 }}
             //    ListFooterComponent={<View style={{ height: Dimensions.get('window').height }}></View>}
             />
