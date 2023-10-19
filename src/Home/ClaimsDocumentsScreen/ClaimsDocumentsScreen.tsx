@@ -181,7 +181,6 @@ const ClaimsDocumentsScreen = ({ route }: any) => {
                     }
 
                     {i.fileName === null &&
-
                         <View style={HomeCss.uploadBtnContainer1}>
 
                             {selectedFile.documentType === i.documentType && visible ?

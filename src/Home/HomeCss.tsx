@@ -2,8 +2,11 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     claimImage: {
-        flex: 1,
-        opacity: 0.3
+        width: "100%",
+        height: '100%',
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10,
+        opacity: 0.4
     },
     card: {
         backgroundColor: 'white',

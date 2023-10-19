@@ -56,6 +56,11 @@ const Documents = ({ item }: any) => {
 
     useEffect(() => {
         setUpdatedData(documents)
+
+        // const allofIt = item?.documents
+        // const isBelowThreshold = (currentValue: any) => currentValue.fileName === null;
+        //const hasNullContent = documents.some((doc: any) => doc.fileContent === null);
+        // console.log(allofIt.some(isBelowThreshold));
     }, [item])
 
     function sendTest() {
@@ -110,9 +115,12 @@ const Documents = ({ item }: any) => {
                 const data = response.data
                 const docs = data.documents
                 setUpdatedData(docs)
+                const hasNullContent = updatedData.some((doc: any) => doc.fileContent === null);
+                console.log("1", hasNullContent)
             }).catch(error => {
                 console.log(error.response)
             }).finally(() => {
+
                 setVisible(false)
             })
     }
@@ -207,7 +215,9 @@ const Documents = ({ item }: any) => {
                 console.log("Erroring", error.response)
 
             }).finally(() => {
-                handleSubmitQuote()
+                handleSubmitQuote();
+                const hasNullContent = updatedData.some((doc: any) => doc.fileContent === null);
+                console.log("2", hasNullContent)
                 setVisible(false)
             })
     }

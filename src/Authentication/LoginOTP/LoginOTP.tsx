@@ -41,11 +41,11 @@ const LoginOTP = ({ route }: any) => {
     api.post("authentication/Verify/LoginOtp", payload)
       .then(response => {
         const data = response.data
-        console.log(data)
+        console.log("here", data)
         AsyncStorage.setItem('activeUser', JSON.stringify(data.body))
         handleSuccess()
       }).catch(error => {
-        console.log(error)
+        alert(error.response?.data?.message)
       }).finally(() =>
         setisLoading(false)
       )

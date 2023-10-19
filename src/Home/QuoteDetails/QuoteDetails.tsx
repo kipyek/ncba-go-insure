@@ -20,12 +20,22 @@ const QuoteDetails = ({ route }: any) => {
     const [visible, setVisible] = useState(false)
     const [show, setShow] = useState(false)
     const [moves, setMoves] = useState(1)
-    const [selectedDoc, setSelectedDoc] = useState(null)
+    const [selectedDoc, setSelectedDoc] = useState<any>(null)
     const [selected, setSelected] = useState([])
 
     useEffect(() => {
         fetch()
     }, [activeUser.userId])
+
+    useEffect(() => {
+        //fetchDifference()
+    }, [selectedDoc])
+
+    const fetchDifference = () => {
+        const documents = selectedDoc?.documents
+        const isBelowThreshold = (currentValue: any) => currentValue.fileName === null;
+        console.log(documents.some(isBelowThreshold));
+    }
 
     const hideMenu = () => setVisible(false);
 
@@ -40,7 +50,9 @@ const QuoteDetails = ({ route }: any) => {
         })
             .then(response => {
                 const data = response.data
+
                 setSelectedDoc(data)
+                console.log()
             }).catch(error => {
                 console.log(error.response)
             })

@@ -6,7 +6,6 @@ import { CoverDetail, Documents, QuoteDetail } from '../QuoteDetailScreens';
 import HomeCss from '../HomeCss';
 
 const QDetails = ({ item }: any) => {
-    console.log("QDetails", item)
     const [tabSelected, setTabSelected] = useState(1);
     const onTabSelected = (value: React.SetStateAction<number>) => {
         setTabSelected(value)

@@ -27,19 +27,24 @@ const ClaimDocuments = ({ route }: any) => {
                     <Text className='font-[gothici-Regular] pb-2'>-Your Ticket number is <Text className='font-[gothici-Bold]'>{item?.claimNo}.</Text></Text>
                     <Text className='font-[gothici-Regular] pb-2'>-To complete claims application, download the claim form from the link below then upload the completed form alongside other documents requested below.</Text>
                 </View>
-                <View className='item-center bg-primary p-3 mt-4 rounded-md '>
-                    <TouchableOpacity onPress={() => { }}>
-                        <Text className='text-center text-white font-["gothici-Bold"]'>DOWNLOAD CLAIM FORM</Text>
-                    </TouchableOpacity>
+
+                <View className='flex-row'>
+                    <View className='item-center bg-primary p-2 mr-1 flex-1 mt-2 rounded-md '>
+                        <TouchableOpacity onPress={() => { }}>
+                            <Text className='text-center text-white font-["gothici-Bold"]'>DOWNLOAD FORM</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View className='item-center bg-primary p-2 ml-1 flex-1 mt-2 rounded-md '>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("ClaimsDocumentsScreen", { item: item, id: id })}
+                        >
+                            <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT DOCUMENTS</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
 
-                <View className='item-center bg-primary p-3 mt-2 rounded-md '>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate("ClaimsDocumentsScreen", { item: item, id: id })}
-                    >
-                        <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT CLAIM DOCUMENTS</Text>
-                    </TouchableOpacity>
-                </View>
 
                 <View className='item-center bg-primary p-3 mt-2 rounded-md '>
                     <TouchableOpacity
@@ -48,6 +53,7 @@ const ClaimDocuments = ({ route }: any) => {
                         <Text className='text-center text-white font-["gothici-Bold"]'>SUBMIT DOCUMENTS LATER</Text>
                     </TouchableOpacity>
                 </View>
+
             </View>
 
         </View>
