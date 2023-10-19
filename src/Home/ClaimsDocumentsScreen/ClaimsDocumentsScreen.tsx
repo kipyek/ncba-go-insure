@@ -142,6 +142,7 @@ const ClaimsDocumentsScreen = ({ route }: any) => {
 
 
     const handleDocUpload = (items: any) => {
+        setVisible(true)
         const payload = {
             "documentRefId": items.fileId,
             "documentName": items.fileName,
@@ -161,6 +162,9 @@ const ClaimsDocumentsScreen = ({ route }: any) => {
                 // navigation.navigate("QuoteDetails", { item: data })
             }).catch(error => {
                 console.log(error.response?.data?.message)
+            }).finally(() => {
+                handleClaimDetails()
+                setVisible(false)
             })
     }
 

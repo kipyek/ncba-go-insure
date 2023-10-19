@@ -40,7 +40,6 @@ const Base64 = {
 
 
 const DocScreen = ({ item }: any) => {
-    console.log("docscreen", item.id)
     const document = item.documents
     const headers = apiHeaders()
     const activeUser = userData()
@@ -58,20 +57,8 @@ const DocScreen = ({ item }: any) => {
 
     useEffect(() => {
         setUpdatedData(document)
-    }, [activeUser.userId])
+    }, [item])
 
-    useEffect(() => {
-        setTimeout(() => handleSubmitQuote(), 1000)
-    }, [])
-
-    const handleLoading = () => {
-        return (
-            <View className=''>
-                <Text>Loading...</Text>
-            </View>
-
-        )
-    }
 
     function sendTest() {
         let userId = activeUser.userId;
@@ -111,9 +98,9 @@ const DocScreen = ({ item }: any) => {
         setSelectedFile(i)
     }
 
-    const handleSubmitQuote = () => {
+    const handleSubmitQuote = async () => {
         setVisible(true)
-        apis.get(`Common/GetQuote?quoteId=${item.id}`, {
+        await apis.get(`Common/GetQuote?quoteId=${item.id}`, {
             headers: {
                 "SecurityToken": security,
                 "UserSessionId": userSession,
@@ -121,9 +108,10 @@ const DocScreen = ({ item }: any) => {
         })
             .then(response => {
                 const data = response.data
-                setUpdatedData(data.documents)
+                const docs = data.documents
+                setUpdatedData(docs)
             }).catch(error => {
-                console.log(error.response)
+                console.log("handleQuote", error)
             }).finally(() => {
                 setVisible(false)
             })
@@ -151,7 +139,6 @@ const DocScreen = ({ item }: any) => {
                 "fileId": selectedFile.documentRefId
             };
             handleDocUpload(payload)
-            handleSubmitQuote()
             return base64;
 
         }
@@ -202,15 +189,24 @@ const DocScreen = ({ item }: any) => {
         }
     }
 
+    const handleCondition = (item: any) => {
+        const isBelowThreshold = (currentValue: any) => currentValue !== null;
 
-    const handleDocUpload = (items: any) => {
+        const array1 = item.fileName
+
+        console.log("Checking if all docs are uploaded", array1.every(isBelowThreshold));
+    }
+
+
+    const handleDocUpload = async (items: any) => {
+        setVisible(true)
         const payload = {
             "documentRefId": items.fileId,
             "documentName": items.fileName,
             "fileName": items.docId,
             "fileContent": items.docName
         }
-        apis.post("Common/UploadeQuoteDocument", payload, {
+        await apis.post("Common/UploadeQuoteDocument", payload, {
             headers: {
                 "SecurityToken": security,
                 "UserSessionId": userSession,
@@ -218,13 +214,13 @@ const DocScreen = ({ item }: any) => {
         })
             .then(response => {
                 const data = response.data
-                console.log("Submiting....", data)
-
                 // navigation.navigate("QuoteDetails", { item: data })
             }).catch(error => {
-                console.log(error.response?.data?.message)
+                console.log("Erroring", error.response)
+
             }).finally(() => {
                 handleSubmitQuote()
+                setVisible(false)
             })
     }
 
@@ -259,7 +255,7 @@ const DocScreen = ({ item }: any) => {
 
                                         <View style={HomeCss.uploadBtnContainer1}>
 
-                                            {selectedFile.documentName === i.documentName || visible ?
+                                            {selectedFile.documentName === i.documentName && visible ?
                                                 < Text className='text-center text-2xl'> Loading...</Text>
                                                 :
                                                 <TouchableOpacity onPress={() => handleOptions(i)} style={HomeCss.uploadBtn} >

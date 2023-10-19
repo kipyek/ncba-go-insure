@@ -45,7 +45,7 @@ const ConfirmedQuote = () => {
         const outStanding = (item.grossPremium) - (item.paidAmount)
         return (
             <CQuote
-                Quote={item.quotationNo}
+                Quote={item?.quotationNo}
                 Product={item.product}
                 Insurer={item.insurer}
                 Reg={item.registrationNo}

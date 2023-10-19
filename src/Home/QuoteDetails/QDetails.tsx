@@ -5,19 +5,18 @@ import CustomTabs from '../../Component/CustomTabs';
 import { CoverDetail, Documents, QuoteDetail } from '../QuoteDetailScreens';
 import HomeCss from '../HomeCss';
 
-const QDetails = (item: any) => {
+const QDetails = ({ item }: any) => {
+    console.log("QDetails", item)
     const [tabSelected, setTabSelected] = useState(1);
     const onTabSelected = (value: React.SetStateAction<number>) => {
         setTabSelected(value)
     }
 
-    const api = item?.item.quotationNo
-    const apiStatus = item?.item.status
     return (
         <View className=''>
             <View className=''>
                 <View style={HomeCss.introCard} className='flex-row justify-between'>
-                    <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Quote details ({item?.item.quotationNo})</Text>
+                    <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Quote details ({item?.quotationNo})</Text>
                     {/* <View className='bg-red-500 rounded-md p-1'>
                         <Text className='text-white font-[gothici-Bold]'>{apiStatus}</Text>
                     </View> */}

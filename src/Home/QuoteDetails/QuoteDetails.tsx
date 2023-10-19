@@ -7,32 +7,54 @@ import QDetails from './QDetails';
 import PaymentScreen from './PaymentScreen';
 import { useNavigation } from '@react-navigation/native';
 import DocScreen from './DocScreen';
+import apiHeaders from '../../Component/apiHeaders';
+import { apis } from '../../Services';
+import userData from '../../Component/UserData';
 
 const QuoteDetails = ({ route }: any) => {
     const { item } = route.params
+    const headers = apiHeaders();
+    const activeUser = userData()
     const document = item.documents
-    console.log("Humbeger21")
     const navigation: any = useNavigation()
     const [visible, setVisible] = useState(false)
     const [show, setShow] = useState(false)
     const [moves, setMoves] = useState(1)
-    const [allDos, setAllDocs] = useState(document)
+    const [selectedDoc, setSelectedDoc] = useState(null)
     const [selected, setSelected] = useState([])
 
     useEffect(() => {
-        document.map((i: any) => setSelected(i.documentName))
-    }, [])
+        fetch()
+    }, [activeUser.userId])
 
     const hideMenu = () => setVisible(false);
 
     const showMenu = () => setVisible(true);
 
+    const fetch = async () => {
+        await apis.get(`Common/GetQuote?quoteId=${item.id}`, {
+            headers: {
+                "SecurityToken": headers.securityToken,
+                "UserSessionId": headers.sessionId,
+            },
+        })
+            .then(response => {
+                const data = response.data
+                setSelectedDoc(data)
+            }).catch(error => {
+                console.log(error.response)
+            })
+    }
+
     const handleDocument = () => {
+        fetch()
         setMoves(0)
         hideMenu()
+
     }
 
     const handleQDetails = () => {
+        fetch()
         setMoves(1)
         hideMenu()
     }
@@ -40,9 +62,6 @@ const QuoteDetails = ({ route }: any) => {
         setMoves(2)
         hideMenu()
     }
-
-
-    console.log("all", selected)
 
     // const isBelowThreshold = (currentValue: any) => currentValue === null;
     // const isWorking = selected.every(isBelowThreshold)
@@ -77,12 +96,12 @@ const QuoteDetails = ({ route }: any) => {
 
             {
                 moves === 1 ?
-                    <QDetails item={item} />
+                    <QDetails item={selectedDoc} />
                     :
                     moves === 2 ?
                         <PaymentScreen item={item} />
                         :
-                        <DocScreen item={item} />
+                        <DocScreen item={selectedDoc} />
             }
 
 

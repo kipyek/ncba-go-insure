@@ -38,9 +38,9 @@ const Base64 = {
 };
 
 
-const Documents = (item: any) => {
-    const data = item?.item?.item
-    const documents = data.documents
+const Documents = ({ item }: any) => {
+    const data = item
+    const documents = data?.documents
     const activeUser = userData()
     const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -55,12 +55,8 @@ const Documents = (item: any) => {
     }, [activeUser.userId])
 
     useEffect(() => {
-        setUpdatedData(updatedData)
-    }, [activeUser.userId])
-
-    useEffect(() => {
-        setTimeout(() => handleSubmitQuote(), 1000)
-    }, [])
+        setUpdatedData(documents)
+    }, [item])
 
     function sendTest() {
         let userId = activeUser.userId;
@@ -99,6 +95,7 @@ const Documents = (item: any) => {
         setModalVisible(true)
         setSelectedFile(i)
         setSelectedDoc(null)
+
     }
 
     const handleSubmitQuote = () => {
@@ -111,7 +108,8 @@ const Documents = (item: any) => {
         })
             .then(response => {
                 const data = response.data
-                setUpdatedData(data.documents)
+                const docs = data.documents
+                setUpdatedData(docs)
             }).catch(error => {
                 console.log(error.response)
             }).finally(() => {
@@ -141,7 +139,6 @@ const Documents = (item: any) => {
                 "fileId": selectedFile.documentRefId
             };
             handleDocUpload(payload)
-            handleSubmitQuote()
             return base64;
 
         }
@@ -163,11 +160,9 @@ const Documents = (item: any) => {
         });
         const file = await createCacheFile(result);
         convertUriToBase64(file, result)
-
         setModalVisible(false)
 
     };
-
     const handleCamera = async () => {
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -191,15 +186,15 @@ const Documents = (item: any) => {
             setModalVisible(false)
         }
     }
-
-    const handleDocUpload = (items: any) => {
+    const handleDocUpload = async (items: any) => {
+        setVisible(true)
         const payload = {
             "documentRefId": items.fileId,
             "documentName": items.fileName,
             "fileName": items.docId,
             "fileContent": items.docName
         }
-        apis.post("Common/UploadeQuoteDocument", payload, {
+        await apis.post("Common/UploadeQuoteDocument", payload, {
             headers: {
                 "SecurityToken": security,
                 "UserSessionId": userSession,
@@ -207,10 +202,13 @@ const Documents = (item: any) => {
         })
             .then(response => {
                 const data = response.data
-                console.log("Submiting....", data)
                 // navigation.navigate("QuoteDetails", { item: data })
             }).catch(error => {
-                console.log(error.response?.data?.message)
+                console.log("Erroring", error.response)
+
+            }).finally(() => {
+                handleSubmitQuote()
+                setVisible(false)
             })
     }
 
@@ -252,9 +250,9 @@ const Documents = (item: any) => {
                 <View className=' mt-2'>
                     <Text className='font-[gothici-Regular] mr-4 ml-4'>Upload all required documents first before you can proceed to next steps</Text>
                     <View className='flex-1 justify-center items-center mt-6'>
-                        {document.length < 1 &&
+                        {/* {document.length < 1 &&
                             <ActivityIndicator size="large" color="#00BFFF" />
-                        }
+                        } */}
                     </View>
 
                     <FlatList

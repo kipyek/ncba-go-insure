@@ -6,8 +6,8 @@ import { BottomModal, ModalContent } from 'react-native-modals';
 import Humanize from 'humanize-plus';
 
 
-const CoverDetail = (item: any) => {
-    const data = item?.item?.item
+const CoverDetail = ({ item }: any) => {
+    const data = item
     const [show, setShow] = useState(false);
     const [showPremium, setShowPremium] = useState(false);
     const [modalVisibles, setModalVisibles] = useState(false);
