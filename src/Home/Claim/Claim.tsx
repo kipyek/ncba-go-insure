@@ -20,6 +20,10 @@ const Claim = () => {
     handleAllPolicies()
   }, [])
 
+  useEffect(() => {
+    handleAllPolicies()
+  }, [activeUser.userId])
+
   const handleAllPolicies = () => {
     apis.get("Common/AllMyPolicies?isAgent=false", {
       headers: {

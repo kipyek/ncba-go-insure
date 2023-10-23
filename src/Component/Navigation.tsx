@@ -60,4 +60,9 @@ export type HomeRoutes = {
   IpfDocument: any;
   ClaimsDocumentsScreen: any;
   ClaimSuccess: any;
+  RenewRequest: any;
+  RenewList: any;
+  RenewBenefit: any;
+  RenewConfirm: any;
+  RenewFinish: any;
 }

@@ -5,16 +5,19 @@ import userData from '../../Component/UserData'
 import { apis } from '../../Services'
 import apiHeaders from '../../Component/apiHeaders'
 import Humanize from 'humanize-plus';
-import { useIsFocused } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 
 const ActivePolicies = () => {
+    const navigation: any = useNavigation()
     const headers = apiHeaders();
     const isFocused = useIsFocused();
     const activeUser = userData();
     const [visible, setVisible] = useState(false);
     const [active, setActive] = useState([])
 
-
+    useEffect(() => {
+        handleActiveQuote()
+    }, [])
 
     useEffect(() => {
         handleActiveQuote()
@@ -50,7 +53,7 @@ const ActivePolicies = () => {
                 Gross={Humanize.formatNumber(item.grossPremium, 2)}
                 ClaimClicked={() => alert(item.productId)}
                 UploadClicked={() => alert("upload valuation")}
-                RenewClicked={() => alert("renew")}
+                RenewClicked={() => navigation.navigate("RenewRequest")}
             />
 
         )
