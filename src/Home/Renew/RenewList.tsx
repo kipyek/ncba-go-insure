@@ -14,14 +14,11 @@ const RenewList = () => {
     const navigation: any = useNavigation()
     const [listData, setListData] = useState([])
 
-    const origin = useSelector(selectFirstTime)
-    const destination = useSelector(selectCapacity)
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const storedData = await AsyncStorage.getItem('motorQuote');
+                const storedData = await AsyncStorage.getItem('motorQuotes');
                 if (storedData !== null) {
                     const parsedData = JSON.parse(storedData);
                     setListData(parsedData)
@@ -42,7 +39,7 @@ const RenewList = () => {
                 data.forEach((element: any) => {
                     element.checked = false
                 });
-                navigation.navigate("QuoteBenefit", { item: item, benefits: data })
+                navigation.navigate("RenewBenefit", { item: item, benefits: data })
             }).catch(error => {
                 console.log("Error", error.response?.data?.message)
             })

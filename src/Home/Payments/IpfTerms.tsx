@@ -6,9 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 import { apis } from '../../Services';
 import Humanize from 'humanize-plus';
 import { companiesDetails } from '../../Component/util';
+import apiHeaders from '../../Component/apiHeaders';
 
-const IpfTerms = (item: any) => {
-    const payload = item?.item
+const IpfTerms = ({ item }: any) => {
+    const payload = item;
+    const headers = apiHeaders();
+    console.log(headers)
     const navigation: any = useNavigation()
     const [confirmed, setConfirmed] = useState(false);
     const [show, setShow] = useState(false);  //add to condition for checking whether amount and months are selected
@@ -20,7 +23,7 @@ const IpfTerms = (item: any) => {
     const handleApplyIPF = () => {
         const payloads =
         {
-            "quoteId": (payload.item?.id).toString(),
+            "quoteId": (payload?.item.quotationNo).toString(),
             "accountNo": "",
             "noOfInstallments": payload.value,
             "installmentAmount": payload.amount,
@@ -28,13 +31,18 @@ const IpfTerms = (item: any) => {
             "fileContent": ""
         }
         console.log("handleApplyIPF", payloads)
-        apis.post("IPF/ApplyIPF", payloads)
+        apis.post("IPF/ApplyIPF", payloads, {
+            headers: {
+                "SecurityToken": headers.securityToken,
+                "UserSessionId": headers.sessionId,
+            },
+        })
             .then(response => {
                 const data = response.data
                 navigation.navigate("IpfDocument")
                 console.log("ApplyIPF", data)
             }).catch(error => {
-                console.log(error.response)
+                console.log("ApplyIPFs", error.response.data)
             })
     }
     return (

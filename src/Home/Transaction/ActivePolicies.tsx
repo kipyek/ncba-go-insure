@@ -53,7 +53,7 @@ const ActivePolicies = () => {
                 Gross={Humanize.formatNumber(item.grossPremium, 2)}
                 ClaimClicked={() => alert(item.productId)}
                 UploadClicked={() => alert("upload valuation")}
-                RenewClicked={() => navigation.navigate("RenewRequest")}
+                RenewClicked={() => navigation.navigate("RenewRequest", { item: item })}
             />
 
         )

@@ -8,7 +8,6 @@ import userData from '../../Component/UserData'
 import { apis } from '../../Services'
 import apiHeaders from '../../Component/apiHeaders'
 
-
 const Claim = () => {
   const navigation: any = useNavigation();
   const activeUser = userData();

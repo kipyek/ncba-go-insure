@@ -12,6 +12,7 @@ import uuid from 'react-native-uuid';
 import { apis } from '../../Services';
 import CryptoJS from 'crypto-js';
 import { cacheDirectory, copyAsync, getInfoAsync, makeDirectoryAsync, EncodingType, readAsStringAsync } from 'expo-file-system';
+import Payments from '../Transaction/Payments';
 
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -55,7 +56,8 @@ const Documents = ({ item }: any) => {
     }, [activeUser.userId])
 
     useEffect(() => {
-        setUpdatedData(documents)
+        setUpdatedData(documents);
+        handleSubmitQuote()
 
         // const allofIt = item?.documents
         // const isBelowThreshold = (currentValue: any) => currentValue.fileName === null;
@@ -115,8 +117,10 @@ const Documents = ({ item }: any) => {
                 const data = response.data
                 const docs = data.documents
                 setUpdatedData(docs)
-                const hasNullContent = updatedData.some((doc: any) => doc.fileContent === null);
-                console.log("1", hasNullContent)
+                const hasNullContent = docs.some((i: any) => i.fileName === null);
+                // if (hasNullContent === false) {
+                //     <Payments />
+                // }
             }).catch(error => {
                 console.log(error.response)
             }).finally(() => {

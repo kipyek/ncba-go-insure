@@ -31,6 +31,8 @@ const Ipf = (item: any) => {
         handleComputation()
     }, [value])
 
+
+
     const handleSwitchingScreens = () => {
         if (value !== null) {
             setShowing(true)
@@ -74,7 +76,7 @@ const Ipf = (item: any) => {
         "amount": updatedAmount
     }
 
-    console.log("payload", payload)
+    console.log("payloadss", payload)
 
     return (
         <View className='ml-4 mr-4'>

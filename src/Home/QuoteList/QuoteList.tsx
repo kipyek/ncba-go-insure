@@ -29,6 +29,7 @@ const QuoteList = () => {
         if (storedData !== null) {
           const parsedData = JSON.parse(storedData);
           setListData(parsedData)
+
         }
       } catch (error) {
         console.error('Error retrieving data:', error);
@@ -46,6 +47,7 @@ const QuoteList = () => {
         data.forEach((element: any) => {
           element.checked = false
         });
+        console.log(data)
         navigation.navigate("QuoteBenefit", { item: item, benefits: data })
       }).catch(error => {
         console.log(error.response?.data?.message)
