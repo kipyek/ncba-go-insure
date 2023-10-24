@@ -22,7 +22,6 @@ const datas = [
 
 const RenewRequest = ({ route }: any) => {
     const { item } = route.params
-    console.log("Helo", item)
     const navigation: any = useNavigation();
     const headers = apiHeaders();
     const [value, setValue] = useState(null);

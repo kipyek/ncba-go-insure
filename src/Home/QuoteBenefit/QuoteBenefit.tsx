@@ -118,7 +118,6 @@ const QuoteBenefit = ({ route }: any) => {
             "quoteType": listDatas?.quoteType,
             "additionalBenefits": selectedBenefits
         }
-        console.log("Payload", payload)
         apis.post("Common/AddBenefits", payload)
             .then(response => {
                 const data = response.data
@@ -137,7 +136,6 @@ const QuoteBenefit = ({ route }: any) => {
             .then(response => {
                 const data = response.data
                 setCoverNotes(data)
-                console.log("123", data)
             }).catch(error => {
                 console.log(error.response?.data?.message)
             })

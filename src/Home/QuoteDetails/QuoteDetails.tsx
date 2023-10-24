@@ -25,11 +25,11 @@ const QuoteDetails = ({ route }: any) => {
 
     useEffect(() => {
         fetch()
-    }, [activeUser.userId])
+    }, [activeUser?.userId, item])
 
-    useEffect(() => {
-        //fetchDifference()
-    }, [selectedDoc])
+    // useEffect(() => {
+    //     //fetchDifference()
+    // }, [selectedDoc])
 
     const fetchDifference = () => {
         const documents = selectedDoc?.documents
@@ -42,7 +42,7 @@ const QuoteDetails = ({ route }: any) => {
     const showMenu = () => setVisible(true);
 
     const fetch = async () => {
-        await apis.get(`Common/GetQuote?quoteId=${item.id}`, {
+        await apis.get(`Common/GetQuote?quoteId=${item?.id}`, {
             headers: {
                 "SecurityToken": headers.securityToken,
                 "UserSessionId": headers.sessionId,
@@ -50,9 +50,8 @@ const QuoteDetails = ({ route }: any) => {
         })
             .then(response => {
                 const data = response.data
-
                 setSelectedDoc(data)
-                console.log()
+                console.log("Main screen data")
             }).catch(error => {
                 console.log(error.response)
             })

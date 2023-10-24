@@ -13,6 +13,7 @@ import { apis } from '../../Services';
 import CryptoJS from 'crypto-js';
 import { cacheDirectory, copyAsync, getInfoAsync, makeDirectoryAsync, EncodingType, readAsStringAsync } from 'expo-file-system';
 import Payments from '../Transaction/Payments';
+import PaymentScreen from '../QuoteDetails/PaymentScreen';
 
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -56,14 +57,8 @@ const Documents = ({ item }: any) => {
     }, [activeUser.userId])
 
     useEffect(() => {
-        setUpdatedData(documents);
-        handleSubmitQuote()
-
-        // const allofIt = item?.documents
-        // const isBelowThreshold = (currentValue: any) => currentValue.fileName === null;
-        //const hasNullContent = documents.some((doc: any) => doc.fileContent === null);
-        // console.log(allofIt.some(isBelowThreshold));
-    }, [item])
+        setUpdatedData(documents)
+    }, [data])
 
     function sendTest() {
         let userId = activeUser.userId;
@@ -107,7 +102,7 @@ const Documents = ({ item }: any) => {
 
     const handleSubmitQuote = () => {
         setVisible(true)
-        apis.get(`Common/GetQuote?quoteId=${data.id}`, {
+        apis.get(`Common/GetQuote?quoteId=${data?.id}`, {
             headers: {
                 "SecurityToken": security,
                 "UserSessionId": userSession,
@@ -118,6 +113,10 @@ const Documents = ({ item }: any) => {
                 const docs = data.documents
                 setUpdatedData(docs)
                 const hasNullContent = docs.some((i: any) => i.fileName === null);
+                if (hasNullContent === false) {
+                    <PaymentScreen />
+                }
+                console.log(hasNullContent)
                 // if (hasNullContent === false) {
                 //     <Payments />
                 // }

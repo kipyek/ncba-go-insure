@@ -15,13 +15,13 @@ const Claim = () => {
   const [allPolicies, setAllPolicies] = useState([])
 
 
-  useEffect(() => {
-    handleAllPolicies()
-  }, [])
+  // useEffect(() => {
+  //   handleAllPolicies()
+  // }, [])
 
-  useEffect(() => {
-    handleAllPolicies()
-  }, [activeUser.userId])
+  // useEffect(() => {
+  //   handleAllPolicies()
+  // }, [activeUser.userId])
 
   const handleAllPolicies = () => {
     apis.get("Common/AllMyPolicies?isAgent=false", {
@@ -33,7 +33,9 @@ const Claim = () => {
 
       .then(response => {
         const data = response.data
+        navigation.navigate("ClaimForm", { item: data })
         setAllPolicies(data)
+        console.log("Claim data", data)
       }).catch(error => {
         console.log(error.response.data)
       })
@@ -41,7 +43,7 @@ const Claim = () => {
 
   const handleMoveNext = () => {
     handleAllPolicies();
-    navigation.navigate("ClaimForm", { item: allPolicies })
+
   }
 
   return (
@@ -49,15 +51,13 @@ const Claim = () => {
       <StatusBar backgroundColor='#87CEEB' />
       <Header
         label="Claims"
-
       />
-      <View className='item-center bg-primary p-4 rounded-md '>
+      <View className='item-center bg-primary p-4'>
         <TouchableOpacity onPress={() => handleMoveNext()}>
           <Text className='text-center text-white font-["gothici-Bold"]'>Click Here to Book a Claim</Text>
         </TouchableOpacity>
       </View>
       <Image source={require("../../../assets/images/claimlanding.png")} style={HomeCss.claimImage} />
-
 
     </View>
 

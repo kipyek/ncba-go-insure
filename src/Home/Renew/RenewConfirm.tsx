@@ -207,10 +207,8 @@ const RenewConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                             <TextInput
                                 className='p-1 rounded-md flex-1'
                                 style={{ borderWidth: 1 }}
-                                onChangeText={text => setNumber(text)}
-                                value={number}
                                 placeholder={renew.registration}
-                                keyboardType="default"
+                                editable={false}
                             />
                         </View>
 

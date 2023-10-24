@@ -34,7 +34,6 @@ const ActivePolicies = () => {
                 const data = response.data
                 data.sort((a: any, b: any) => b.id - a.id);
                 setActive(data)
-                console.log("I am re-rendering", data)
             }).catch(error => {
                 console.log(error.response.data)
             })

@@ -1,12 +1,12 @@
-import { Linking, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Linking, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import AuthCss from '../AuthCss'
 import { Formik } from 'formik'
 import * as Yup from "yup"
 import { api } from '../../Services'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { companiesDetails } from '../../Component/util'
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 const validationSchema = Yup.object().shape({
   email: Yup
@@ -23,6 +23,7 @@ const validationSchema = Yup.object().shape({
 const Login = () => {
   const navigation: any = useNavigation()
   const [isLoading, setisLoading] = useState(false)
+  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
 
   const privacyPolicy = () => {
     Linking.canOpenURL("https://ke.ncbagroup.com/privacy-policy/").then(supported => {
@@ -83,21 +84,29 @@ const Login = () => {
                   onBlur={handleBlur("email")}
                   placeholder="Enter your email"
                   keyboardType="default"
+                  autoCorrect={false}
                 />
                 {errors && <Text className='text-red-400 font-light'>{errors.email}</Text>}
               </View>
 
               <View>
-                <TextInput
-                  className='p-1 rounded-md mt-2'
-                  style={{ borderWidth: 1 }}
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  placeholder="Type your password"
-                  autoCorrect={false}
-                  keyboardType="visible-password"
-                />
+                <View className=' rounded-md mt-2 flex-row justify-between'
+                  style={{ borderWidth: 1 }}>
+                  <TextInput
+                    style={{ width: Dimensions.get('window').width / 1.2, paddingVertical: 5 }}
+                    secureTextEntry={isPasswordSecure}
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    placeholder="Type your password"
+                    autoCorrect={false}
+                  />
+
+                  <MaterialCommunityIcons name={isPasswordSecure ? "eye-off" : "eye"} size={28} color={"black"}
+                    onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}
+                    style={{ paddingVertical: 5 }} />
+                </View>
                 {errors && <Text className='text-red-400 font-light'>{errors.password}</Text>}
+
               </View>
 
 

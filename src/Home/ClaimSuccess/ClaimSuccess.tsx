@@ -14,7 +14,7 @@ const ClaimSuccess = () => {
                 label={"Claim Submitted"}
                 leftButton={{
                     child: <Ionicons name="arrow-back" size={24} color="black" />,
-                    onPress: () => { navigation.goBack() }
+                    onPress: () => { navigation.navigate("Main") }
                 }}
             />
             <View className=' bg-ncba1 p-2'>

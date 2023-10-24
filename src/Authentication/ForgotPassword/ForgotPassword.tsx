@@ -19,7 +19,6 @@ const ForgotPassword = () => {
             navigation.navigate("ResetPassword", { item: data.body })
             console.log("success", data)
           }).catch(error => {
-            navigation.navigate("ResetPassword")
             alert("An error as occured, make sure your email is correct")
             console.log(error.response.data)
           }).finally(() => {

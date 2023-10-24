@@ -42,7 +42,7 @@ const Ipf = (item: any) => {
 
     }
 
-    console.log(value)
+
 
     const handleRepaymentMonths = async () => {
         await apis.get("IPF/RepaymentMonths")
@@ -54,7 +54,7 @@ const Ipf = (item: any) => {
                 }));
 
                 setRepayment(convertedArray)
-                console.log("IPF months", convertedArray)
+                //console.log("IPF months", convertedArray)
             })
             .catch(error => {
                 console.log(error.response?.data?.message)
@@ -66,7 +66,10 @@ const Ipf = (item: any) => {
             .then(response => {
                 const data = response.data
                 const installment = data.result.installment
+                console.log("installment", installment)
                 setUpdatedAmount(installment)
+            }).catch(error => {
+                console.log("error", error.response.data)
             })
     }
 

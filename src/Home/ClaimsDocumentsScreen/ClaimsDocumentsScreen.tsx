@@ -20,7 +20,6 @@ import apiHeaders from '../../Component/apiHeaders';
 const ClaimsDocumentsScreen = ({ route }: any) => {
     const { item, id } = route.params;
     const doc = item?.documents
-    console.log("claims123", id)
     const headers = apiHeaders()
     const navigation: any = useNavigation()
     const activeUser = userData()
@@ -35,10 +34,7 @@ const ClaimsDocumentsScreen = ({ route }: any) => {
         handleClaimDetails()
     }, [])
 
-
     const document = updatedDocs
-
-    console.log("console", document)
 
     const handleOptions = (i: any) => {
         setModalVisible(true)
@@ -57,7 +53,11 @@ const ClaimsDocumentsScreen = ({ route }: any) => {
             .then(response => {
                 const data = response.data.documents
                 setUpdatedDocs(data)
-                console.log("claims details", data)
+                const hasNullContent = data.some((i: any) => i.fileName === null);
+                if (hasNullContent === false) {
+                    navigation.navigate("ClaimSuccess")
+                }
+                console.log("checking null", hasNullContent)
             })
             .catch(error => {
                 console.log(error.response.data.message)
