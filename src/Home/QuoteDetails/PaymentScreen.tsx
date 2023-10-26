@@ -16,7 +16,7 @@ const PaymentScreen = (item: any) => {
         <View>
             {/**Amount */}
             <View style={HomeCss.introCard} className='mt-1 mb-0'>
-                <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Total premium: Kes {Humanize.formatNumber(data.totalPremium, 2)}
+                <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Total premium: Kes {Humanize.formatNumber(data.grossPremium, 2)}
                 </Text>
             </View>
             {/**Quote Card */}

@@ -137,7 +137,6 @@ const RenewBenefit = ({ route }: any) => {
             .then(response => {
                 const data = response.data
                 setCoverNotes(data)
-                console.log("123", data)
             }).catch(error => {
                 console.log(error.response?.data?.message)
             })

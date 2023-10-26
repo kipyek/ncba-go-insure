@@ -29,5 +29,10 @@ const projectImages = {
 }
 
 
+const mpesa = {
+    "paybill": "488496"
+}
 
-export { companiesDetails, helpDetails, projectImages }
+
+
+export { companiesDetails, helpDetails, projectImages, mpesa }

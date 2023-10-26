@@ -7,6 +7,7 @@ import HomeCss from '../HomeCss';
 import Humanize from 'humanize-plus';
 import { handleToastCopied } from '../../Component/Toast';
 import { api } from '../../Services';
+import { mpesa } from '../../Component/util';
 
 const MPesa = (item: any) => {
     const data = item?.item?.item
@@ -14,9 +15,9 @@ const MPesa = (item: any) => {
     const [visible, setVisible] = useState(false);
     const [phone, setPhone] = useState<any>(null);
     const [amount, setAmount] = useState<any>(null);
-    const apiPaybill = "488496";
+    const apiPaybill = mpesa.paybill;
 
-    const PayableAmount = (data.totalPremium / 2)
+    const PayableAmount = ((34 / 100) * data.grossPremium)
 
     const handleToggling = () => {
         setShow(!show)
@@ -43,7 +44,6 @@ const MPesa = (item: any) => {
         api.post("mpesa/stk/initiate", payload)
             .then(response => {
                 const data = response.data
-                console.log("STK", data)
                 setVisible(false)
             }).catch(error => {
                 console.log(error.response)

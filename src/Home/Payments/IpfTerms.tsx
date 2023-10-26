@@ -60,7 +60,7 @@ const IpfTerms = ({ item }: any) => {
     return (
         <View>
             <View style={HomeCss.introCard}>
-                <Text className='font-[gothici-Regular]'>You are about to apply an IPF of <Text className='font-[gothici-Bold]'>Kes {Humanize.formatNumber(payload.item.totalPremium, 2)}</Text></Text>
+                <Text className='font-[gothici-Regular]'>You are about to apply an IPF of <Text className='font-[gothici-Bold]'>Kes {Humanize.formatNumber(payload.item.grossPremium, 2)}</Text></Text>
                 <Text className='font-[gothici-Regular]'>Your monthly installment amount will be <Text className='font-[gothici-Bold]'>Kes {Humanize.formatNumber(payload.amount, 2)}</Text> payable in <Text className='font-[gothici-Bold]'>{payload.value}</Text> installments.</Text>
             </View>
 
