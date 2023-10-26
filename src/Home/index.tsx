@@ -23,6 +23,7 @@ import IpfDocument from "./IpfDocument";
 import ClaimsDocumentsScreen from "./ClaimsDocumentsScreen";
 import ClaimSuccess from "./ClaimSuccess";
 import { RenewBenefit, RenewConfirm, RenewFinish, RenewList, RenewRequest } from "./Renew";
+import Details from "./Details";
 
 // Tabs Defination
 const Tab = createBottomTabNavigator<HomeRoutes>();
@@ -109,6 +110,7 @@ export const HomeNavigator = () => {
       <Stack.Screen name="RenewBenefit" component={RenewBenefit} />
       <Stack.Screen name="RenewConfirm" component={RenewConfirm} />
       <Stack.Screen name="RenewFinish" component={RenewFinish} />
+      <Stack.Screen name="Details" component={Details} />
 
     </Stack.Navigator>
   )

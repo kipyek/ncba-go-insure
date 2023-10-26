@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, Image, TouchableOpacity, TextInput, Dimensions } from 'react-native'
 import React, { useState, Fragment } from 'react'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { MaterialIcons, Feather } from '@expo/vector-icons';
@@ -6,20 +6,25 @@ import { BottomModal, ModalContent } from 'react-native-modals';
 import { Header } from '../../Component/Header';
 import { Button } from '@rneui/themed';
 import { StatusBar } from 'expo-status-bar';
+import userData from '../../Component/UserData';
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 const Profile = () => {
   const navigation: any = useNavigation();
-  const [email, setEmail] = useState('');
+  const activeUser = userData()
+  const [email, setEmail] = useState<string | undefined>('');
+  const [phone, setPhone] = useState<string | undefined>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalPassword, setModalPassword] = useState(false);
   const [modalVisibles, setModalVisibles] = useState(false);
-  const [userData, setUserData] = useState(Object);
   const [userId, setUserId] = useState('')
   const [currentPass, setCurrentPassword] = useState('')
   const [Password, setPassword] = useState('')
   const [ConfirmPass, setConfirmPass] = useState('')
-  const [userName, setUserName] = useState('')
-  const [location, setLocation] = useState('')
+  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
+  const [isPasswordShown, setIsPasswordShown] = useState(true);
+
+
 
   const handleSuccess = () => {
     navigation.dispatch(CommonActions.reset({
@@ -45,7 +50,7 @@ const Profile = () => {
           <View className='bg-gray-100 p-2 rounded-md justify-between flex-row'>
             <View>
               <Text className='text-sm font-[gothici-Regular] text-gray-300 ml-2'>Email</Text>
-              <Text className='text-base font-[gothici-Bold] text-gray-500 ml-2'>d.kipyek@gmail.com</Text>
+              <Text className='text-base font-[gothici-Bold] text-gray-500 ml-2'>{activeUser?.userEmail}</Text>
             </View>
             <Feather name="edit-3" size={24} color="black"
               style={{ alignSelf: 'center' }}
@@ -57,7 +62,7 @@ const Profile = () => {
           <View className='bg-gray-100 p-2 rounded-md my-2 flex-row justify-between'>
             <View >
               <Text className='text-sm font-[gothici-Regular] text-gray-300 ml-2'>Phone Number</Text>
-              <Text className='text-base font-[gothici-Bold] text-gray-500 ml-2'>0712345678</Text>
+              <Text className='text-base font-[gothici-Bold] text-gray-500 ml-2'>{activeUser?.userPhone}</Text>
             </View>
             <Feather
               name="edit-3"
@@ -107,8 +112,8 @@ const Profile = () => {
             className='border-2 h-10 rounded-xl px-2'
             placeholder="Enter preferred email"
             keyboardType="default"
-            //defaultValue={userData.userName}
-            onChangeText={(text) => setUserName(text.trim())}
+            defaultValue={`${activeUser.userEmail}`}
+            onChangeText={(text) => setEmail(text.trim())}
           />
           <View className='bottom-2 mt-2'>
             <View className='item-center bg-primary p-3 mt-4 rounded-md '>
@@ -132,8 +137,8 @@ const Profile = () => {
             className='border-2 h-10 rounded-xl px-2'
             placeholder="Phone Number"
             keyboardType="default"
-            //defaultValue={userData.location}
-            onChangeText={(text) => setLocation(text.trim())}
+            defaultValue={`${activeUser?.userPhone}`}
+            onChangeText={(text) => setPhone(text.trim())}
           />
           <View className='bottom-2 mt-2'>
             <View className='item-center bg-primary p-3 mt-4 rounded-md '>
@@ -153,27 +158,64 @@ const Profile = () => {
         onSwipeOut={() => setModalPassword(false)}
       >
         <ModalContent>
-          <TextInput
-            className='border-2 h-10 rounded-xl px-2 mb-2'
-            placeholder="Current Password"
-            keyboardType="default"
-            //defaultValue={userData.location}
-            onChangeText={(text) => setCurrentPassword(text.trim())}
-          />
-          <TextInput
-            className='border-2 h-10 rounded-xl px-2 mb-2'
-            placeholder="New Password"
-            keyboardType="default"
-            //defaultValue={userData.location}
-            onChangeText={(text) => setPassword(text.trim())}
-          />
-          <TextInput
-            className='border-2 h-10 rounded-xl px-2'
-            placeholder="Confirm new password"
-            keyboardType="default"
-            //defaultValue={userData.location}
-            onChangeText={(text) => setConfirmPass(text.trim())}
-          />
+
+          {/**Current Password */}
+          <View>
+            <View className=' rounded-md mt-2 flex-row justify-between'
+              style={{ borderWidth: 1 }}>
+              <TextInput
+                style={{ width: Dimensions.get('window').width / 1.27, paddingVertical: 4 }}
+                secureTextEntry={isPasswordShown}
+                className='px-2'
+                placeholder="Current password"
+                keyboardType="default"
+                onChangeText={(text) => setCurrentPassword(text.trim())}
+              />
+              <MaterialCommunityIcons name={isPasswordShown ? "eye-off" : "eye"} size={28} color={"black"}
+                onPress={() => { isPasswordShown ? setIsPasswordShown(false) : setIsPasswordShown(true) }}
+                style={{ paddingVertical: 5 }} />
+            </View>
+          </View>
+
+          {/**New Password */}
+          <View>
+            <View className=' rounded-md mt-2 flex-row justify-between'
+              style={{ borderWidth: 1 }}>
+              <TextInput
+                style={{ width: Dimensions.get('window').width / 1.27, paddingVertical: 4 }}
+                secureTextEntry={isPasswordSecure}
+                className='px-2'
+                placeholder="New password"
+                keyboardType="default"
+                //defaultValue={userData.location}
+                onChangeText={(text) => setConfirmPass(text.trim())}
+              />
+              <MaterialCommunityIcons name={isPasswordSecure ? "eye-off" : "eye"} size={28} color={"black"}
+                onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}
+                style={{ paddingVertical: 5 }} />
+            </View>
+          </View>
+
+          {/**Confirm New Password */}
+          <View>
+            <View className=' rounded-md mt-2 flex-row justify-between'
+              style={{ borderWidth: 1 }}>
+              <TextInput
+                style={{ width: Dimensions.get('window').width / 1.27, paddingVertical: 4 }}
+                secureTextEntry={isPasswordSecure}
+                className='px-2'
+                placeholder="Confirm new password"
+                keyboardType="default"
+                //defaultValue={userData.location}
+                onChangeText={(text) => setConfirmPass(text.trim())}
+              />
+              <MaterialCommunityIcons name={isPasswordSecure ? "eye-off" : "eye"} size={28} color={"black"}
+                onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}
+                style={{ paddingVertical: 5 }} />
+            </View>
+          </View>
+
+
           <View className='bottom-2 mt-2'>
             <View className='item-center bg-primary p-3 mt-4 rounded-md '>
               <TouchableOpacity>

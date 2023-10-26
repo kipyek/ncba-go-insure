@@ -14,6 +14,7 @@ import userData from '../../Component/UserData';
 
 const RenewBenefit = ({ route }: any) => {
     let { item, benefits } = route?.params
+
     const navigation: any = useNavigation();
 
     const [listData, setListData] = useState([])
@@ -69,7 +70,7 @@ const RenewBenefit = ({ route }: any) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const storedData = await AsyncStorage.getItem('quoteData');
+                const storedData = await AsyncStorage.getItem('RenewQuoteDatas');
                 if (storedData !== null) {
                     const parsedData = JSON.parse(storedData);
                     setListDatas(parsedData)
@@ -118,7 +119,6 @@ const RenewBenefit = ({ route }: any) => {
             "quoteType": listDatas?.quoteType,
             "additionalBenefits": selectedBenefits
         }
-        console.log("Payload", payload)
         apis.post("Common/AddBenefits", payload)
             .then(response => {
                 const data = response.data

@@ -18,7 +18,7 @@ const RenewList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const storedData = await AsyncStorage.getItem('motorQuotes');
+                const storedData = await AsyncStorage.getItem('RenewMotorQuotes');
                 if (storedData !== null) {
                     const parsedData = JSON.parse(storedData);
                     setListData(parsedData)
@@ -52,7 +52,7 @@ const RenewList = () => {
                     <Image source={{ uri: item.insurerLogo }} className='w-28 h-28' resizeMode='contain' />
                     <View className='w-48 ml-4'>
                         <Text>Insurance company:</Text>
-                        <Text className='font-[gothici-Bold]'>{item.insurerName} </Text>
+                        <Text className='font-[gothici-Bold]'>{item.insurerName}</Text>
                         <View className='flex-row mt-2'>
                             <Text>Premium: </Text>
                             <Text className='font-[gothici-Bold]'> {Humanize.formatNumber(item.grossPremium, 2)}</Text>

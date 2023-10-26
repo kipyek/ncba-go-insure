@@ -78,6 +78,13 @@ const RenewRequest = ({ route }: any) => {
     };
 
 
+    const selectedFields = {
+        "windscreenValue": windscreen ? windscreen : renewalData.generatedQuoteRequest?.windscreenValue,
+        "entertainmentValue": eunit ? eunit : renewalData.generatedQuoteRequest?.entertainmentValue,
+        "sessionId": uid,
+    }
+
+
     const handleGetQuote = () => {
         setisLoading(true)
         const payload = {
@@ -98,14 +105,18 @@ const RenewRequest = ({ route }: any) => {
             "productId": 0,
             "additionalBenefits": []
         }
+        console.log("request request", payload)
         apis.post("MotorQuotes/GetMotorQuote", payload)
             .then(response => {
                 const data = response.data
                 //dispatch({ type: 'FETCH_DATA_SUCCESS', payload: data })
                 const datas = JSON.stringify(data)
-                AsyncStorage.setItem('motorQuotes', datas);
-                AsyncStorage.setItem("quoteData", JSON.stringify(payload))
+                AsyncStorage.setItem('RenewMotorQuotes', datas);
+                AsyncStorage.setItem("RenewQuoteDatas", JSON.stringify(payload))
+                AsyncStorage.setItem("RenewUserData", JSON.stringify(selectedFields))
+
                 navigation.navigate("RenewList")
+                console.log("request requestssss", payload)
             }).catch(error => {
                 console.log("error", error.response?.data)
             }).finally(() =>

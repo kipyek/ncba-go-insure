@@ -10,14 +10,27 @@ import apiHeaders from '../../Component/apiHeaders';
 
 const IpfTerms = ({ item }: any) => {
     const payload = item;
+    //console.log("IpfTerm", item)
     const headers = apiHeaders();
-    console.log(headers)
-    const navigation: any = useNavigation()
+    const navigation: any = useNavigation();
     const [confirmed, setConfirmed] = useState(false);
+    const [baseForm, setBaseForm] = useState(null);
     const [show, setShow] = useState(false);  //add to condition for checking whether amount and months are selected
 
     const handleConfirm = () => {
         setConfirmed(!confirmed)
+    }
+
+    const handleDownloadForm = () => {
+        apis.get(`Common/IPFForm?id=1852`)
+            .then(response => {
+                const data = response.data
+                console.log("IpfData", data)
+                setBaseForm(data)
+                navigation.navigate("IpfDocument", { item: data })
+            }).catch(error => {
+                console.log(error.response?.data?.message)
+            })
     }
 
     const handleApplyIPF = () => {
@@ -30,7 +43,6 @@ const IpfTerms = ({ item }: any) => {
             "fileName": "",
             "fileContent": ""
         }
-        console.log("handleApplyIPF", payloads)
         apis.post("IPF/ApplyIPF", payloads, {
             headers: {
                 "SecurityToken": headers.securityToken,
@@ -39,7 +51,7 @@ const IpfTerms = ({ item }: any) => {
         })
             .then(response => {
                 const data = response.data
-                navigation.navigate("IpfDocument")
+                handleDownloadForm()
                 console.log("ApplyIPF", data)
             }).catch(error => {
                 console.log("ApplyIPFs", error.response.data)

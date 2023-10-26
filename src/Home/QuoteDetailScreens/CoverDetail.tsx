@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image } from 'react-native'
 import React, { Fragment, useState } from 'react';
 import { Entypo } from "@expo/vector-icons";
-import { Cover } from '../../../DummyData/Data';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import Humanize from 'humanize-plus';
 

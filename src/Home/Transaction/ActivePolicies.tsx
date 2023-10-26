@@ -6,6 +6,8 @@ import { apis } from '../../Services'
 import apiHeaders from '../../Component/apiHeaders'
 import Humanize from 'humanize-plus';
 import { useIsFocused, useNavigation } from '@react-navigation/native'
+import Moment from 'moment';
+
 
 const ActivePolicies = () => {
     const navigation: any = useNavigation()
@@ -43,11 +45,11 @@ const ActivePolicies = () => {
         const outStanding = (item.grossPremium) - (item.paidAmount)
         return (
             <APolicies
-                Cdate={item.commencementDate}
+                Cdate={Moment(item?.commencementDate).format('Do MMMM YYYY')}
                 Product={item.productName}
                 Insurer={item.insurer}
                 Reg={item.registrationNumber}
-                Edate={item.expiryDate}
+                Edate={Moment(item.expiryDate).format('Do MMMM YYYY')}
                 Sinsured={Humanize.formatNumber(item.sumInsured, 2)}
                 Gross={Humanize.formatNumber(item.grossPremium, 2)}
                 ClaimClicked={() => alert(item.productId)}

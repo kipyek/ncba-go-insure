@@ -17,6 +17,14 @@ const RenewFinish = ({ route }: any) => {
     const [visible, setVisible] = useState(false)
     const navigation: any = useNavigation();
 
+    useEffect(
+        () =>
+            navigation.addListener('beforeRemove', (e: any) => {
+                e.preventDefault();
+            }),
+        [navigation]
+    );
+
     const handleSubmitQuote = () => {
         setVisible(true)
         apis.get(`Common/GetQuote?quoteId=${item.quoteId}`, {
@@ -27,7 +35,14 @@ const RenewFinish = ({ route }: any) => {
         })
             .then(response => {
                 const data = response.data
-                navigation.navigate("QuoteDetails", { item: data })
+                console.log(data)
+                const doc = data?.documents
+                const hasNullContent = doc.some((i: any) => i.fileName === null);
+                if (hasNullContent === false) {
+                    navigation.replace("QuoteDetails", { item: data })
+                } else {
+                    navigation.navigate("Details", { item: data })
+                }
             }).catch(error => {
                 console.log("Errors", error.response?.data)
             }).finally(() => {

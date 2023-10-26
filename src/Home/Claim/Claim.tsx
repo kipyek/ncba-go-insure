@@ -13,6 +13,7 @@ const Claim = () => {
   const activeUser = userData();
   const headers = apiHeaders();
   const [allPolicies, setAllPolicies] = useState([])
+  const [isLoading, setisLoading] = useState(false)
 
 
   // useEffect(() => {
@@ -24,6 +25,7 @@ const Claim = () => {
   // }, [activeUser.userId])
 
   const handleAllPolicies = () => {
+    setisLoading(true)
     apis.get("Common/AllMyPolicies?isAgent=false", {
       headers: {
         "SecurityToken": headers.securityToken,
@@ -35,15 +37,15 @@ const Claim = () => {
         const data = response.data
         navigation.navigate("ClaimForm", { item: data })
         setAllPolicies(data)
-        console.log("Claim data", data)
       }).catch(error => {
         console.log(error.response.data)
+      }).finally(() => {
+        setisLoading(false)
       })
   }
 
   const handleMoveNext = () => {
     handleAllPolicies();
-
   }
 
   return (
@@ -53,9 +55,13 @@ const Claim = () => {
         label="Claims"
       />
       <View className='item-center bg-primary p-4'>
-        <TouchableOpacity onPress={() => handleMoveNext()}>
-          <Text className='text-center text-white font-["gothici-Bold"]'>Click Here to Book a Claim</Text>
-        </TouchableOpacity>
+        {!isLoading ?
+          <TouchableOpacity onPress={() => handleMoveNext()}>
+            <Text className='text-center text-white font-["gothici-Bold"]'>Tap Here to Book a Claim</Text>
+          </TouchableOpacity>
+          :
+          <Text className='text-center text-white font-["gothici-Bold"]'>Redirecting...</Text>
+        }
       </View>
       <Image source={require("../../../assets/images/claimlanding.png")} style={HomeCss.claimImage} />
 

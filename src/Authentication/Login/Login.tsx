@@ -91,7 +91,7 @@ const Login = () => {
 
               <View>
                 <View className=' rounded-md mt-2 flex-row justify-between'
-                  style={{ borderWidth: 1 }}>
+                  style={{ borderWidth: 1, paddingHorizontal: 4 }}>
                   <TextInput
                     style={{ width: Dimensions.get('window').width / 1.2, paddingVertical: 5 }}
                     secureTextEntry={isPasswordSecure}
@@ -108,7 +108,6 @@ const Login = () => {
                 {errors && <Text className='text-red-400 font-light'>{errors.password}</Text>}
 
               </View>
-
 
               <View className='item-center bg-primary p-4 mt-4 rounded-md '>
                 {!isLoading ?
@@ -133,11 +132,12 @@ const Login = () => {
               </TouchableOpacity>
             </View>
           </View>
-        )}
-      </Formik>
+        )
+        }
+      </Formik >
 
 
-    </View>
+    </View >
 
   )
 }

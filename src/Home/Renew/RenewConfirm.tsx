@@ -12,9 +12,8 @@ import userData from '../../Component/UserData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { companiesDetails } from '../../Component/util';
 
-const RenewConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) => {
+const RenewConfirm = ({ route }: any) => {
     const { item, addedBenefits, allBenefits } = route.params
-
     const navigation: any = useNavigation()
     const activeUser = userData();
 
@@ -25,7 +24,7 @@ const RenewConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
     const [payPoints, setPayPoints] = useState([]);
     const [selectedReferral, setSelectedReferral] = useState(null);
     const [selectedPayPoints, setSelectedPayPoints] = useState(null);
-    const [policyDate, setPolicyDate] = useState(null);
+    const [policyDate, setPolicyDate] = useState<any>(null);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isDatePickerVisibles, setDatePickerVisibilitys] = useState(false);
     const [finance, setFinance] = useState(false)
@@ -37,7 +36,7 @@ const RenewConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const storedData = await AsyncStorage.getItem('filledData');
+                const storedData = await AsyncStorage.getItem('RenewUserData');
                 if (storedData !== null) {
                     const parsedData = JSON.parse(storedData);
                     setListData(parsedData)
@@ -86,9 +85,10 @@ const RenewConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
         setDatePickerVisibilitys(false)
     }
 
-    const handleConfirmPolicy = (date: any) => {
-        setPolicyDate(date)
+    const handleConfirmPolicy = (i: any) => {
+        setPolicyDate(i)
         hideDatePicker()
+        hideDatePickerPolicy()
     }
 
     const handleNext = () => {
@@ -118,19 +118,19 @@ const RenewConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
             })
     }
 
-    const handleErrorChecker = () => {
-        if (policyDate !== '') {
-            handleConfirmQUote()
-        } else {
-            alert("Fill all the fields")
-        }
-    }
+    // const handleErrorChecker = () => {
+    //     if (policyDate !== '') {
+    //         handleConfirmQUote()
+    //     } else {
+    //         alert("Fill all the fields")
+    //     }
+    // }
 
     const handleConfirmQUote = () => {
         setVisible(true)
         const payload = {
-            "commencementDate": new Date(),
-            "expiryDate": new Date(),
+            "commencementDate": policyDate,
+            "expiryDate": policyDate,
             "productId": item?.productId,
             "sumInsured": addedBenefits?.sumInsured,
             "basicPremium": addedBenefits?.basicPremium,
@@ -165,9 +165,9 @@ const RenewConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
             "additionalBenefits": allBenefits,
             "phoneNumber": activeUser?.userPhone,
             "registrationNo": number, //registration number
-            "make": listData?.make,
-            "model": listData?.model,
-            "yom": listData?.yom,
+            "make": renew?.make,
+            "model": renew?.model,
+            "yom": renew?.yom,
             "agentId": "",
             "isClient": true,
             "windscreen": listData.windscreenValue,
@@ -182,6 +182,7 @@ const RenewConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
         apis.post("MotorQuotes/ConfirmQuoteClient", payload)
             .then(response => {
                 const data = response.data
+                console.log("data::::", data)
                 navigation.navigate("RenewFinish", { item: data })
             }).catch(error => {
                 console.log("error", error.response.data)

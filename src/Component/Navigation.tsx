@@ -65,4 +65,5 @@ export type HomeRoutes = {
   RenewBenefit: any;
   RenewConfirm: any;
   RenewFinish: any;
+  Details: any
 }

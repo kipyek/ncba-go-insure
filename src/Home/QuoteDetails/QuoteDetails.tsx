@@ -66,11 +66,11 @@ const QuoteDetails = ({ route }: any) => {
 
     const handleQDetails = () => {
         fetch()
-        setMoves(1)
+        setMoves(2)
         hideMenu()
     }
     const handlePayments = () => {
-        setMoves(2)
+        setMoves(1)
         hideMenu()
     }
 
@@ -99,7 +99,7 @@ const QuoteDetails = ({ route }: any) => {
                     onRequestClose={hideMenu}
                     style={{}}
                 >
-                    {!show && <MenuItem onPress={() => handleDocument()}>UPLOAD DOCUMENTS</MenuItem>}
+
                     <MenuItem onPress={() => handleQDetails()} >QUOTE DETAILS</MenuItem>
                     {!show && <MenuItem onPress={() => handlePayments()}>PAYMENTS</MenuItem>}
                 </Menu>
@@ -107,12 +107,9 @@ const QuoteDetails = ({ route }: any) => {
 
             {
                 moves === 1 ?
-                    <QDetails item={selectedDoc} />
+                    <PaymentScreen item={item} />
                     :
-                    moves === 2 ?
-                        <PaymentScreen item={item} />
-                        :
-                        <DocScreen item={selectedDoc} />
+                    <QDetails item={selectedDoc} />
             }
 
 

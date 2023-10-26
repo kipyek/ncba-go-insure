@@ -79,8 +79,6 @@ const Ipf = (item: any) => {
         "amount": updatedAmount
     }
 
-    console.log("payloadss", payload)
-
     return (
         <View className='ml-4 mr-4'>
             {!showing ?

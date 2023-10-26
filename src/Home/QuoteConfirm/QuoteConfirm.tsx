@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, ScrollView, } from 'react-native';
 import React, { Fragment, useEffect, useState } from 'react';
 import Moment from 'moment';
 import { Fontisto, MaterialIcons, FontAwesome } from '@expo/vector-icons';
@@ -12,27 +12,20 @@ import userData from '../../Component/UserData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { companiesDetails } from '../../Component/util';
 
-const data = [
-    { label: 'Health', value: '1' },
-    { label: 'Life', value: '2' },
-    { label: 'Homeowner', value: '3' },
-    { label: 'Car Insurance', value: '4' },
-];
-
-const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) => {
+const QuoteConfirm = ({ route }: any) => {
     const { item, addedBenefits, allBenefits } = route.params
 
     const navigation: any = useNavigation()
     const activeUser = userData();
 
     const [number, setNumber] = useState("");
-    const [value, setValue] = useState('')
-    const [date, setDate] = useState(null);
+    const [date, setDate] = useState<any>(null);
+    const [expiryDate, setExpiryDate] = useState<any>(null);
     const [referral, setReferral] = useState([]);
     const [payPoints, setPayPoints] = useState([]);
     const [selectedReferral, setSelectedReferral] = useState(null);
     const [selectedPayPoints, setSelectedPayPoints] = useState(null);
-    const [policyDate, setPolicyDate] = useState(null);
+    const [policyDate, setPolicyDate] = useState<any>(null)
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isDatePickerVisibles, setDatePickerVisibilitys] = useState(false);
     const [finance, setFinance] = useState(false)
@@ -47,7 +40,6 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                 if (storedData !== null) {
                     const parsedData = JSON.parse(storedData);
                     setListData(parsedData)
-                    console.log("ParsedData", parsedData)
                 }
             } catch (error) {
                 console.error('Error retrieving data:', error);
@@ -66,27 +58,17 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
         setConfirmed(!confirmed)
     }
 
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false)
-    }
-
-    const handleConfirmDate = (date: any) => {
-        setDate(date)
-        hideDatePicker()
-    }
-
     const hideDatePickerPolicy = () => {
         setDatePickerVisibilitys(false)
     }
 
     const handleConfirmPolicy = (date: any) => {
         setPolicyDate(date)
-        hideDatePicker()
+        hideDatePickerPolicy()
     }
 
     const handleNext = () => {
         handleConfirmQUote()
-
     }
 
 
@@ -114,8 +96,8 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
     const handleConfirmQUote = () => {
         setVisible(true)
         const payload = {
-            "commencementDate": new Date(),
-            "expiryDate": new Date(),
+            "commencementDate": policyDate,
+            "expiryDate": policyDate,
             "productId": item?.productId,
             "sumInsured": addedBenefits?.sumInsured,
             "basicPremium": addedBenefits?.basicPremium,
@@ -164,15 +146,11 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
             "insurerId": item?.insurerId
 
         }
+        console.log("Quote payload", payload)
         apis.post("MotorQuotes/ConfirmQuoteClient", payload)
             .then(response => {
                 const data = response.data
-                if (number !== "" || policyDate !== null) {
-                    navigation.navigate("QuoteFinish", { item: data })
-                } else {
-                    alert("Fill all the fields")
-                }
-
+                navigation.navigate("QuoteFinish", { item: data })
                 console.log("confirmed data", data)
             }).catch(error => {
                 console.log("error", error.response.data)
@@ -314,14 +292,14 @@ const QuoteConfirm = ({ onNextStepPressConfirm, handleBackStep, route }: any) =>
                 minimumDate={new Date()}
             />
 
-            <DateTimePicker
+            {/* <DateTimePicker
                 isVisible={isDatePickerVisible}
                 mode="date"
                 display='default'
                 pickerContainerStyleIOS={{ justifyContent: "center", paddingHorizontal: 150 }}
                 onConfirm={handleConfirmDate}
                 onCancel={hideDatePicker}
-            />
+            /> */}
         </Fragment>
     )
 }

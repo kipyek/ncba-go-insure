@@ -14,6 +14,7 @@ import CryptoJS from 'crypto-js';
 import { cacheDirectory, copyAsync, getInfoAsync, makeDirectoryAsync, EncodingType, readAsStringAsync } from 'expo-file-system';
 import Payments from '../Transaction/Payments';
 import PaymentScreen from '../QuoteDetails/PaymentScreen';
+import { useNavigation } from '@react-navigation/native';
 
 
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -43,6 +44,7 @@ const Base64 = {
 const Documents = ({ item }: any) => {
     const data = item
     const documents = data?.documents
+    const navigation: any = useNavigation()
     const activeUser = userData()
     const [modalVisible, setModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -53,7 +55,7 @@ const Documents = ({ item }: any) => {
     const [updatedData, setUpdatedData] = useState(documents);
 
     useEffect(() => {
-        sendTest()
+        sendTest();
     }, [activeUser.userId])
 
     useEffect(() => {
@@ -92,12 +94,10 @@ const Documents = ({ item }: any) => {
 
     const document = updatedData
 
-
     const handleOptions = (i: any) => {
         setModalVisible(true)
         setSelectedFile(i)
         setSelectedDoc(null)
-
     }
 
     const handleSubmitQuote = () => {
@@ -114,12 +114,9 @@ const Documents = ({ item }: any) => {
                 setUpdatedData(docs)
                 const hasNullContent = docs.some((i: any) => i.fileName === null);
                 if (hasNullContent === false) {
-                    <PaymentScreen />
+                    navigation.replace("QuoteDetails", { item: item })
                 }
                 console.log(hasNullContent)
-                // if (hasNullContent === false) {
-                //     <Payments />
-                // }
             }).catch(error => {
                 console.log(error.response)
             }).finally(() => {
@@ -272,7 +269,7 @@ const Documents = ({ item }: any) => {
                         data={document}
                         renderItem={({ item }) => <Item i={item} />}
                         keyExtractor={(item: any) => item.productId}
-                        //contentContainerStyle={{ paddingBottom: 200 }}
+                        contentContainerStyle={{ paddingBottom: 50 }}
                         ListFooterComponent={<View style={{ height: Dimensions.get('window').height }}></View>}
                     />
 
