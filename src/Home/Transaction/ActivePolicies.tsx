@@ -52,8 +52,8 @@ const ActivePolicies = () => {
                 Edate={Moment(item.expiryDate).format('Do MMMM YYYY')}
                 Sinsured={Humanize.formatNumber(item.sumInsured, 2)}
                 Gross={Humanize.formatNumber(item.grossPremium, 2)}
-                ClaimClicked={() => alert(item.productId)}
-                UploadClicked={() => alert("upload valuation")}
+                ClaimClicked={() => { }}
+                UploadClicked={() => { }}
                 RenewClicked={() => navigation.navigate("RenewRequest", { item: item })}
             />
 

@@ -13,6 +13,7 @@ import StepperComponet from '../../Component/StepperComponet'
 import { Header } from '../../Component/Header'
 import Humanize from 'humanize-plus';
 import { setFirstTime, setCapacitys } from '../../../Slices/QuoteSlice';
+import Toast from 'react-native-root-toast';
 
 const datas = [
   { label: 'First time', value: '1' },
@@ -147,13 +148,6 @@ const QuoteRequest = () => {
       })
   }
 
-  // const handleEncryption = async () => {
-  //   const digest = await Crypto.digestStringAsync(
-  //     Crypto.CryptoDigestAlgorithm.SHA256,
-  //     'Digitex22'
-  //   );
-  //   setSe
-  // }
 
   const selectedFields = {
     "yom": date,
@@ -203,6 +197,14 @@ const QuoteRequest = () => {
       }).finally(() =>
         setisLoading(false)
       )
+  }
+
+
+  const handleGetQuotes = () => {
+    if (value === null) {
+      alert("Choose whether you are renewing or first time")
+      console.log(value)
+    }
   }
 
 
@@ -292,7 +294,7 @@ const QuoteRequest = () => {
               onChangeText={text => setVehicleCost(text)}
               value={vehicleCost}
               placeholder="1,500,000"
-              keyboardType="phone-pad"
+              keyboardType="numeric"
             />
 
             {/** Start Logic need to change after adding apis */}

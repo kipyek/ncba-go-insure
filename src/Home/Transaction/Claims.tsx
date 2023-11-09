@@ -4,6 +4,7 @@ import ClaimComponent from '../../Component/ClaimComponent'
 import { apis } from '../../Services'
 import userData from '../../Component/UserData'
 import apiHeaders from '../../Component/apiHeaders'
+import Moment from 'moment';
 
 const Claims = () => {
     const headers = apiHeaders();
@@ -41,7 +42,7 @@ const Claims = () => {
                 RNumber={item.registrationNo ? item.registrationNo : "---"}
                 CNumber={item.claimNo}
                 PNumber={item.policyNo ? item.policyNo : "---"}
-                CDate={item.claimDate}
+                CDate={Moment(item.claimDate).format('Do MMMM YYYY')}
                 PType={item.product}
                 RLocation={item.riskLocation}
                 Status={item.closureStatus}

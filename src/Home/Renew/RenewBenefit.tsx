@@ -105,8 +105,6 @@ const RenewBenefit = ({ route }: any) => {
         item.checked = !item.checked
         setCurrentSelected(item)
         setSelectKey(Math.random())
-
-
     }
 
     const handleAddBenefit = () => {
@@ -162,7 +160,7 @@ const RenewBenefit = ({ route }: any) => {
                     </View>
                     <View>
                         {allBenefits.map((i: any) => (
-                            <View>
+                            <View key={i.benefitId}>
                                 {item.benefitId === i.benefitId &&
                                     <View>
                                         <Text>Premium: {i.premium}</Text>

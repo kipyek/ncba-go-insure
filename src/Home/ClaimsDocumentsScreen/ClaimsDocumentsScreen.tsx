@@ -220,7 +220,7 @@ const ClaimsDocumentsScreen = ({ route }: any) => {
                     <FlatList
                         data={document}
                         renderItem={({ item }) => <Item i={item} />}
-                        keyExtractor={(item: any) => item.productId}
+                        keyExtractor={(item: any) => item.documentRefId}
                     //contentContainerStyle={{ paddingBottom: 200 }}
                     // ListFooterComponent={<View style={{ height: Dimensions.get('window').height }}></View>}
                     />

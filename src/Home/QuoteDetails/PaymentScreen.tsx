@@ -22,9 +22,9 @@ const PaymentScreen = (item: any) => {
             {/**Quote Card */}
             <View style={HomeCss.introCard} className='flex-row justify-between mt-1'>
                 <Text className='font-[gothici-Regular]' style={{ fontSize: 18 }}>Quote details ({data.quotationNo})</Text>
-                <View className='bg-red-500 rounded-md p-1'>
+                {/**<View className='bg-red-500 rounded-md p-1'>
                     <Text className='text-white font-[gothici-Bold]'>{data.status}</Text>
-                </View>
+                </View> */}
             </View>
             <CustomTabs
                 selectionMode={1}

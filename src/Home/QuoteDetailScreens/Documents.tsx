@@ -226,7 +226,7 @@ const Documents = ({ item }: any) => {
         return (
             <Box className='mt-1 ml-4 mr-4'>
 
-                <View style={HomeCss.container1} className='mt-2 ' key={i.id}>
+                <View style={HomeCss.container1} className='mt-2 '>
                     {i.fileName !== null &&
                         <View>
                             <Text className='text-center'>{i.documentName}</Text>
@@ -268,7 +268,7 @@ const Documents = ({ item }: any) => {
                     <FlatList
                         data={document}
                         renderItem={({ item }) => <Item i={item} />}
-                        keyExtractor={(item: any) => item.productId}
+                        keyExtractor={(item: any) => item.documentRefId}
                         contentContainerStyle={{ paddingBottom: 50 }}
                         ListFooterComponent={<View style={{ height: Dimensions.get('window').height }}></View>}
                     />

@@ -47,30 +47,30 @@ const Profile = () => {
             className='w-36 h-36 rounded-full self-center mb-4'
           />
 
-          <View className='bg-gray-100 p-2 rounded-md justify-between flex-row'>
+          <View className='bg-gray-100 p-2 rounded-md'>
             <View>
               <Text className='text-sm font-[gothici-Regular] text-gray-300 ml-2'>Email</Text>
               <Text className='text-base font-[gothici-Bold] text-gray-500 ml-2'>{activeUser?.userEmail}</Text>
             </View>
-            <Feather name="edit-3" size={24} color="black"
+            {/* <Feather name="edit-3" size={24} color="black"
               style={{ alignSelf: 'center' }}
               onPress={() => setModalVisible(true)}
-            />
+            /> */}
 
           </View>
 
-          <View className='bg-gray-100 p-2 rounded-md my-2 flex-row justify-between'>
+          <View className='bg-gray-100 p-2 rounded-md my-2'>
             <View >
               <Text className='text-sm font-[gothici-Regular] text-gray-300 ml-2'>Phone Number</Text>
               <Text className='text-base font-[gothici-Bold] text-gray-500 ml-2'>{activeUser?.userPhone}</Text>
             </View>
-            <Feather
+            {/* <Feather
               name="edit-3"
               size={24}
               color="black"
               style={{ alignSelf: 'center' }}
               onPress={() => setModalVisibles(true)}
-            />
+            /> */}
           </View>
 
           <TouchableOpacity

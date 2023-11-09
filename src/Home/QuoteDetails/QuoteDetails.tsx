@@ -74,15 +74,11 @@ const QuoteDetails = ({ route }: any) => {
         hideMenu()
     }
 
-    // const isBelowThreshold = (currentValue: any) => currentValue === null;
-    // const isWorking = selected.every(isBelowThreshold)
-    // console.log(isWorking)
-
 
     return (
         <View className='flex-1'>
             <Header
-                label={moves === 2 ? "Payments" : moves === 1 ? "Quote Details" : "Upload Documents"}
+                label={moves === 1 ? "Payments" : moves === 2 ? "Quote Details" : "Upload Documents"}
                 rightButton={{
                     child: <Feather
                         name="more-vertical"

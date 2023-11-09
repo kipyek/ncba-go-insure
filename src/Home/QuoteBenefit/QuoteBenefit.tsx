@@ -149,8 +149,6 @@ const QuoteBenefit = ({ route }: any) => {
                     <View className='flex-1 flex-row justify-between  '>
                         <Text className='text-center font-["gothici-Bold"]'>{item?.benefitName}</Text>
 
-
-
                         <View className=''>
                             {item.checked == true ?
                                 <MaterialCommunityIcons name="checkbox-marked" size={24} color="black" />
@@ -161,7 +159,7 @@ const QuoteBenefit = ({ route }: any) => {
                     </View>
                     <View>
                         {allBenefits.map((i: any) => (
-                            <View>
+                            <View key={i.benefitId}>
                                 {item.benefitId === i.benefitId &&
                                     <View>
                                         <Text>Premium: {i.premium}</Text>
@@ -196,7 +194,7 @@ const QuoteBenefit = ({ route }: any) => {
                         <TouchableOpacity
                             onPress={() => setModalVisible(true)}
                             className='flex-row justify-between bg-gray-200 ml-4 mr-4 pl-1 pr-1'>
-                            <Text className='font-[gothici-Bold]'>Click here to see applicable benefits</Text>
+                            <Text className='font-[gothici-Bold]'>Click here to see additional benefits</Text>
                             {!show ?
                                 <Entypo name="chevron-small-up" size={24} color="black" />
                                 :

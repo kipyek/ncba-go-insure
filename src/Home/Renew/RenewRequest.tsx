@@ -1,30 +1,18 @@
 import { ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import uuid from 'react-native-uuid';
-import DropDown from '../../Component/DropDown'
-import { Alert } from 'react-native';
-import HomeCss from '../HomeCss';
 import { apis } from '../../Services';
 import userData from '../../Component/UserData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import StepperComponet from '../../Component/StepperComponet'
 import { Header } from '../../Component/Header'
-import Humanize from 'humanize-plus';
-import { setFirstTime, setCapacitys } from '../../../Slices/QuoteSlice';
 import apiHeaders from '../../Component/apiHeaders';
-
-const datas = [
-    { label: 'First time', value: '1' },
-    { label: 'Renewal', value: '2' },
-];
+import { Ionicons } from "@expo/vector-icons";
 
 const RenewRequest = ({ route }: any) => {
     const { item } = route.params
     const navigation: any = useNavigation();
     const headers = apiHeaders();
-    const [value, setValue] = useState(null);
     const [uid, setUid] = useState<any>('');
     const [vehicleCost, setVehicleCost] = useState('');
     const [windscreen, setWindScreen] = useState<any>(null);
@@ -32,9 +20,6 @@ const RenewRequest = ({ route }: any) => {
     const [motor, setMotor] = useState<any>(Object);
     const [renewalData, setRenewalData] = useState<any>(Object);
     const [isLoading, setisLoading] = useState(false);
-    const [capacity, setCapacity] = useState('');
-    const [selectedCoverType, setSelectedCoverType] = useState<any>(Object);
-    const [selectedVehicleUsed, setSelectedVehicleUsed] = useState<any>(Object);
 
     const activeUser = userData();
 
@@ -105,7 +90,6 @@ const RenewRequest = ({ route }: any) => {
             "productId": 0,
             "additionalBenefits": []
         }
-        console.log("request request", payload)
         apis.post("MotorQuotes/GetMotorQuote", payload)
             .then(response => {
                 const data = response.data
@@ -130,6 +114,10 @@ const RenewRequest = ({ route }: any) => {
             <StatusBar backgroundColor='#87CEEB' />
             <Header
                 label={"Get Quote"}
+                leftButton={{
+                    child: <Ionicons name="arrow-back" size={24} color="black" />,
+                    onPress: () => { navigation.goBack() }
+                }}
             />
 
 

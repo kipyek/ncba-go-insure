@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground } from 'react-native'
 import React from 'react'
 import { projectImages } from '../../Component/util'
 import HomeCss from '../HomeCss'
@@ -17,14 +17,16 @@ const ClaimSuccess = () => {
                     onPress: () => { navigation.navigate("Main") }
                 }}
             />
-            <View className=' bg-ncba1 p-2'>
-                <Text className='font-[gothici-Bold]'>All documents have been received successfully.
-                    A staff will get back to you on progress of your claim.</Text>
-            </View>
-            <Image
+            <ImageBackground
                 source={projectImages?.claimsuccess}
                 style={HomeCss.homeImage}
-            />
+                resizeMode='cover'
+            >
+                <View className=' bg-ncba1 p-2 mt-2 ml-4 mr-4 rounded-md'>
+                    <Text className='font-[gothici-Bold]'>All documents have been received successfully.
+                        Our staff will reach out to you on progress of your claim.</Text>
+                </View>
+            </ImageBackground>
         </View>
     )
 }

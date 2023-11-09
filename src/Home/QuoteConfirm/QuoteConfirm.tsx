@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View, ScrollView, } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, ScrollView, Alert, } from 'react-native';
 import React, { Fragment, useEffect, useState } from 'react';
 import Moment from 'moment';
 import { Fontisto, MaterialIcons, FontAwesome } from '@expo/vector-icons';
@@ -18,20 +18,19 @@ const QuoteConfirm = ({ route }: any) => {
     const navigation: any = useNavigation()
     const activeUser = userData();
 
-    const [number, setNumber] = useState("");
-    const [date, setDate] = useState<any>(null);
-    const [expiryDate, setExpiryDate] = useState<any>(null);
+    const [number, setNumber] = useState<any>(null);
     const [referral, setReferral] = useState([]);
     const [payPoints, setPayPoints] = useState([]);
     const [selectedReferral, setSelectedReferral] = useState(null);
     const [selectedPayPoints, setSelectedPayPoints] = useState(null);
     const [policyDate, setPolicyDate] = useState<any>(null)
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isDatePickerVisibles, setDatePickerVisibilitys] = useState(false);
     const [finance, setFinance] = useState(false)
     const [visible, setVisible] = useState(false)
     const [confirmed, setConfirmed] = useState(false)
     const [listData, setListData] = useState<any>([])
+    const [error1, setError1] = useState('')
+    const [error2, setError2] = useState('')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -93,7 +92,7 @@ const QuoteConfirm = ({ route }: any) => {
             })
     }
 
-    const handleConfirmQUote = () => {
+    const handleConfirmQuote = () => {
         setVisible(true)
         const payload = {
             "commencementDate": policyDate,
@@ -151,12 +150,21 @@ const QuoteConfirm = ({ route }: any) => {
             .then(response => {
                 const data = response.data
                 navigation.navigate("QuoteFinish", { item: data })
-                console.log("confirmed data", data)
             }).catch(error => {
                 console.log("error", error.response.data)
             }).finally(() =>
                 setVisible(false)
             )
+    }
+
+    const handleConfirmQUote = () => {
+        if (!number) {
+            setError1("Enter vehicle registration number")
+        } else if (policyDate === null) {
+            setError2("Select policy date first")
+        } else {
+            handleConfirmQuote()
+        }
     }
 
 
@@ -182,6 +190,7 @@ const QuoteConfirm = ({ route }: any) => {
                                 placeholder="e.g KAA 123A"
                                 keyboardType="default"
                             />
+                            {error1 && !number && <Text className='text-red-600 mt-1'>{error1}</Text>}
                         </View>
 
                         <View className='mt-2 mb-2'>
@@ -194,13 +203,7 @@ const QuoteConfirm = ({ route }: any) => {
                                 }
                                 <Fontisto name="date" size={20} color="black" onPress={() => setDatePickerVisibilitys(true)} />
                             </View>
-                        </View>
-
-
-                        <View className='mt-2 '>
-                            <Text className=' font-[gothici-Regular]'>Please tell us more about yourself.</Text>
-                            <Text className=' font-[gothici-Regular]'>If you already have an account, please click </Text>
-                            <Text className=' font-[gothici-Regular]'>here to login</Text>
+                            {error2 && policyDate === null && <Text className='text-red-600 mt-1'>{error2}</Text>}
                         </View>
 
                         {/**Start of Condition for financing */}

@@ -32,6 +32,7 @@ const RenewConfirm = ({ route }: any) => {
     const [confirmed, setConfirmed] = useState(false)
     const [listData, setListData] = useState<any>([])
     const [renew, setRenew] = useState<any>(Object)
+    const [error2, setError2] = useState('')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -126,7 +127,7 @@ const RenewConfirm = ({ route }: any) => {
     //     }
     // }
 
-    const handleConfirmQUote = () => {
+    const handleConfirmQuote = () => {
         setVisible(true)
         const payload = {
             "commencementDate": policyDate,
@@ -192,11 +193,18 @@ const RenewConfirm = ({ route }: any) => {
     }
 
 
+    const handleConfirmQUote = () => {
+        if (!policyDate) {
+            setError2("Select policy start date")
+        } else {
+            handleConfirmQuote()
+        }
 
+    }
 
     return (
         <Fragment>
-            <View>
+            <View className='flex-1'>
                 <Header
                     label={"Get Quote"}
                 />
@@ -223,14 +231,15 @@ const RenewConfirm = ({ route }: any) => {
                                 }
                                 <Fontisto name="date" size={20} color="black" onPress={() => setDatePickerVisibilitys(true)} />
                             </View>
+                            {!policyDate && <Text className='text-red-600 mt-2'>{error2}</Text>}
                         </View>
 
 
-                        <View className='mt-2 '>
+                        {/* <View className='mt-2 '>
                             <Text className=' font-[gothici-Regular]'>Please tell us more about yourself.</Text>
                             <Text className=' font-[gothici-Regular]'>If you already have an account, please click </Text>
                             <Text className=' font-[gothici-Regular]'>here to login</Text>
-                        </View>
+                        </View> */}
 
                         {/**Start of Condition for financing */}
                         <View className='mt-4 mb-2'>
