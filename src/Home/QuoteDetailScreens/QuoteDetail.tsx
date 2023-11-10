@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import HomeCss from '../HomeCss';
 import Humanize from 'humanize-plus';
+import Moment from 'moment';
+
 
 const QuoteDetail = ({ item }: any) => {
     const data = item
@@ -27,12 +29,12 @@ const QuoteDetail = ({ item }: any) => {
 
                 <View className='flex-row justify-between mt-1'>
                     <Text className='font-[gothici-Bold]' style={{ fontSize: 16 }}>Commencement date</Text>
-                    <Text className='w-36'>{data?.commencementDate}</Text>
+                    <Text >{Moment(data?.commencementDate).format('Do MMMM YYYY')}</Text>
                 </View>
 
                 <View className='flex-row justify-between bg-[#F5F5F5] p-1 rounded-sm mt-1'>
                     <Text className='font-[gothici-Bold]' style={{ fontSize: 16 }}>Expiry date</Text>
-                    <Text>{data?.expiryDate}</Text>
+                    <Text>{Moment(data?.expiryDate).format('Do MMMM YYYY')}</Text>
                 </View>
 
                 <View className='bg-[#F5F5F5] mt-4'>

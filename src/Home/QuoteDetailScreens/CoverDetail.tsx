@@ -3,10 +3,12 @@ import React, { Fragment, useState } from 'react';
 import { Entypo } from "@expo/vector-icons";
 import { BottomModal, ModalContent } from 'react-native-modals';
 import Humanize from 'humanize-plus';
+import Moment from "moment"
 
 
 const CoverDetail = ({ item }: any) => {
     const data = item
+    console.log("I am here", item)
     const [show, setShow] = useState(false);
     const [showPremium, setShowPremium] = useState(false);
     const [modalVisibles, setModalVisibles] = useState(false);
@@ -22,6 +24,10 @@ const CoverDetail = ({ item }: any) => {
     }
 
     const levy = (data.stampDuty) + (data?.trainingLevy) + (data?.phcf)
+
+    const startDate = Moment(data?.commencementDate).format('Do.MM.YYYY')
+    const endDate = Moment(data?.expiryDate).format('Do.MM.YYYY')
+    const dateRange = `${startDate} to ${endDate}`
 
     return (
         <Fragment>
@@ -55,12 +61,13 @@ const CoverDetail = ({ item }: any) => {
                                     <View className='flex-1'>
                                         <Text className='font-[gothici-Regular]'>Policy holder name</Text>
                                         <TextInput
-                                            className='p-1 rounded-md'
+                                            className='p-1 rounded-md h-10'
                                             style={{ borderWidth: 1 }}
                                             //onChangeText={text => setPassword(text)}
                                             //value={password}
                                             editable={false}
-                                            placeholder={data.customer.firstName + data.customer.otherNames}
+                                            placeholderTextColor={'grey'}
+                                            placeholder={data.customer.firstName + " " + data.customer.otherNames}
                                             keyboardType="default"
                                         />
                                     </View>
@@ -68,11 +75,12 @@ const CoverDetail = ({ item }: any) => {
                                     <View className=''>
                                         <Text className='font-[gothici-Regular]'>Mobile number</Text>
                                         <TextInput
-                                            className='p-1 rounded-md'
+                                            className='p-1 rounded-md h-10'
                                             style={{ borderWidth: 1 }}
                                             //onChangeText={text => setPass(text)}
                                             //value={pass}
                                             editable={false}
+                                            placeholderTextColor={'grey'}
                                             placeholder={data.customer.mobileNo}
                                             keyboardType="default"
                                         />
@@ -83,11 +91,12 @@ const CoverDetail = ({ item }: any) => {
                                 <View className='mt-2'>
                                     <Text className='font-[gothici-Regular]'>Email address</Text>
                                     <TextInput
-                                        className='p-1 rounded-md'
+                                        className='p-1 rounded-md h-10'
                                         style={{ borderWidth: 1 }}
                                         //onChangeText={text => setPass(text)}
                                         //value={pass}
                                         editable={false}
+                                        placeholderTextColor={'grey'}
                                         placeholder={data.customer.emailAddress}
                                         keyboardType="default"
                                     />
@@ -97,12 +106,13 @@ const CoverDetail = ({ item }: any) => {
                                     <View className='flex-1'>
                                         <Text className='font-[gothici-Regular]'>Cover period</Text>
                                         <TextInput
-                                            className='p-1 rounded-md'
+                                            className='p-1 rounded-md h-10'
                                             style={{ borderWidth: 1 }}
                                             //onChangeText={text => setPassword(text)}
                                             //value={password}
                                             editable={false}
-                                            placeholder="21-Sep-2023 to 19-Sep-2024"
+                                            placeholderTextColor={'grey'}
+                                            placeholder={dateRange}
                                             keyboardType="default"
                                         />
                                     </View>
@@ -110,12 +120,13 @@ const CoverDetail = ({ item }: any) => {
                                     <View className=''>
                                         <Text className='font-[gothici-Regular]'>Vehicle reg No</Text>
                                         <TextInput
-                                            className='p-1 rounded-md'
+                                            className='p-1 rounded-md h-10'
                                             style={{ borderWidth: 1 }}
                                             //onChangeText={text => setPass(text)}
                                             //value={pass}
                                             editable={false}
-                                            placeholder={data.registrationNo ? data.registrationNo : "null"}
+                                            placeholderTextColor={'grey'}
+                                            placeholder={data.assetRegistration ? data.assetRegistration : "---"}
                                             keyboardType="default"
                                         />
                                     </View>

@@ -9,8 +9,6 @@ import { useNavigation } from '@react-navigation/native';
 import { Entypo, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons"
 import { apis } from '../../Services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import userData from '../../Component/UserData';
-
 
 const RenewBenefit = ({ route }: any) => {
     let { item, benefits } = route?.params
