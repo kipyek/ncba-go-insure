@@ -8,9 +8,32 @@ import Humanize from 'humanize-plus';
 import { companiesDetails } from '../../Component/util';
 import apiHeaders from '../../Component/apiHeaders';
 
+
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+const Base64 = {
+
+    atob: (input: string = '') => {
+        let str = input.replace(/=+$/, '');
+        let output = '';
+
+        if (str.length % 4 == 1) {
+            throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
+        }
+        for (let bc = 0, bs = 0, buffer, i = 0;
+            buffer = str.charAt(i++);
+
+            ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+                bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
+        ) {
+            buffer = chars.indexOf(buffer);
+        }
+
+        return output;
+    }
+};
+
 const IpfTerms = ({ item }: any) => {
     const payload = item;
-    //console.log("IpfTerm", item)
     const headers = apiHeaders();
     const navigation: any = useNavigation();
     const [confirmed, setConfirmed] = useState(false);
@@ -22,10 +45,10 @@ const IpfTerms = ({ item }: any) => {
     }
 
     const handleDownloadForm = () => {
-        apis.get(`Common/IPFForm?id=1852`)
+        apis.get(`Common/IPFForm?id=${item?.item?.id}`)
             .then(response => {
                 const data = response.data
-                console.log("IpfData", data)
+                // const base64Img = Base64.atob(data);
                 setBaseForm(data)
                 navigation.navigate("IpfDocument", { item: data })
             }).catch(error => {
@@ -52,7 +75,6 @@ const IpfTerms = ({ item }: any) => {
             .then(response => {
                 const data = response.data
                 handleDownloadForm()
-                console.log("ApplyIPF", data)
             }).catch(error => {
                 console.log("ApplyIPFs", error.response.data)
             })

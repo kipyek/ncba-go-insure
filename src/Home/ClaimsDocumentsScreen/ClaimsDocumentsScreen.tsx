@@ -97,8 +97,10 @@ const ClaimsDocumentsScreen = ({ route }: any) => {
     const createCacheFile = async (result: any) => {
         if (!(await getInfoAsync(cacheDirectory + "uploads/")).exists) {
             await makeDirectoryAsync(cacheDirectory + "uploads/");
+
         }
         const cacheFilePath = cacheDirectory + "uploads/" + result.name;
+        console.log("dir", cacheFilePath)
         await copyAsync({ from: result.uri, to: cacheFilePath });
         return cacheFilePath;
     }
@@ -157,10 +159,10 @@ const ClaimsDocumentsScreen = ({ route }: any) => {
         })
             .then(response => {
                 const data = response.data
+                console.log("Hello2")
                 handleClaimDetails()
-                console.log("Submiting....", data)
-                // navigation.navigate("QuoteDetails", { item: data })
             }).catch(error => {
+                console.log("Hello1")
                 console.log(error.response?.data?.message)
             }).finally(() => {
                 handleClaimDetails()

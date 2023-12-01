@@ -9,7 +9,7 @@ import userData from '../../Component/UserData';
 import * as ImagePicker from 'expo-image-picker';
 import { BottomModal, ModalContent } from 'react-native-modals';
 import * as DocumentPicker from 'expo-document-picker';
-import uuid from 'react-native-uuid';
+import * as IntentLauncher from 'expo-intent-launcher';
 import { cacheDirectory, copyAsync, getInfoAsync, makeDirectoryAsync, EncodingType, readAsStringAsync } from 'expo-file-system'
 import { Header } from '../../Component/Header';
 import * as FileSystem from 'expo-file-system';
@@ -58,7 +58,6 @@ const Base64 = {
 
 const IpfDocument = ({ route }: any) => {
     const { item } = route.params
-    console.log("Hello world", item)
     const [show, setShow] = useState(false) //Add to the downloading function
     const activeUser = userData()
     const [modalVisible, setModalVisible] = useState(false);
@@ -228,7 +227,8 @@ const IpfDocument = ({ route }: any) => {
     //         })
     // }
     const requestFileWritePermission = async () => {
-        const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+        const albumUri = FileSystem.StorageAccessFramework.getUriForDirectoryInRoot("Download");
+        const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync(albumUri);
         if (!permissions.granted) {
             console.log('File write Permissions Denied!!')
             return {
@@ -237,6 +237,7 @@ const IpfDocument = ({ route }: any) => {
             };
         }
         const uri = permissions.directoryUri
+
         saveReportFile(uri)
         return {
             access: true,
@@ -244,18 +245,26 @@ const IpfDocument = ({ route }: any) => {
 
         };
     }
-    const saveReportFile = async (i: any) => {
-        console.log(i)
+
+
+    const saveReportFile = async (i: string) => {
+        const regex = /data:.*base64,/
+        const baseData = item.replace(regex, "")
         try {
             await FileSystem.StorageAccessFramework.createFileAsync(i, 'ipfs', 'application/pdf')
                 .then(async (uri) => {
-                    await FileSystem.writeAsStringAsync(uri, item);
+                    const data = await FileSystem.writeAsStringAsync(uri, baseData, { encoding: FileSystem.EncodingType.Base64 });
                 }).then(res => {
-                    console.log(res)
+                    console.log("why")
                     Alert.alert('Success', `File Saved`)
+                    // IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+                    //     data: res,
+                    //     flags: 1,
+                    // });
                 })
                 .catch((e) => {
                     console.log(e);
+                    alert("Download to download folder or root folder")
                 });
         } catch (error: any) {
             Alert.alert('Error', `Could not Download file ${error.message}`);

@@ -1,5 +1,5 @@
 //This is one of the custom tabs
-import { Text, TouchableOpacity, View, ScrollView, Platform, FlatList, ActivityIndicator, Dimensions } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView, Platform, FlatList, Dimensions } from 'react-native';
 import React, { Fragment, useEffect, useState } from 'react';
 import { AntDesign } from "@expo/vector-icons";
 import { Box } from '../../Component/Theme';
@@ -212,7 +212,7 @@ const Documents = ({ item }: any) => {
                 const data = response.data
                 // navigation.navigate("QuoteDetails", { item: data })
             }).catch(error => {
-                console.log("Erroring", error.response)
+                console.log("", error.response)
 
             }).finally(() => {
                 handleSubmitQuote();

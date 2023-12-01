@@ -45,6 +45,7 @@ const LoginOTP = ({ route }: any) => {
         AsyncStorage.setItem('activeUser', JSON.stringify(data.body))
         handleSuccess()
       }).catch(error => {
+        console.log("error", error.response.data)
         alert(error.response?.data?.message)
       }).finally(() =>
         setisLoading(false)

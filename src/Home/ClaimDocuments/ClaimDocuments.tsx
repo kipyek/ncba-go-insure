@@ -1,14 +1,78 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Platform, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { Header } from '../../Component/Header';
 import HomeCss from '../HomeCss';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from "@expo/vector-icons"
 import { companiesDetails } from '../../Component/util';
+import * as FileSystem from 'expo-file-system';
+import { apis } from '../../Services';
+import apiHeaders from '../../Component/apiHeaders';
 
 const ClaimDocuments = ({ route }: any) => {
     const { item, id } = route.params
     const navigation: any = useNavigation();
+    const headers = apiHeaders()
+
+
+    const requestFileWritePermission = async () => {
+        if (Platform.OS === 'android') {
+            const specificUri = FileSystem.StorageAccessFramework.getUriForDirectoryInRoot("Download");
+            const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync(specificUri);
+            if (!permissions.granted) {
+                Alert.alert('Error', 'File Permissions Denied')
+                return {
+                    access: false,
+                    directoryUri: null
+                };
+            }
+            return {
+                access: true,
+                directoryUri: permissions.directoryUri
+            };
+        };
+    }
+
+    const saveReportFile = async (pdfData: any, directoryUri: string) => {
+        const regex = /data:.*base64,/
+        const baseData = pdfData.replace(regex, "")
+        try {
+            await FileSystem.StorageAccessFramework.createFileAsync(directoryUri, 'Claim', 'application/pdf')
+                .then(async (uri) => {
+                    await FileSystem.writeAsStringAsync(uri, baseData, { encoding: FileSystem.EncodingType.Base64 });
+                }).then(res => {
+                    console.log(res)
+                    Alert.alert('Success', `File successfully downloaded`)
+                })
+                .catch((e) => {
+                    console.log("This is the error", e);
+                    alert("Download to root folder or download folder")
+                });
+        } catch (error: any) {
+            Alert.alert('Error', `Could not Download file ${error.message}`);
+        }
+    }
+
+
+    async function fetchReportForm() {
+        apis.get(`Common/ClaimForm?id=${id}`, {
+            headers: {
+                "SecurityToken": headers.securityToken,
+                "UserSessionId": headers.sessionId,
+            },
+        })
+            .then(async (res) => {
+                const pdfData = res.data;
+                const hasPermissions: any = await requestFileWritePermission();
+                if (hasPermissions.access) {
+                    saveReportFile(pdfData, hasPermissions?.directoryUri)
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                Alert.alert('Error', 'Error Downloading File!!')
+            })
+    }
     return (
         <View className='flex-1'>
             <Header
@@ -30,7 +94,7 @@ const ClaimDocuments = ({ route }: any) => {
 
                 <View className='flex-row'>
                     <View className='item-center bg-primary p-2 mr-1 flex-1 mt-2 rounded-md '>
-                        <TouchableOpacity onPress={() => { }}>
+                        <TouchableOpacity onPress={() => fetchReportForm()}>
                             <Text className='text-center text-white font-["gothici-Bold"]'>DOWNLOAD FORM</Text>
                         </TouchableOpacity>
                     </View>
